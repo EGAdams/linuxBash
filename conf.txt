@@ -1,0 +1,4 @@
+/mnt/c/Users/EG/dndSolution/browserTests:jasmine
+/home/adamsl/bash_scripts:bashscripts
+password:tinman99
+
