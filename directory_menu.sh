@@ -20,11 +20,13 @@ while true; do
     --title "Menu" \
     --clear \
     --cancel-label "Exit" \
-    --menu "Please select:" $HEIGHT $WIDTH 4 \
+    --menu "Please select:" $HEIGHT $WIDTH 6 \
     "1" "Display System Information" \
     "2" "Display Disk Space" \
     "3" "Display Home Space Utilization" \
-    "4" "change to vue 3 component directory" \
+    "4" "start vscode in vue 3 component directory" \
+    "5" "change to vue 3 component directory"\
+    "6" "run electron vue dashboard"\
     2>&1 1>&3)
   exit_status=$?
   exec 3>&-
@@ -59,8 +61,19 @@ while true; do
       fi
       ;;
     4 )
-      cd /home/adamsl/vue3_components
+      cd /home/adamsl/vue3_components/vue_typescript_components
+      code .
+      clear
       break
       ;;
+    5 )
+      cd /home/adamsl/vue3_components/vue_typescript_components
+      clear
+      break
+      ;;
+    6 )
+      cd /mnt/c/Users/EG/electron-vue-example
+      powershell.exe startElectron.bat
+    ;;  
   esac
 done
