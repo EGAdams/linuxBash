@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # while-menu-dialog: a menu driven system information program 
 
 DIALOG_CANCEL=1
@@ -60,7 +59,10 @@ while true; do
       ;;
     4 )
       cd vue3_components
+      clear
       break
       ;;
   esac
 done
+
+clear
