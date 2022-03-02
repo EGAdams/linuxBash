@@ -1,1 +1,1 @@
-code C:\Users\EG\linuxBash
+wsl.exe code /mnt/c/Users/EG/linuxBash
