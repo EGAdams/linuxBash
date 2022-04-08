@@ -11,8 +11,8 @@ let tray;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width: 500,
-        height: 420,
+        width: 550,
+        height: 700,
         // maxWidth:1000,
         // icon:"icon.png",
 
@@ -21,39 +21,39 @@ function createWindow() {
     // mainWindow.maximize();
 
     // create system tray
-    // var appIcon = new Tray("icon.png");
-    // var contextMenu = Menu.buildFromTemplate([
-    //     {
-    //         label: 'Show App', click: function () {
-    //             mainWindow.show()
-    //         }
-    //     },
+    // var appIcon = new Tray( "./icon.png" );
+    var contextMenu = Menu.buildFromTemplate([
+        {
+            label: 'Show App', click: function () {
+                mainWindow.show()
+            }
+        },
 
-    //     {
-    //         label: 'Open Program Files', click: function () {
-    //             child_process.exec('start "" "C:\\Program Files"')
-    //         }
-    //     },
+        {
+            label: 'Open Program Files', click: function () {
+                child_process.exec('start "" "C:\\Program Files"')
+            }
+        },
 
-    //     {
-    //         label: 'Open Temp Folder', click: function () {
-    //             child_process.exec('start ' + os.tmpdir());
-    //         }
-    //     },
+        {
+            label: 'Open Temp Folder', click: function () {
+                child_process.exec('start ' + os.tmpdir());
+            }
+        },
 
-    //     {
-    //         label: 'Open NotePad', click: function () {
-    //             child_process.spawn('C:\\windows\\notepad.exe')
-    //         }
-    //     },
+        {
+            label: 'Open NotePad', click: function () {
+                child_process.spawn('C:\\windows\\notepad.exe')
+            }
+        },
 
-    //     {
-    //         label: 'Quit', click: function () {
-    //             app.isQuiting = true;
-    //             app.quit()
-    //         }
-    //     }
-    // ]);
+        {
+            label: 'Quit', click: function () {
+                app.isQuiting = true;
+                app.quit()
+            }
+        }
+    ]);
     // appIcon.setContextMenu(contextMenu);
 
     mainWindow.on('close', function (event) {
@@ -74,9 +74,7 @@ function createWindow() {
     });
 
 }
-
 app.on('ready', createWindow);
-
 
 // Open Select file dialog
 ipcMain.on('select-file', (event, arg) => {
@@ -104,15 +102,38 @@ function getcpuusage() {
 }
 
 // open notepad
-ipcMain.on('open-notepad', (event, arg) => {
-    child_process.spawn('C:\\windows\\notepad.exe')
+// ipcMain.on('open-notepad', (event, arg) => {
+//     child_process.spawn('C:\\windows\\notepad.exe')
+// });
+
+
+
+// open folder
+ipcMain.on('home-spa', (event, arg) => {
+    child_process.exec('start "" "C:\\Users\\EG\\Desktop\\2022\\rol\\rol_map"')
 });
 
 // open folder
-ipcMain.on('open-folder', (event, arg) => {
-    child_process.exec('start "" "C:\\Program Files"')
+ipcMain.on('typescript-source', (event, arg) => {
+    child_process.exec('start "" "C:\\Users\\EG\\Desktop\\2022\\march\\3_week\\pkief_debug_article"')
 });
 
 ipcMain.on('open-this-folder', (event, arg) => {
     child_process.exec('start "" "C:\\Users\\EG\\march\\week_3\\linuxBash\\system_info"')
+});
+
+ipcMain.on('log-vuer-plugin', (event, arg) => {
+    child_process.exec('start "" "C:\\Users\\EG\\Desktop\\2022\\april\\2nd_week\\friday\\vue3-plugin"')
+});
+
+ipcMain.on('log-object-processor', (event, arg) => {
+    child_process.exec('start "" "C:\\Users\\EG\\Desktop\\2022\\april\\1st_week\\log_object_processor_new_build\\log-object-processor"')
+});
+
+ipcMain.on('log-object-processor-test', (event, arg) => {
+    child_process.exec('start "" "C:\\Users\\EG\\Desktop\\2022\\april\\2nd_week\\friday\\log-viewer-test"')
+});
+
+ipcMain.on('open-vue-sequence', (event, arg) => {
+    child_process.exec('start "" "C:\\Users\\EG\\vue-sequence-diagram"')
 });

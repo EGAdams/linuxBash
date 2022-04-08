@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>File System Application</title>
-    <script>window.$ = window.jQuery = require('jquery');</script>
+    <script>window.$ = window.jQuery = require( 'jquery' );</script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
-          integrity="sha384-PmY9l28YgO4JwMKbTvgaS7XNZJ30MK9FAZjjzXtlqyZCqBY6X6bXIkM++IkyinN+" crossorigin="anonymous">
+        integrity="sha384-PmY9l28YgO4JwMKbTvgaS7XNZJ30MK9FAZjjzXtlqyZCqBY6X6bXIkM++IkyinN+" crossorigin="anonymous">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap-theme.min.css"
-          integrity="sha384-jzngWsPS6op3fgRCDTESqrEJwRKck+CILhJVO5VvaAZCq8JYf8HsR/HPpBOOPZfR" crossorigin="anonymous">
+        integrity="sha384-jzngWsPS6op3fgRCDTESqrEJwRKck+CILhJVO5VvaAZCq8JYf8HsR/HPpBOOPZfR" crossorigin="anonymous">
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"
-            integrity="sha384-vhJnz1OVIdLktyixHY4Uk3OHEwdQqPppqYR8+5mjsauETgLOcEynD9oPHhhz18Nw"
-            crossorigin="anonymous"></script>
+        integrity="sha384-vhJnz1OVIdLktyixHY4Uk3OHEwdQqPppqYR8+5mjsauETgLOcEynD9oPHhhz18Nw"
+        crossorigin="anonymous"></script>
     <script src="main.js"></script>
-    <script src="http://momentjs.com/downloads/moment.js" type="application/javascript" ></script>
+    <script src="http://momentjs.com/downloads/moment.js" type="application/javascript"></script>
     <style>
         body {
             background: #333333;
@@ -24,109 +25,173 @@
         .progress {
             background: transparent;
         }
+
+        .monitor-button {
+            margin-bottom: 10px;
+            display: block;
+            width: 85%;
+            
+        }
+
+        .purple-back {
+            background-color: purple;
+        }
+
+        #uptime_timer {
+            margin-top: 10%;
+            color: rgb(255, 255, 255);
+        }
+
+        .btn-light {
+
+            background-color: hsl(351, 68%, 11%) !important;
+            background-repeat: repeat-x;
+            background-image: -o-linear-gradient(top, #d12741, #2f080e);
+            background-image: linear-gradient(#d12741, #5f3239);
+            border-color: #2f080e #2f080e hsl(351, 68%, 1.5%);
+            color: #fff !important;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.62);
+
+        }
+
+        .container {
+            margin-left: 4%;
+            position: absolute;
+            display: flex;
+            justify-content: space-evenly;
+            flex-direction: column;
+            background-color: rgb(191, 192, 195);
+            background-image: linear-gradient(-25deg, white, rgb(83, 81, 81));
+            width: 70%;
+            padding-top: 3%;
+            border-radius: 1%;
+        }
     </style>
 
 </head>
+
 <body>
     <nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Brand</a>
-        </div>
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Brand</a>
+            </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Link</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Link</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
 
     <div class="container-fluid">
-    <!-- <img style="max-width: 1000px; width: 100%; padding: 15px; box-shadow: 5px 5px 50px 5px #000000;"
+        <!-- <img style="max-width: 1000px; width: 100%; padding: 15px; box-shadow: 5px 5px 50px 5px #000000;"
          src="https://raw.githubusercontent.com/Giphy/GiphyAPI/master/api_giphy_header.gif"> -->
-    <div class="progress" style="margin-top: 35px; background-color: transparent;">
-        <div class="cpu-progress progress-bar progress-bar-success" role="progressbar"
-             aria-valuemin="0" aria-valuemax="100" style="width:0%">
+        <div class="progress" style="margin-top: 35px; background-color: transparent;">
+            <div class="cpu-progress progress-bar progress-bar-success" role="progressbar" aria-valuemin="0"
+                aria-valuemax="100" style="width:0%">
+            </div>
         </div>
-    </div>
-    <input class="btn btn-warning" onclick="open_notepad();" type="button" value="Open Notepad.exe">
-    <input class="btn btn-danger" onclick="open_folder();" type="button" value="Open Folder">
-    <input class="btn btn-danger" onclick="open_this_folder();" type="button" value="Open This Folder">
-    <div style="color: white;">
-        <p id="uptime_timer"> Uptime </p>
-    </div>
+        <div class="container">
+            <input class="btn btn-light monitor-button" onclick="home_spa();" type="button" value="Home SPA">
+            <input class="btn btn-danger monitor-button" onclick="open_folder();" type="button" value="Typescript Source">
+            <input class="btn btn-primary monitor-button" onclick="open_this_folder();" type="button" value="System Info Project">
+            <input class="btn btn-success monitor-button" onclick="open_view_sequence();" type="button" value="Vue Sequence">
+            <input class="btn btn-primary monitor-button" onclick="log_vuer_plugin();" type="button" value="Log Vuer Plugin">
+            <input class="btn btn-success monitor-button" onclick="log_object_processor();" type="button" value="Log Object Processor">
+            <input class="btn btn-danger monitor-button" onclick="log_object_processor_test();" type="button" value="Log Object Processor Test">
+            <div style="color: white;">
+                <p id="uptime_timer"> Uptime </p>
+            </div>
+        </div>
 
-</div>
+    </div>
 
 </body>
 
 <script>
-    const ipcRenderer = require('electron').ipcRenderer;
-    ipcRenderer.send('get-cpu', {});
-    ipcRenderer.on('cpu', function (event, data) {
-        $('.cpu-progress').css('width', data + '%').attr('aria-valuenow', data).text(data + ' CPU');
-    });
+    const ipcRenderer = require( 'electron' ).ipcRenderer;
+    ipcRenderer.send( 'get-cpu', {} );
+    ipcRenderer.on( 'cpu', function ( event, data ) {
+        $( '.cpu-progress' ).css( 'width', data + '%' ).attr( 'aria-valuenow', data ).text( data + ' CPU' );
+    } );
 
-    ipcRenderer.on('uptime', function (event, data) {
-        var uptime = moment.utc(data*1000).format('HH:mm:ss');
-        document.getElementById("uptime_timer").innerHTML = uptime
+    ipcRenderer.on( 'uptime', function ( event, data ) {
+        var uptime = moment.utc( data * 1000 ).format( 'HH:mm:ss' );
+        document.getElementById( "uptime_timer" ).innerHTML = uptime
 
-    });
+    } );
 
-    function open_notepad() {
-        ipcRenderer.send('open-notepad', {})
+    function home_spa() {
+        ipcRenderer.send( 'home-spa', {} )
     }
 
     function open_folder() {
-        ipcRenderer.send('open-folder', {})
+        ipcRenderer.send( 'typescript-source', {} )
     }
-    
+
     function open_this_folder() {
-        ipcRenderer.send('open-this-folder', {})
+        ipcRenderer.send( 'open-this-folder', {} )
+    }
+
+    function open_view_sequence() {
+        ipcRenderer.send( 'open-vue-sequence', {} )
+    }
+
+    function log_vuer_plugin() {
+        ipcRenderer.send( 'log-vuer-plugin', {} )
+    }
+
+    function log_object_processor() {
+        ipcRenderer.send( 'log-object-processor', {} )
+    }
+
+    function log_object_processor_test() {
+        ipcRenderer.send( 'log-object-processor-test', {} )
     }
 
 </script>
