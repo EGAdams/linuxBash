@@ -138,12 +138,18 @@
         </div>
         <div class="container">
             <input class="btn btn-light monitor-button" onclick="home_spa();" type="button" value="Home SPA">
-            <input class="btn btn-danger monitor-button" onclick="open_folder();" type="button" value="Typescript Source">
-            <input class="btn btn-primary monitor-button" onclick="open_this_folder();" type="button" value="System Info Project">
+            <input class="btn btn-danger monitor-button" onclick="open_folder();" type="button" value="Pkief Typescript Source">
+            <input class="btn btn-danger monitor-button" onclick="vite_electron_ts_source();" type="button" value="Vite Electron Typescript Source">
+            <input class="btn btn-primary monitor-button" onclick="open_this_folder();" type="button" value="This Project">
             <input class="btn btn-success monitor-button" onclick="open_view_sequence();" type="button" value="Vue Sequence">
             <input class="btn btn-primary monitor-button" onclick="log_vuer_plugin();" type="button" value="Log Vuer Plugin">
             <input class="btn btn-success monitor-button" onclick="log_object_processor();" type="button" value="Log Object Processor">
             <input class="btn btn-danger monitor-button" onclick="log_object_processor_test();" type="button" value="Log Object Processor Test">
+            <input class="btn btn-primary monitor-button" onclick="sourced_log_viewer();" type="button" value="Sourced Log Viewer">
+            <input class="btn btn-success monitor-button" onclick="original_monitor();" type="button" value="Original Monitor">
+            <input class="btn btn-danger monitor-button" onclick="monitor_led();" type="button" value="Monitor LED">
+            <input class="btn btn-success monitor-button" onclick="bank_interrogation();" type="button" value="Bank Interrogation">
+            <input class="btn btn-primary monitor-button" onclick="wordpress_project();" type="button" value="wordpress project">
             <div style="color: white;">
                 <p id="uptime_timer"> Uptime </p>
             </div>
@@ -174,6 +180,10 @@
         ipcRenderer.send( 'typescript-source', {} )
     }
 
+    function vite_electron_ts_source() {
+        ipcRenderer.send( 'vite-electron-typescript-source', {} )
+    }
+
     function open_this_folder() {
         ipcRenderer.send( 'open-this-folder', {} )
     }
@@ -193,6 +203,20 @@
     function log_object_processor_test() {
         ipcRenderer.send( 'log-object-processor-test', {} )
     }
+
+    function sourced_log_viewer() {
+        ipcRenderer.send( 'sourced-log-viewer', {} )
+    }
+
+    function original_monitor() {
+        ipcRenderer.send( 'original-monitor', {} )
+    }
+
+    function monitor_led() { ipcRenderer.send( 'monitor-led', {}); }
+
+    function bank_interrogation() { ipcRenderer.send( 'bank-interrogation', {}); }
+
+    function wordpress_project() { ipcRenderer.send( 'wordpress-project', {}); }
 
 </script>
 
