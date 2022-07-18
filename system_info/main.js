@@ -163,3 +163,21 @@ ipcMain.on( 'bank-interrogation', ( _event, _arg ) => {
 
 ipcMain.on( 'wordpress-project', ( _event, _arg ) => { 
     child_process.exec( 'start "" "C:\\xampp-joomla\\htdocs\\wordpress\\wp-content\\plugins\\MCBA-Wordpress"' )} );
+
+ipcMain.on( 'test-folder', ( _event, _arg ) => { 
+    child_process.exec( 'start "" "C:\\Users\\EG\\Desktop\\2022\\june\\4th_week\\test_folder"' )} );
+
+ipcMain.on( 'tennis-cpp', ( _event, _arg ) => { 
+    child_process.exec( 'start "" "C:\\Users\\EG\\Desktop\\2022\\june\\2nd_week\\tennis_cpp"' )} );
+
+ipcMain.on( 'library-transfer', ( _event, _arg ) => { 
+    child_process.exec( 'start "" "C:\\Users\\EG\\Desktop\\2022\\june\\2nd_week\\libraries"' )} );
+
+ipcMain.on( 'tennis-view', ( _event, _arg ) => { 
+    child_process.exec( 'start "" "C:\\Users\\EG\\Desktop\\2022\\april\\5th_week\\electron-quick-start"' )} );
+
+ipcMain.on( 'vanilla-web', ( _event, _arg ) => { 
+    child_process.exec( 'start "" "C:\\Users\\EG\\Desktop\\2022\\july\\3rd_week\\vanilla_web_component"' )} );
+
+ipcMain.on( 'vue-node-chat-app', ( _event, _arg ) => { 
+    child_process.exec( 'start "" "C:\\Users\\EG\\Desktop\\2022\\july\\4th_week\\vue-node-chatapp\\parsingTools"' )} );

@@ -150,6 +150,12 @@
             <input class="btn btn-danger monitor-button" onclick="monitor_led();" type="button" value="Monitor LED">
             <input class="btn btn-success monitor-button" onclick="bank_interrogation();" type="button" value="Bank Interrogation">
             <input class="btn btn-primary monitor-button" onclick="wordpress_project();" type="button" value="wordpress project">
+            <input class="btn btn-danger monitor-button" onclick="test_folder();" type="button" value="test folder">
+            <input class="btn btn-success monitor-button" onclick="tennis_cpp();" type="button" value="tennis cpp">
+            <input class="btn btn-primary monitor-button" onclick="library_transfer();" type="button" value="libraries">
+            <input class="btn btn-danger monitor-button" onclick="tennis_view();" type="button" value="tennis view">
+            <input class="btn btn-success monitor-button" onclick="vanilla_web();" type="button" value="vanilla web component">
+            <input class="btn btn-primary monitor-button" onclick="vue_node_chat_app();" type="button" value="vue node chat app">
             <div style="color: white;">
                 <p id="uptime_timer"> Uptime </p>
             </div>
@@ -217,6 +223,18 @@
     function bank_interrogation() { ipcRenderer.send( 'bank-interrogation', {}); }
 
     function wordpress_project() { ipcRenderer.send( 'wordpress-project', {}); }
+
+    function test_folder() { ipcRenderer.send( 'test-folder', {}); }
+
+    function tennis_cpp() { ipcRenderer.send( 'tennis-cpp', {}); }
+
+    function library_transfer() { ipcRenderer.send( 'library-transfer', {}); }
+
+    function tennis_view() { ipcRenderer.send( 'tennis-view', {}); }
+
+    function vanilla_web() { ipcRenderer.send( 'vanilla-web', {}); }
+
+    function vue_node_chat_app() { ipcRenderer.send( 'vue-node-chat-app', {}); }
 
 </script>
 
