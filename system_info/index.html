@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>File System Application</title>
@@ -156,87 +155,46 @@
             <input class="btn btn-danger monitor-button" onclick="tennis_view();" type="button" value="tennis view">
             <input class="btn btn-success monitor-button" onclick="vanilla_web();" type="button" value="vanilla web component">
             <input class="btn btn-primary monitor-button" onclick="vue_node_chat_app();" type="button" value="vue node chat app">
-            <div style="color: white;">
-                <p id="uptime_timer"> Uptime </p>
-            </div>
+            <input class="btn btn-danger monitor-button" onclick="local_php_api();" type="button" value="local php api">
+            <input class="btn btn-success monitor-button" onclick="monitored_object_js();" type="button" value="monitored object js ">
+            <div style="color: white;"><p id="uptime_timer"> Uptime </p></div>
         </div>
-
     </div>
-
 </body>
 
 <script>
     const ipcRenderer = require( 'electron' ).ipcRenderer;
-    ipcRenderer.send( 'get-cpu', {} );
+    ipcRenderer.send( 'get-cpu', {});
     ipcRenderer.on( 'cpu', function ( event, data ) {
         $( '.cpu-progress' ).css( 'width', data + '%' ).attr( 'aria-valuenow', data ).text( data + ' CPU' );
-    } );
+    });
 
     ipcRenderer.on( 'uptime', function ( event, data ) {
         var uptime = moment.utc( data * 1000 ).format( 'HH:mm:ss' );
-        document.getElementById( "uptime_timer" ).innerHTML = uptime
+        document.getElementById( "uptime_timer" ).innerHTML = uptime;
 
-    } );
+    });
 
-    function home_spa() {
-        ipcRenderer.send( 'home-spa', {} )
-    }
-
-    function open_folder() {
-        ipcRenderer.send( 'typescript-source', {} )
-    }
-
-    function vite_electron_ts_source() {
-        ipcRenderer.send( 'vite-electron-typescript-source', {} )
-    }
-
-    function open_this_folder() {
-        ipcRenderer.send( 'open-this-folder', {} )
-    }
-
-    function open_view_sequence() {
-        ipcRenderer.send( 'open-vue-sequence', {} )
-    }
-
-    function log_vuer_plugin() {
-        ipcRenderer.send( 'log-vuer-plugin', {} )
-    }
-
-    function log_object_processor() {
-        ipcRenderer.send( 'log-object-processor', {} )
-    }
-
-    function log_object_processor_test() {
-        ipcRenderer.send( 'log-object-processor-test', {} )
-    }
-
-    function sourced_log_viewer() {
-        ipcRenderer.send( 'sourced-log-viewer', {} )
-    }
-
-    function original_monitor() {
-        ipcRenderer.send( 'original-monitor', {} )
-    }
-
-    function monitor_led() { ipcRenderer.send( 'monitor-led', {}); }
-
-    function bank_interrogation() { ipcRenderer.send( 'bank-interrogation', {}); }
-
-    function wordpress_project() { ipcRenderer.send( 'wordpress-project', {}); }
-
-    function test_folder() { ipcRenderer.send( 'test-folder', {}); }
-
-    function tennis_cpp() { ipcRenderer.send( 'tennis-cpp', {}); }
-
-    function library_transfer() { ipcRenderer.send( 'library-transfer', {}); }
-
-    function tennis_view() { ipcRenderer.send( 'tennis-view', {}); }
-
-    function vanilla_web() { ipcRenderer.send( 'vanilla-web', {}); }
-
-    function vue_node_chat_app() { ipcRenderer.send( 'vue-node-chat-app', {}); }
-
+    function home_spa()                  { ipcRenderer.send( 'home-spa',                        {}); }
+    function open_folder()               { ipcRenderer.send( 'typescript-source',               {}); }
+    function vite_electron_ts_source()   { ipcRenderer.send( 'vite-electron-typescript-source', {}); }
+    function open_this_folder()          { ipcRenderer.send( 'open-this-folder',                {}); }
+    function open_view_sequence()        { ipcRenderer.send( 'open-vue-sequence',               {}); }
+    function log_vuer_plugin()           { ipcRenderer.send( 'log-vuer-plugin',                 {}); }
+    function log_object_processor()      { ipcRenderer.send( 'log-object-processor',            {}); }
+    function log_object_processor_test() { ipcRenderer.send( 'log-object-processor-test',       {}); }
+    function sourced_log_viewer()        { ipcRenderer.send( 'sourced-log-viewer',              {}); }
+    function original_monitor()          { ipcRenderer.send( 'original-monitor',                {}); }
+    function monitor_led()               { ipcRenderer.send( 'monitor-led',                     {}); }
+    function bank_interrogation()        { ipcRenderer.send( 'bank-interrogation',              {}); }
+    function wordpress_project()         { ipcRenderer.send( 'wordpress-project',               {}); }
+    function test_folder()               { ipcRenderer.send( 'test-folder',                     {}); }
+    function tennis_cpp()                { ipcRenderer.send( 'tennis-cpp',                      {}); }
+    function library_transfer()          { ipcRenderer.send( 'library-transfer',                {}); }
+    function tennis_view()               { ipcRenderer.send( 'tennis-view',                     {}); }
+    function vanilla_web()               { ipcRenderer.send( 'vanilla-web',                     {}); }
+    function vue_node_chat_app()         { ipcRenderer.send( 'vue-node-chat-app',               {}); }
+    function local_php_api()             { ipcRenderer.send( 'local-php-api',                   {}); }
+    function monitored_object_js()       { ipcRenderer.send( 'monitored-object-js',             {}); }
 </script>
-
-
 </html>
