@@ -25,7 +25,7 @@ while true; do
     --cancel-label "Exit" \
     --menu "Please select:" $HEIGHT $WIDTH $NUMBER_OF_OPTIONS \
     "0" "exit this menu" \
-    "1" "Display System Information" \
+    "1" "Clean all but users" \
     "2" "Display Disk Space" \
     "3" "Display Home Space Utilization" \
     "4" "start vscode in vue 3 component directory" \
@@ -53,8 +53,10 @@ while true; do
       break
       ;;
     1 )
-      result=$(echo "Hostname: $HOSTNAME"; uptime)
-      display_result "System Information"
+      cd /mnt/c/Users/EG/Desktop/2022/july/1st_week/vite-vue-electron/src/typescript_source/concrete/commands/delete_html_logs/
+      ./clean_but_keep_users.sh
+      #display_result "clean all but users"
+      cd -
       ;;
     2 )
       result=$(df -h)
@@ -86,22 +88,31 @@ while true; do
     ;;  
     7 )
       clear
-      echo "cp -fp $LATEST_SOURCE/src/components/* $CURRENT_WORKSPACE/src/components/"
-      echo "cp -rfp $LATEST_SOURCE/src/typescript_source $CURRENT_WORKSPACE/src/"
-      echo "cp -rfp $LATEST_SOURCE/src/views $CURRENT_WORKSPACE/src/"
-      echo "cp -fp $LATEST_SOURCE/src/router/*.ts $CURRENT_WORKSPACE/src/router/"
+      cp -fp $LATEST_SOURCE/src/components/* $CURRENT_WORKSPACE/src/components/
+      cp -rfp $LATEST_SOURCE/src/typescript_source $CURRENT_WORKSPACE/src/
+      cp -rfp $LATEST_SOURCE/src/views $CURRENT_WORKSPACE/src/
+      cp -fp $LATEST_SOURCE/src/router/*.ts $CURRENT_WORKSPACE/src/router/
       cd $CURRENT_WORKSPACE
+      echo "yarn add electron-ssh2"
       echo "npm install --save-dev @types/jquery"
+      echo "yarn add @types/jquery"
+      echo "yarn add jquery mysql --ignore-engines"
+
       echo "npm install --save-dev @types/mysql"
+      echo "yarn add @types/mysql"
+      echo "yarn add mysql --ignore-engines"
       echo "npm install --save-dev @types/socket.io-client"
-      echo "npm install --save-dev @types/ssh2"
+      echo "yarn add @types/socket.io-client"
+      echo "yarn add electron-ssh2"
       echo "npm install --save-dev dns"
+      echo "yarn add dns --ignore-engines"
       echo "npm install --save-dev cpu-features"
       echo "npm install node-loader --save-dev"
       echo "npm install https://github.com/mscdex/cpu-features.git"
       echo "npm install https://github.com/mscdex/ssh2.git"
       echo "npm install -g npm-install-peers"
       echo "yarn add -D native-ext-loader --ignore-engines"
+
       echo "npm install --save-dev node-loader@latest"
       echo "npm install"
       echo "yarn add node-loader@latest --ignore-engines"
@@ -109,6 +120,7 @@ while true; do
       echo "yarn add vue@next"
       echo "yarn add vue@next --ignore-engine"
       echo "yarn add @vue/compiler-sfc -D"
+      echo "RUN THE INSTALLS IN WINDOWS ENV!"
       break
     ;;  
   esac

@@ -1,2 +1,2 @@
-cd  C:\Users\EG\march\fresh_electron
+cd  C:\Users\EG\electron-vue-example\
 yarn run electron:serve
