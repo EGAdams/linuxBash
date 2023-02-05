@@ -20,15 +20,15 @@ while true; do
   exec 3>&1
   selection=$(dialog \
     --backtitle "System Information" \
-    --title "Menu" \
+    --title "VS Code Project Menu" \
     --clear \
     --cancel-label "Exit" \
     --menu "Please select:" $HEIGHT $WIDTH $NUMBER_OF_OPTIONS \
     "0" "exit this menu" \
-    "1" "Clean all but users" \
+    "1" "vite-vue-electron" \
     "2" "Edit this menu" \
-    "j" "vscode projects" \
-    "k" "Show Table Commands" \
+    "f" "open wsl factory" \
+    "4" "start vscode in vue 3 component directory" \
     "5" "change to vue 3 component directory"\
     "6" "run electron vue dashboard"\
     "7" "copy workspace to fresh electron"\
@@ -53,9 +53,8 @@ while true; do
       break
       ;;
     1 )
-      cd /mnt/c/Users/EG/Desktop/2022/july/1st_week/vite-vue-electron/src/typescript_source/concrete/commands/delete_html_logs/
-      ./clean_but_keep_users.sh
-      #display_result "clean all but users"
+      cd /mnt/c/Users/EG/Desktop/2022/july/1st_week/vite-vue-electron
+      code .
       cd -
       ;;
     2 )
@@ -63,13 +62,14 @@ while true; do
       code .
       cd -
       ;;
-    j )
-      cd /home/adamsl/linuxBash
-      ./vscode_projects.sh
+    f )
+      cd /home/adamsl/the-factory
+      code .
       ;;
-    k )
-      cd /home/adamsl/linuxBash
-      ./show_table_commands.sh
+    4 )
+      cd /home/adamsl/vue3_components/vue_typescript_components
+      code .
+      clear
       break
       ;;
     5 )
