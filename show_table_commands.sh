@@ -28,7 +28,7 @@ while true; do
     "j" "show all mycustom_WP1 tables" \
     "k" "Delete all non-admin users" \
     "f" "open wsl factory" \
-    "4" "start vscode in vue 3 component directory" \
+    "d" "delete from debug log" \
     "5" "change to vue 3 component directory"\
     "6" "run electron vue dashboard"\
     "7" "copy workspace to fresh electron"\
@@ -58,17 +58,15 @@ while true; do
       ;;
     k )
       ./delete_all_but_admin.sh
-      break
+      
       ;;
     f )
       cd /home/adamsl/the-factory
       code .
       ;;
-    4 )
-      cd /home/adamsl/vue3_components/vue_typescript_components
-      code .
+    d )
+      ./delete_from_debug_log.sh
       clear
-      break
       ;;
     5 )
       cd /home/adamsl/vue3_components/vue_typescript_components

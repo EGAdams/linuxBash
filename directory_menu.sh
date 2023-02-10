@@ -19,7 +19,7 @@ display_result() {
 while true; do
   exec 3>&1
   selection=$(dialog \
-    --backtitle "System Information" \
+    --backtitle "Main Directory Menu" \
     --title "Menu" \
     --clear \
     --cancel-label "Exit" \
@@ -29,8 +29,8 @@ while true; do
     "2" "Edit this menu" \
     "j" "vscode projects" \
     "k" "Show Table Commands" \
-    "5" "change to vue 3 component directory"\
-    "6" "run electron vue dashboard"\
+    "a" "clean all but admin"\
+    "c" "clean keep users and conversations"\
     "7" "copy workspace to fresh electron"\
     2>&1 1>&3)
   exit_status=$?
@@ -72,14 +72,13 @@ while true; do
       ./show_table_commands.sh
       break
       ;;
-    5 )
-      cd /home/adamsl/vue3_components/vue_typescript_components
-      clear
-      break
+    a )
+      cd /home/adamsl/linuxBash
+      ./clean_all_but_admin.sh
       ;;
-    6 )
-      cd /mnt/c/Users/EG/electron-vue-example
-      powershell.exe startElectron.bat
+    c )
+      cd /home/adamsl/linuxBash
+      ./clean_keep_users_conversatons.sh
     ;;  
     7 )
       clear

@@ -28,10 +28,11 @@ while true; do
     "1" "vite-vue-electron" \
     "2" "Edit this menu" \
     "f" "open wsl factory" \
-    "4" "start vscode in vue 3 component directory" \
-    "5" "change to vue 3 component directory"\
-    "6" "run electron vue dashboard"\
-    "7" "copy workspace to fresh electron"\
+    "w" "open project wordpress" \
+    "m" "the matrix project" \
+    "6" "open app test" \
+    "7" "copy workspace to fresh electron" \
+    "a" "open app test" \
     2>&1 1>&3)
   exit_status=$?
   exec 3>&-
@@ -66,16 +67,15 @@ while true; do
       cd /home/adamsl/the-factory
       code .
       ;;
-    4 )
-      cd /home/adamsl/vue3_components/vue_typescript_components
+    w )
+      cd /mnt/c/xampp-joomla/htdocs/wordpress/
       code .
-      clear
-      break
+      cd -
       ;;
-    5 )
-      cd /home/adamsl/vue3_components/vue_typescript_components
-      clear
-      break
+    m )
+      cd /home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix/
+      code .
+      cd -
       ;;
     6 )
       cd /mnt/c/Users/EG/electron-vue-example
@@ -117,6 +117,11 @@ while true; do
       echo "yarn add @vue/compiler-sfc -D"
       echo "RUN THE INSTALLS IN WINDOWS ENV!"
       break
-    ;;  
+    ;; 
+
+    a )
+      cd /mnt/c/Users/EG/appium_example
+      code .
+      ;; 
   esac
 done
