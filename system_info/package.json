@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "the_packager": "electron-packager . --platform=win32 --arch=x64 --overwrite"
+    "the_packager": "cmd /c c:\\Users\\EG\\march\\week_3\\linuxBash\\system_info\\kill_filesystemmap.bat; electron-packager . --platform=win32 --arch=x64 --overwrite"
   },
   "author": "Rajiv Sharma",
   "license": "MIT",

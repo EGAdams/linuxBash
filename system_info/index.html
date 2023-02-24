@@ -157,6 +157,7 @@
             <input class="btn btn-primary monitor-button" onclick="vue_node_chat_app();" type="button" value="vue node chat app">
             <input class="btn btn-danger monitor-button" onclick="local_php_api();" type="button" value="local php api">
             <input class="btn btn-success monitor-button" onclick="monitored_object_js();" type="button" value="monitored object js ">
+            <input class="btn btn-primary monitor-button" onclick="tennis_library();" type="button" value="tennis library ">
             <div style="color: white;"><p id="uptime_timer"> Uptime </p></div>
         </div>
     </div>
@@ -196,5 +197,6 @@
     function vue_node_chat_app()         { ipcRenderer.send( 'vue-node-chat-app',               {}); }
     function local_php_api()             { ipcRenderer.send( 'local-php-api',                   {}); }
     function monitored_object_js()       { ipcRenderer.send( 'monitored-object-js',             {}); }
+    function tennis_library()            { ipcRenderer.send( 'tennis-library',                  {}); }
 </script>
 </html>
