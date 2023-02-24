@@ -19,19 +19,20 @@ display_result() {
 while true; do
   exec 3>&1
   selection=$(dialog \
-    --backtitle "Main Directory Menu" \
-    --title "Menu" \
+    --backtitle "System Information" \
+    --title "VS Code Project Menu" \
     --clear \
     --cancel-label "Exit" \
     --menu "Please select:" $HEIGHT $WIDTH $NUMBER_OF_OPTIONS \
     "0" "exit this menu" \
-    "1" "Clean all but users" \
+    "1" "vite-vue-electron" \
     "2" "Edit this menu" \
-    "j" "vscode projects" \
-    "k" "Show Table Commands" \
-    "a" "clean all but admin"\
-    "c" "clean keep users and conversations"\
-    "7" "copy workspace to fresh electron"\
+    "f" "open wsl factory" \
+    "w" "open project wordpress" \
+    "m" "the matrix project" \
+    "6" "open app test" \
+    "7" "copy workspace to fresh electron" \
+    "a" "open app test" \
     2>&1 1>&3)
   exit_status=$?
   exec 3>&-
@@ -53,9 +54,8 @@ while true; do
       break
       ;;
     1 )
-      cd /mnt/c/Users/EG/Desktop/2022/july/1st_week/vite-vue-electron/src/typescript_source/concrete/commands/delete_html_logs/
-      ./clean_but_keep_users.sh
-      #display_result "clean all but users"
+      cd /mnt/c/Users/EG/Desktop/2022/july/1st_week/vite-vue-electron
+      code .
       cd -
       ;;
     2 )
@@ -63,22 +63,23 @@ while true; do
       code .
       cd -
       ;;
-    j )
-      cd /home/adamsl/linuxBash
-      ./vscode_projects.sh
+    f )
+      cd /home/adamsl/the-factory
+      code .
       ;;
-    k )
-      cd /home/adamsl/linuxBash
-      ./show_table_commands.sh
-      break
+    w )
+      cd /mnt/c/xampp-joomla/htdocs/wordpress/
+      code .
+      cd -
       ;;
-    a )
-      cd /home/adamsl/linuxBash
-      ./clean_all_but_admin.sh
+    m )
+      cd /home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix/
+      code .
+      cd -
       ;;
-    c )
-      cd /home/adamsl/linuxBash
-      ./clean_keep_users_conversatons.sh
+    6 )
+      cd /mnt/c/Users/EG/electron-vue-example
+      powershell.exe startElectron.bat
     ;;  
     7 )
       clear
@@ -116,6 +117,11 @@ while true; do
       echo "yarn add @vue/compiler-sfc -D"
       echo "RUN THE INSTALLS IN WINDOWS ENV!"
       break
-    ;;  
+    ;; 
+
+    a )
+      cd /mnt/c/Users/EG/appium_example
+      code .
+      ;; 
   esac
 done
