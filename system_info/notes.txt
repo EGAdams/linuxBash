@@ -1,0 +1,15 @@
+
+
+friday february 24, 2023
+when i first ran the packager, it failed.  something about install.
+then i ran npm install and it worked.
+
+
+first run tasklist in powereshell.
+
+Run:
+taskkill /IM filesystemapp.exe /F
+
+the batch file works, but the npm script might need some work to.
+
+i got to get on something else right now.

@@ -123,5 +123,6 @@ ipcMain.on( 'library-transfer',                () => { child_process.exec( 'star
 ipcMain.on( 'tennis-view',                     () => { child_process.exec( 'start "" "C:\\Users\\EG\\Desktop\\2022\\april\\5th_week\\electron-quick-start"' )});
 ipcMain.on( 'vanilla-web',                     () => { child_process.exec( 'start "" "C:\\Users\\EG\\Desktop\\2022\\july\\3rd_week\\vanilla_web_component"' )});
 ipcMain.on( 'vue-node-chat-app',               () => { child_process.exec( 'start "" "C:\\Users\\EG\\Desktop\\2022\\july\\4th_week\\vue-node-chatapp\\parsingTools"' )});
-ipcMain.on( 'local-php-api',                   () => { child_process.exec( 'start "" "C:\\Users\\EG\\local-php-api"' )});
+ipcMain.on( 'local-php-api',                   () => { child_process.exec( 'start "" "C:\\Users\\EG\\local-php-api"'                                        )});
 ipcMain.on( 'monitored-object-js',             () => { child_process.exec( 'start "" "C:\\Users\\EG\\Desktop\\2022\\august\\3rd_week\\monitored-object-js"' )});
+ipcMain.on( 'tennis-library',                  () => { child_process.exec( 'start "" "C:\\Users\\EG\\tlib\\current-tennis-library"'                         )});
