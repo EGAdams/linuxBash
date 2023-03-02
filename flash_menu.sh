@@ -4,7 +4,7 @@ while true; do
     echo "Please select an option:"
     echo "  1. Open tennis cpp and view."
     echo "  2. Compile tennis project and open view." 
-    echo "  3. Option 3" 
+    echo "  3. Open vite-vue-electron project containing the latest command objects." 
     echo "  4. Quit"
 
     read -p "Enter your selection [1-4] " selection
