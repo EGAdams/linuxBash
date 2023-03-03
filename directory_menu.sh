@@ -26,6 +26,7 @@ while true; do
     --menu "Please select:" $HEIGHT $WIDTH $NUMBER_OF_OPTIONS \
     "0" "exit this menu" \
     "1" "Clean all but users" \
+    "f" "open flash menu" \
     "2" "Edit this menu" \
     "j" "vscode projects" \
     "k" "Show Table Commands" \
@@ -57,6 +58,11 @@ while true; do
       ./clean_but_keep_users.sh
       #display_result "clean all but users"
       cd -
+      ;;
+    f )
+      cd /home/adamsl/linuxBash
+      ./flash_menu.sh
+      break
       ;;
     2 )
       cd /home/adamsl/linuxBash

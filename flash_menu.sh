@@ -5,7 +5,8 @@ while true; do
     echo "  1. Open tennis cpp and view."
     echo "  2. Compile tennis project and open view." 
     echo "  3. Open vite-vue-electron project containing the latest command objects." 
-    echo "  4. Quit"
+    echo "  p. Open pickleball view project."
+    echo "  5. Quit"
 
     read -p "Enter your selection [1-4] " selection
 
@@ -37,7 +38,14 @@ while true; do
             powershell.exe code .
         ;;
 
-        4) echo "You chose to quit" 
+        p) echo "Openning pickleball view... project... " 
+            sleep 1;
+            cd /mnt/c/Users/EG/Desktop/2022/may/2nd_week/pickleball_view
+            powershell.exe code .
+            exit 0 
+        ;;
+
+        5) echo "You chose to quit" 
             exit 0 
         ;;
         
