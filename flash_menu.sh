@@ -42,7 +42,6 @@ while true; do
             sleep 1;
             cd /mnt/c/Users/EG/Desktop/2022/may/2nd_week/pickleball_view
             powershell.exe code .
-            exit 0 
         ;;
 
         5) echo "You chose to quit" 

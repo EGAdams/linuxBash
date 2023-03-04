@@ -1,7 +1,7 @@
 #
 # This script deletes the html logs from the server.  
 # It also delete the debug_log, conversations and all users except for the admin from the mycustom_WP1 database.
-#
+# Am3RICC2nJeW3ReeForM3
 mysql -D tinman72_rest_api_demo -u tinman72_4a4e_cg --password='th3RIver0fL1F3Data$toraGePl@ce' -h americansjewelry.com -e "delete from monitored_objects;"
 #mysql -D mycustom_WP1 -u mycustom --password='f7Jh1jv27O' -h mycustombusinessapp.com -e "DELETE FROM wp_mcba_users WHERE isAdmin='0'"
 #mysql -D mycustom_WP1 -u mycustom --password='f7Jh1jv27O' -h mycustombusinessapp.com -e "DELETE FROM wp_mcba_chat_messages;"
