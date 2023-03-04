@@ -31,7 +31,7 @@ while true; do
     "k" "Show Table Commands" \
     "a" "clean all but admin"\
     "c" "clean keep users and conversations"\
-    "7" "copy workspace to fresh electron"\
+    "m" "start monitor"\
     2>&1 1>&3)
   exit_status=$?
   exec 3>&-
@@ -79,7 +79,11 @@ while true; do
     c )
       cd /home/adamsl/linuxBash
       ./clean_keep_users_conversatons.sh
-    ;;  
+    ;; 
+    m )
+       ./start_monitor.sh
+    ;;
+
     7 )
       clear
       cp -fp $LATEST_SOURCE/src/components/* $CURRENT_WORKSPACE/src/components/

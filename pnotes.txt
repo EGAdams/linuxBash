@@ -1,0 +1,14 @@
+
+
+You are an expert in using debian linux.
+
+The linux command below successfully uses the ftp command to "ftp"
+in to an internet address and execute commands.
+
+ftp -in << EOF
+    open 192.168.1.110
+    user dietpi@192.168.1.110 tinman88
+    cd /rgb-rpi
+EOF    
+
+Please give me the similar command for ssh and not ftp.
