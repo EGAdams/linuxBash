@@ -26,7 +26,7 @@ class FolderMover:
             print ( folder )
             #continue if it is a .zip file
             if folder.endswith( ".zip" ) or folder == "Morse":
-                print( "skipping zip file... " )
+                print( "skipping Morse directory... " )
                 continue
 
             # delete the contents of the associated folder that is in the tennis_cpp_directory.

@@ -6,6 +6,7 @@ while true; do
     echo "  2. Compile tennis project and open view." 
     echo "  3. Open vite-vue-electron project containing the latest command objects." 
     echo "  p. Open pickleball view project."
+    echo "  t. Pull a tennis lib file from the jewelry machine and move it to tennis_cpp."
     echo "  5. Quit"
 
     read -p "Enter your selection [1-4] " selection
@@ -42,6 +43,11 @@ while true; do
             sleep 1;
             cd /mnt/c/Users/EG/Desktop/2022/may/2nd_week/pickleball_view
             powershell.exe code .
+        ;;
+
+        t) echo; echo "Pulling latest tennis_cpp project from the jewelry machine... " 
+            sleep 1;
+            python3 move_ltst_tnns_lib_to_wrkng_dir.py
         ;;
 
         5) echo "You chose to quit" 
