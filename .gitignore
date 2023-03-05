@@ -1,2 +1,4 @@
 system_info/node_modules
 system_info/filesystemapp-win32-x64
+ftp_logs
+*.pyc
