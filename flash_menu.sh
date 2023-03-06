@@ -1,16 +1,33 @@
 #!/bin/bash
 
 while true; do
-    echo "Please select an option:"
-    echo "    1. Open tennis cpp and view."
-    echo "    2. Compile tennis project and open view." 
-    echo "    3. Open vite-vue-electron project containing the latest command objects." 
-    echo "    p. Open pickleball view project."
-    echo "    t. Pull a tennis lib file from the jewelry machine and move it to tennis_cpp."
-    echo "  mvp. Pull a pickleball lib file from the jewelry machine and move it to pickle_cpp."
-    echo "  5. Quit"
+    echo; echo; 
+    echo "      ///////////////////////////////////////////"
+    echo "      "
+    echo "      Please select an option:"
+    echo "      "
+    echo "      ///////////////////////////////////////////"
+    echo
+    echo
+    echo "      1.    Open tennis cpp and view."
+    echo ""
+    echo "      2.    Compile tennis project and open view." 
+    echo ""
+    echo "      3.    Open vite-vue-electron project containing the latest command objects." 
+    echo ""
+    echo "      p.    Open pickleball view project."
+    echo ""
+    echo "      t.    Pull a tennis lib file from the jewelry machine and move it to tennis_cpp."
+    echo ""
+    echo "      mvp.  Pull a pickleball lib file from the jewelry machine and move it to pickle_cpp."
+    echo ""
+    echo "      pcpp. Open pickleball cpp project."
+    echo ""
+    echo ""
+    echo "      5. Quit"
+    echo ""
 
-    read -p "Enter your selection [1-4] " selection
+    read -p "Enter your selection: " selection
 
     case $selection in
         1) echo "Openning tennis_cpp vscode project and view... " 
