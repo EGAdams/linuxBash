@@ -5,30 +5,32 @@
 import os
 
 def main():
-    print("Welcome to the main menu")
-    print("1. latest matrix code")
-    print("2. Script 2")
+    print("\n\n\n//////////////////////////////////" )
+    print( "Welcome to the Matrix Project Menu" )
+    print("//////////////////////////////////\n" )
+    print("1. Fony.exe")
+    print("2. Open the code repository")
     print("3. Script 3")
     print("4. Exit")
 
     choice = input("Please enter your choice: ")
 
     if choice == "1":
-        print("openning the latest matrix project... ")
+        print("openning Fony... ")
         # cd to the directory where the script is located
-        #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
         # open vscode in the directory
-        os.system( "python3 the_matrix_project.py ")
+        os.system("Fony.exe")
         main()
     elif choice == "2":
-        print("You have chosen script 2")
+        print("openning the code repository... ")
+        os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
         # open a child process to execute script 2
-        os.system("python script2.py")
+        os.system("code .")
         main()
     elif choice == "3":
         print("You have chosen script 3")
         # open a child process to execute script 3
-        os.system("python script3.py")
+        #os.system("python script3.py")
         main()
 
     elif choice == "4":

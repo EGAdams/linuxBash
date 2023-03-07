@@ -23,6 +23,8 @@ while true; do
     echo ""
     echo "      pcpp. Open pickleball cpp project."
     echo ""
+    echo "      4. Open flash.py"
+    echo ""
     echo ""
     echo "      5. Quit"
     echo ""
@@ -78,6 +80,11 @@ while true; do
             sleep 1;
             python3 move_ltst_pckl_lib_to_wrkng_dir.py
         ;;
+
+        4) echo "opening flash.py... "
+            sleep 1;
+            python3 flash.py
+        ;;    
 
         5) echo "You chose to quit" 
             exit 0 
