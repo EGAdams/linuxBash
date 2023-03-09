@@ -25,11 +25,12 @@ while true; do
     --cancel-label "Exit" \
     --menu "Please select:" $HEIGHT $WIDTH $NUMBER_OF_OPTIONS \
     "0" "exit this menu" \
+    "p" "open pickleball dashboard" \
     "1" "Clean all but users" \
     "f" "open flash menu" \
     "2" "Edit this menu" \
     "j" "vscode projects" \
-    "k" "Show Table Commands" \
+    "k" "MCBA System Dashboard" \
     "a" "clean all but admin"\
     "c" "clean keep users and conversations"\
     "7" "copy workspace to fresh electron"\
@@ -75,7 +76,7 @@ while true; do
       ;;
     k )
       cd /home/adamsl/linuxBash
-      ./show_table_commands.sh
+      python3 mcba_system_dashboard.py
       break
       ;;
     a )
@@ -85,6 +86,12 @@ while true; do
     c )
       cd /home/adamsl/linuxBash
       ./clean_keep_users_conversatons.sh
+    ;;
+
+    p )
+      cd /home/adamsl/linuxBash/pickle_ball
+      python3 pickleball_dashboard.py
+      break
     ;;  
     7 )
       clear

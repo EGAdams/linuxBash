@@ -2,7 +2,7 @@
 
 while true; do
     echo; echo; 
-    echo "      ///////////////////////////////////////////"
+    echo "      /////////////////////////////////////////// "
     echo "      "
     echo "      Please select an option:"
     echo "      "
