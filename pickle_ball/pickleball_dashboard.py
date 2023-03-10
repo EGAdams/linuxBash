@@ -34,7 +34,7 @@ def main():
         main()
 
     elif choice == "2":
-        print( "openning pickleball remote project... " )
+        print( "openning pickleball C++ project... " )
         os.system( "sleep 1" )
         os.system( "powershell.exe code c:/Users/EG/Desktop/2022/may/2nd_week/pickle_cpp" )
         main()
@@ -104,10 +104,10 @@ def main():
         thread.start()
         main()
 
-    elif choice == "next":
-        print("You have chosen script next")
-        # open a child process to execute script 3
-        os.system("python script3.py")
+    elif choice == "7":
+        print( "pulling the library menu from the jewelry machine... " )
+        os.system( "sleep 1" )
+        os.system( "python3 move_ltst_pckl_lib_to_wrkng_dir.py" )
         main()
 
     elif choice == "4":
