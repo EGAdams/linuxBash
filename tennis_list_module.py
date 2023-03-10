@@ -5,8 +5,6 @@
 # class to populate the tennis library list from the ftp server
 # ftp to remote site name is americansjewelry.com
 # use passive mode for ftp.
-# the username is tinman72
-# the password is sep02@Th
 # the directory to list is  /public_html/scoreprolibraries/tennis_libraries
 # list only the .zip files
 # put the list of files in a menu.
@@ -56,8 +54,18 @@ class TennisList:
             print( "\nConnected to americansjewelry.com" )  # connection message from server is printed on stdout (screen)
 
             try:  # login with username and password - passwd is being sent in clear text, sendcmd() sends command and returns response string (not printed on screen)
-                ftp.login('tinman72', 'sep02@Th')  # login as user anonymous, passwd anonymous@ (usually email address is used as password) - passwd is being sent in clear text!
-
+                ftp_user     = os.environ.get( "FTP_USER"     )  # get the login an password from the environment variables
+                ftp_password = os.environ.get( "FTP_PASSWORD" )
+                # if ftp_user == None or ftp_password == None: # create the .env file if it does not exist
+                #     print( "FTP_USER or FTP_PASSWORD environment variables not set. Creating .env file." )
+                #     env_file = open( ".env", "w" )
+                #     env_file.write( "FTP_USER="     + input( "Enter FTP user name: " ))
+                #     env_file.write( "FTP_PASSWORD=" + input( "Enter FTP password:  " ))
+                #     env_file.close()
+                #     print( "FTP_USER and FTP_PASSWORD environment variables set. Please restart the program." )
+                #     sys.exit()
+                    
+                ftp.login( ftp_user, ftp_password )  
                 print( "\nLogged into americansjewelry.com" )  # connection message from server is printed on stdout (screen)
 
                 try:  # set binary mode for transferring image files - use ASCII for text files! - setpassive() sets passive mode on or off (default off), returns nothing - passive mode is used when client behind firewall/NAT router needs to initiate data transfer with server outside firewall/NAT router! - active mode is used when client outside firewall/NAT router needs to initiate data transfer with server behind firewall/NAT router! - active mode requires that client be able to accept incoming connections from server! - passive mode requires that client be able to initiate outgoing connections with server! - active vs passive modes are not related to FTP commands PORT vs PASV! PORT command tells server which port number it should connect back to for data transfer while PASV command tells client which port number it should connect back to for data transfer! In both cases, client is initiating connection!

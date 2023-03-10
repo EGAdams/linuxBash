@@ -4,3 +4,5 @@ ftp_logs
 *.pyc
 conf.txt
 .env
+clean_all_but_admin.sh
+clean_keep_users_conversatons.sh
