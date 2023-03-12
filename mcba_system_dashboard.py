@@ -51,6 +51,11 @@ def main():
         
         # execute python3 open_fcw_page.py 
         os.system( "python3 open_fcw_page.py " )
+        print( "changing back to main directory... " )
+        # sleep to display message
+        #os.system( "sleep 2" )
+        os.chdir( "/home/adamsl/linuxBash" )
+
         main()
 
     elif choice == "next":
