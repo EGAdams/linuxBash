@@ -21,12 +21,12 @@ class FolderMover:
         with zipfile.ZipFile( "./temp/" + zip_file, 'r') as zip_ref: # unzip archive.zip in that directory
             zip_ref.extractall( "./temp" )
 
-        # for each folder in the directory that the archive created:
-        for folder in os.listdir( "./temp" ):
+      
+        for folder in os.listdir( "./temp" ): # for each folder in the directory that the archive created:
             print ( folder )
-            #continue if it is a .zip file
-            if folder.endswith( ".zip" ) or folder == "Morse":
-                print( "skipping Morse directory... " )
+           
+            if folder.endswith( ".zip" ) or folder == "Morse":  #continue if Morse dir or it is a .zip file
+                print( "skipping zip file or Morse directory... " )
                 continue
 
             # delete the contents of the associated folder that is in the tennis_cpp_directory.
@@ -37,9 +37,5 @@ class FolderMover:
             for file in os.listdir( os.path.join( "./temp", folder ) ):
                 shutil.move( os.path.join( "./temp", folder, file ), os.path.join( tennis_cpp_directory, folder, file ) )
             
-        # delete the temp directory
-        shutil.rmtree( "./temp" )
-
-
-            
-
+        shutil.rmtree( "./temp" ) # delete the temp directory
+        
