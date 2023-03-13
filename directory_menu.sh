@@ -27,7 +27,7 @@ while true; do
     "0" "exit this menu" \
     "p" "open pickleball dashboard" \
     "1" "Clean all but users" \
-    "f" "open flash menu" \
+    "f" "open flash menu ( includes matrix project with fonts )" \
     "2" "Edit this menu" \
     "j" "vscode projects" \
     "k" "MCBA System Dashboard" \
