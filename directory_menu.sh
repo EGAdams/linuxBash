@@ -33,7 +33,7 @@ while true; do
     "k" "MCBA System Dashboard" \
     "a" "clean all but admin"\
     "c" "clean keep users and conversations"\
-    "7" "copy workspace to fresh electron"\
+    "m" "start monitor"\
     2>&1 1>&3)
   exit_status=$?
   exec 3>&-
