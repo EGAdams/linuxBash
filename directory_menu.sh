@@ -6,7 +6,7 @@ DIALOG_CANCEL=1
 DIALOG_ESC=255
 HEIGHT=0
 WIDTH=0
-NUMBER_OF_OPTIONS=8
+NUMBER_OF_OPTIONS=9
 CURRENT_WORKSPACE='/mnt/c/Users/EG/march/fresh_electron'
 LATEST_SOURCE='/mnt/c/Users/EG/electron-vue-example'
 

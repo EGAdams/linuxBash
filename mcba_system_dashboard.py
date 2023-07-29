@@ -18,7 +18,7 @@ def main():
     print("     2. clean all tables.  keep users, conversations, and admin\n\n")
     print("     3. show all tables\n\n")
     print("     4. open car wash page and click on phone icon\n\n")
-    print("     5. Script 5\n\n")
+    print("     5. open log viewer\n\n")
     print("     6. Exit\n\n")
 
     choice = input("    Please select an option: \n\n    >")
@@ -58,10 +58,11 @@ def main():
 
         main()
 
-    elif choice == "next":
-        print("You have chosen script next")
-        # open a child process to execute script 3
-        os.system("python script3.py")
+    elif choice == "5":
+        print("openining log viewer... " )
+        # open a child process to execute script
+        os.chdir( "/home/adamsl/the-factory" )
+        os.system( "npm run start" )
         main()
 
     elif choice == "4":
