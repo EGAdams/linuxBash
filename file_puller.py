@@ -16,14 +16,14 @@ class PullZipFile:
             try:  # login with username and password - passwd is being sent in clear text
                 ftp_user     = os.environ.get( "FTP_USER"     )  # get the login an password from the environment variables
                 ftp_password = os.environ.get( "FTP_PASSWORD" )
-                # if ftp_user == None or ftp_password == None: # create the .env file if it does not exist
-                #     print( "FTP_USER or FTP_PASSWORD environment variables not set. Creating .env file." )
-                #     env_file = open( ".env", "w" )
-                #     env_file.write( "FTP_USER="     + input( "Enter FTP user name: " ))
-                #     env_file.write( "FTP_PASSWORD=" + input( "Enter FTP password:  " ))
-                #     env_file.close()
-                #     print( "FTP_USER and FTP_PASSWORD environment variables set. Please restart the program." )
-                #     sys.exit()
+                if ftp_user == None or ftp_password == None: # create the .env file if it does not exist
+                    print( "FTP_USER or FTP_PASSWORD environment variables not set. Creating .env file." )
+                    env_file = open( ".env", "w" )
+                    env_file.write( "FTP_USER="     + input( "Enter FTP user name: " ))
+                    env_file.write( "FTP_PASSWORD=" + input( "Enter FTP password:  " ))
+                    env_file.close()
+                    print( "FTP_USER and FTP_PASSWORD environment variables set. Please restart the program." )
+                    sys.exit()
                     
                 ftp.login( ftp_user, ftp_password )   
                 print( "Logged into americansjewelry.com" )  # connection message from server is printed on stdout (screen)

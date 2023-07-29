@@ -8,6 +8,7 @@ import tennis_list_module
 import file_puller
 import folder_mover
 
+
 def print_menu(files):
     for i, file in enumerate(files):
         print("{}. {}".format(i + 1, file))
@@ -29,7 +30,7 @@ def main():
         try:
             choice = int(choice) - 1
             print(files[choice])
-            chosen_zip_file = files[ choice ]
+            chosen_zip_file = files[choice]
             break
         except ValueError:
             print("Invalid input")
@@ -37,10 +38,12 @@ def main():
         except IndexError:
             print("Invalid input")
 
-    filePuller = file_puller.PullZipFile() # create a file puller object
-    filePuller.execute( chosen_zip_file )  # pull the chosen file from the server
+    filePuller = file_puller.PullZipFile()  # create a file puller object
+    filePuller.execute(chosen_zip_file)  # pull the chosen file from the server
     mover = folder_mover.FolderMover()     # create a folder mover object
-    mover.execute( chosen_zip_file )       # move the extracted files to the tennis_cpp directories
+    # move the extracted files to the tennis_cpp directories
+    mover.execute(chosen_zip_file)
+
 
 if __name__ == '__main__':
     main()
