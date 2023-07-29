@@ -6,11 +6,11 @@ PATTERN_NEW=$'\e[1;31mNEW SEARCH PATERN\e[0;33m'
 PATTERN_CLEAR=$'\e[1;31mCLEAR SEARCHES\e[0;33m'
 
 
-sh$ for i in {1..12}; 
+for i in {1..12}; 
     do OPTIONS[$i]=$(printf "option-%02d" $i); 
 done
 
-sh$ select i in "${OPTIONS[@]}"; 
+select i in "${OPTIONS[@]}"; 
     do echo $i ; 
 done
 

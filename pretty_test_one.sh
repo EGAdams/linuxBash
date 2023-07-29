@@ -2,6 +2,27 @@
 # by oToGamez
 # www.pro-toolz.net
 
+# Function to get the terminal screen dimensions
+get_screen_dimensions() {
+  # Using tput to get the terminal size
+  SCREEN_WIDTH=$(tput cols)
+  SCREEN_HEIGHT=$(tput lines)
+}
+
+# Function to calculate the center position for the dialog box
+center_dialog_box() {
+  DIALOG_WIDTH=${#1}   # Length of the dialog box text
+  DIALOG_HEIGHT=15     # Set the height of the dialog box
+
+  # Calculate the center position
+  DIALOG_X=$((SCREEN_WIDTH / 2 - DIALOG_WIDTH / 2))
+  DIALOG_Y=$((SCREEN_HEIGHT / 2 - DIALOG_HEIGHT / 2))
+}
+
+# Call the functions to get screen dimensions and center the dialog box
+get_screen_dimensions
+center_dialog_box "BASH SELECTION MENU"
+
       E='echo -e';e='echo -en';trap "R;exit" 2
     ESC=$( $e "\e")
    TPUT(){ $e "\e[${1};${2}H";}
