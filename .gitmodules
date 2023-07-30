@@ -1,3 +1,6 @@
 [submodule "developer"]
 	path = developer
 	url = https://github.com/smol-ai/developer.git
+[submodule "babyagi"]
+	path = babyagi
+	url = https://github.com/yoheinakajima/babyagi.git
