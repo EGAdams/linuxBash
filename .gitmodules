@@ -1,0 +1,3 @@
+[submodule "developer"]
+	path = developer
+	url = https://github.com/smol-ai/developer.git
