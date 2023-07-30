@@ -7,18 +7,30 @@ from langchain.llms import OpenAI
 from langchain import SerpAPIWrapper
 from langchain.agents.tools import Tool
 from langchain import LLMMathChain
+from langchain.tools import Tool
+from pydantic import BaseModel, Field
+from subprocess import Popen, PIPE
 from dotenv import load_dotenv
 
 load_dotenv()
+
+class ShellSchema(BaseModel):
+    command: str = Field(description="The shell command to execute")
+
+def shell_function(command: str) -> str:
+    process = Popen(command, stdout=PIPE, shell=True)
+    output, _ = process.communicate()
+    return output.decode()
 
 search = SerpAPIWrapper()
 llm = OpenAI(temperature=0)
 llm_math_chain = LLMMathChain.from_llm(llm=llm, verbose=True)
 tools = [
-    Tool( 
-        name = "Shell",
-        func=llm.run,
-        description="useful for when you need to run a command in the shell"
+    Tool(
+        name="shell",
+        func=shell_function,
+        args_schema=ShellSchema,
+        description="Executes shell commands."
     ),
     Tool(
         name = "Search",
