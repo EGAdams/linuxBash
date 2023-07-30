@@ -9,14 +9,17 @@ from langchain.agents.tools import Tool
 from langchain import LLMMathChain
 from dotenv import load_dotenv
 
-# Load default environment variables (.env)
 load_dotenv()
-
 
 search = SerpAPIWrapper()
 llm = OpenAI(temperature=0)
 llm_math_chain = LLMMathChain.from_llm(llm=llm, verbose=True)
 tools = [
+    Tool( 
+        name = "Shell",
+        func=llm.run,
+        description="useful for when you need to run a command in the shell"
+    ),
     Tool(
         name = "Search",
         func=search.run,
@@ -37,4 +40,4 @@ executor = load_agent_executor(model, tools, verbose=True)
 agent = PlanAndExecute(planner=planner, executor=executor, verbose=True)
 
 # Run Example
-agent.run("Who is Leo DiCaprio's girlfriend? What is her current age raised to the 0.43 power?")
+agent.run( "please list the contents of the current directory." )
