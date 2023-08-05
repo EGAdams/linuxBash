@@ -4,3 +4,9 @@
 [submodule "babyagi"]
 	path = babyagi
 	url = https://github.com/yoheinakajima/babyagi.git
+[submodule "SMOL_AI"]
+	path = SMOL_AI
+	url = https://github.com/EGAdams/SMOL_AI.git
+[submodule "aider"]
+	path = aider
+	url = https://github.com/paul-gauthier/aider.git
