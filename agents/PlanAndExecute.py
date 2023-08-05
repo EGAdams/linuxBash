@@ -51,5 +51,5 @@ executor = load_agent_executor(model, tools, verbose=True)
 
 agent = PlanAndExecute(planner=planner, executor=executor, verbose=True)
 
-# Run Example
-agent.run( "My Windows 10 hard drive is maxed out in Task Manager. Your shell Tool that you have access to is located on my Windows 10 WSL 2 Ubuntu subsystem for Linux, so if you need to use the shell, feel free to use Ubuntu Linux style commands. Just remamber to send all the errors out to dev null whenever you execute commands so that we minimize the output of the command.  The /mnt/c mount (or C: Drive Linux mount) has got plenty of free space, it's just that the Task Manager is reporting 97 to 100 percent usage.  Can you find out how we can get this usage percentage down?" )
+# Run Example 
+agent.run( "search the web for ai automation news.  Pick the latest news.  Summarize that piece of news and put it in a professional looking html document.  give it a name relevant to the content.  store it in the current directory." )
