@@ -10,3 +10,6 @@
 [submodule "aider"]
 	path = aider
 	url = https://github.com/paul-gauthier/aider.git
+[submodule "langchain"]
+	path = langchain
+	url = https://github.com/EGAdams/langchain.git
