@@ -1,82 +1,47 @@
 My files are as follows:
 ```
-Makefile:
-# Compiler settings
-CXX := g++
-CXXFLAGS := -std=c++14 -Wall -Wextra
-
-# Directories
-SRC_DIR   := /home/adamsl/SMOL_AI/tennis_unit_tests/PinInterface
-TEST_DIR  := /home/adamsl/SMOL_AI/tennis_unit_tests/PinInterface
-BUILD_DIR := /home/adamsl/SMOL_AI/tennis_unit_tests/build/PinInterface
-
-# Google Test and Google Mock directories
-GTEST_DIR := /home/adamsl/SMOL_AI/tennis_unit_tests/googletest/build/lib
-GMOCK_DIR := /home/adamsl/SMOL_AI/tennis_unit_tests/googletest/build/lib
-
-# Object files and dependencies
-TEST_OBJ := $(BUILD_DIR)/MockPinInterface.o
-DEPS := $(GTEST_DIR)/libgtest_main.a $(GMOCK_DIR)/libgmock_main.a
-
-# Main target (unit tests)
-TARGET := $(BUILD_DIR)/MockPinInterfaceTest
-
-# Targets
-.PHONY: all clean
-
-all: $(TARGET)
-
-# Build the unit test executable
-$(TARGET): $(TEST_OBJ) $(DEPS)
-	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -o $@ $^
-
-# Compile the unit test source file
-$(BUILD_DIR)/%.o: %.cpp
-	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
-
-# Google Test and Google Mock dependencies
-$(GTEST_DIR)/libgtest_main.a:
-        # Build Google Test if needed
-
-$(GMOCK_DIR)/libgmock_main.a:
-        # Build Google Mock if needed
-
-# Clean build artifacts
-clean:
-	rm -rf $(BUILD_DIR)
-
-MockPinInterface.cpp:
+PinInterfaceTest.cpp:
 #include "PinInterface.h"
-#include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
-// Create the MOCK class for PinInterface
-class MockPinInterface : public PinInterface {
-public:
-    // Use the constructor of the base class
-    using PinInterface::PinInterface;
-
-    // MOCK methods to override the original ones
-    MOCK_METHOD(int, pinAnalogRead, (int pin), (override));
-    MOCK_METHOD(int, pinDigitalRead, (int pin), (override));
-    MOCK_METHOD(void, pinAnalogWrite, (int pin, int value), (override));
-    MOCK_METHOD(void, pinDigitalWrite, (int pin, int value), (override));
-};
-
-// Define a test fixture (if needed)
-class PinInterfaceTest : public ::testing::Test {
+class PinInterfaceTest : public ::testing::Test {  // Define a test fixture
 protected:
+    PinState*                   pinState;
+    std::map<std::string, int>  pinMap;
+    PinInterface*               pinInterface;
+
     void SetUp() override {
-        // Set up any common data or configuration for your tests
-    }
+        pinState         = new PinState( pinMap );
+        pinInterface     = new PinInterface( pinState ); }
 
     void TearDown() override {
-        // Clean up after your tests (if needed)
-    }
+        delete pinInterface;
+        delete pinState; }};
 
-    // Add other helper methods or variables specific to your test suite
-};
+TEST_F( PinInterfaceTest, TestAnalogRead ) {  // Define tests
+    int pin = 5;
+    int value = 1;
+    pinInterface->pinAnalogWrite( pin, value );
+    EXPECT_EQ( pinInterface->pinAnalogRead( pin ), value );}
+
+TEST_F( PinInterfaceTest, TestDigitalRead ) {
+    int pin = 5;
+    int value = 1; // Digital pins can only be HIGH ( 1 ) or LOW (0)
+    pinInterface->pinDigitalWrite( pin, value );
+
+    EXPECT_EQ( pinInterface->pinDigitalRead( pin ), value );}
+
+TEST_F( PinInterfaceTest, TestAnalogWrite ) {
+    int pin = 5;
+    int value = 1;
+    pinInterface->pinAnalogWrite( pin, value );
+    EXPECT_EQ( pinState->getPinState(std::to_string( pin )), value );}
+
+TEST_F( PinInterfaceTest, TestDigitalWrite ) {
+    int pin = 5;
+    int value = 1; // Digital pins can only be HIGH ( 1 ) or LOW (0)
+    pinInterface->pinDigitalWrite( pin, value );
+    EXPECT_EQ( pinState->getPinState(std::to_string( pin )), value );}
 
 PinInterface.cpp:
 #include "PinInterface.h"
@@ -85,20 +50,23 @@ PinInterface.cpp:
 PinInterface::PinInterface( PinState* pinState ) : _pinState( pinState ) {}
 PinInterface::~PinInterface() {}
 
-std::map<std::string, int> PinInterface::getPinStateMap() { return _pin_map; }
-
-int PinInterface::pinAnalogRead( int pin ) {                         // Analog interface
-    std::string pin_string = std::to_string( pin );
-    int pin_value = _pinState->getPinState( pin_string );
-    return pin_value; }
-
-void PinInterface::pinAnalogWrite( int pin, int value ) { _pinState->setPinState( std::to_string( pin ), value ); }
-
-int PinInterface::pinDigitalRead( int pin ) {                        // Digital interface   
+int PinInterface::pinAnalogRead( int pin ) {
+    // std::string pin_string = std::to_string( pin );
     int pin_value = _pinState->getPinState( std::to_string( pin ));
     return pin_value; }
 
-void PinInterface::pinDigitalWrite( int pin, int value ) { _pinState->setPinState( std::to_string( pin ), value ); }
+int PinInterface::pinDigitalRead( int pin ) {
+    int pin_value = _pinState->getPinState( std::to_string( pin ));
+    return pin_value; }
+
+void PinInterface::pinAnalogWrite( int pin, int value ) { 
+    _pinState->setPinState( std::to_string( pin ), value ); }
+
+void PinInterface::pinDigitalWrite( int pin, int value ) { 
+    _pinState->setPinState( std::to_string( pin ), value ); }
+
+std::map<std::string, int> PinInterface::getPinStateMap() { return _pin_map; }
+
 PinInterface.h:
 #ifndef PININTERFACE_H
 #define PININTERFACE_H
@@ -110,20 +78,17 @@ PinInterface.h:
 class PinInterface {
   public:
     PinInterface(PinState* pinState);
-    ~PinInterface();
-    void pinAnalogWrite(int pin, int value);
-    void pinDigitalWrite(int pin, int value);
-    int pinAnalogRead(int pin);
-    int pinDigitalRead(int pin);
+    virtual ~PinInterface();
+    virtual void pinAnalogWrite(int pin, int value);
+    virtual void pinDigitalWrite(int pin, int value);
+    virtual int pinAnalogRead(int pin);
+    virtual int pinDigitalRead(int pin);
     std::map<std::string, int> getPinStateMap();
 
   private:
     std::map<std::string, int> _pin_map;
-    PinState* _pinState;
-};
-
-#endif
-```
+    PinState* _pinState; };
+#endif```
 
 My issue is as follows: I am getting the following error when running:
 ``` command
@@ -131,23 +96,11 @@ My issue is as follows: I am getting the following error when running:
 ```
 
 ``` error
-g++ -std=c++14 -Wall -Wextra -c -o /home/adamsl/SMOL_AI/tennis_unit_tests/build/PinInterface/MockPinInterface.o MockPinInterface.cpp
-In file included from /usr/local/include/gmock/gmock-actions.h:147,
-                 from /usr/local/include/gmock/gmock.h:56,
-                 from MockPinInterface.cpp:2:
-MockPinInterface.cpp:11:22: error: ‘testing::internal::Function<int(int)>::Result MockPinInterface::pinAnalogRead(testing::internal::ElemFromList<0, int>::type)’ marked ‘override’, but does not override
-   11 |     MOCK_METHOD(int, pinAnalogRead, (int pin), (override));
-      |                      ^~~~~~~~~~~~~
-MockPinInterface.cpp:12:22: error: ‘testing::internal::Function<int(int)>::Result MockPinInterface::pinDigitalRead(testing::internal::ElemFromList<0, int>::type)’ marked ‘override’, but does not override
-   12 |     MOCK_METHOD(int, pinDigitalRead, (int pin), (override));
-      |                      ^~~~~~~~~~~~~~
-MockPinInterface.cpp:13:23: error: ‘testing::internal::Function<void(int, int)>::Result MockPinInterface::pinAnalogWrite(testing::internal::ElemFromList<0, int, int>::type, testing::internal::ElemFromList<1, int, int>::type)’ marked ‘override’, but does not override
-   13 |     MOCK_METHOD(void, pinAnalogWrite, (int pin, int value), (override));
-      |                       ^~~~~~~~~~~~~~
-MockPinInterface.cpp:14:23: error: ‘testing::internal::Function<void(int, int)>::Result MockPinInterface::pinDigitalWrite(testing::internal::ElemFromList<0, int, int>::type, testing::internal::ElemFromList<1, int, int>::type)’ marked ‘override’, but does not override
-   14 |     MOCK_METHOD(void, pinDigitalWrite, (int pin, int value), (override));
-      |                       ^~~~~~~~~~~~~~~
-make: *** [Makefile:34: /home/adamsl/SMOL_AI/tennis_unit_tests/build/PinInterface/MockPinInterface.o] Error 1
+g++   -std=c++14 -Wall -Wextra -g -o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1ScoreTest /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/WinSequences.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1ScoreTest.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Player.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/GameState.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1TieBreaker.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/PinState.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1Score.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/TranslateConstant.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest/build/lib/libgtest.a /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest/build/lib/libgtest_main.a /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest/build/lib/libgmock.a /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest/build/lib/libgmock_main.a -lgtest -lgtest_main -lgmock -lpthread
+/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/WinSequences.o: in function `WinSequences::~WinSequences()':
+/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../WinSequences/WinSequences.cpp:4: undefined reference to `SetWin::~SetWin()'
+...
+make: *** [Makefile:24: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1ScoreTest] Error 1
 ```
 
 Act as a world-class, expert C++ project debugger and give me ideas for what could be wrong and what fixes to do in which files.

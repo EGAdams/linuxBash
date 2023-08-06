@@ -1,6 +1,6 @@
 You are an expert C++ Developer specializing in writting brilliant unit tests with the C++ Google framework.  Your task is to help me troubleshoot a problem with my C++ project build. This task will involve analyzing the C++ header files, source files, and Makefile present on my system. I will provide you with these files and their contents, as well as the error message or issue I'm encountering.My files are as follows: 
 ```Mode1TieBreaker.o:
-Error reading file Mode1TieBreaker.o: 'utf-8' codec can't decode byte 0xd0 in position 40: invalid continuation byte
+Error reading file Mode1TieBreaker.o: 'utf-8' codec can't decode byte 0xc8 in position 41: invalid continuation byte
 Mode1ScoreTest.cpp:
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
@@ -43,7 +43,7 @@ TEST_F(Mode1ScoreTest, Mode1P1ScoreTest) {
     ASSERT_EQ(player1.getPoints(), 3 );
 }
 Mode1ScoreTest.o:
-Error reading file Mode1ScoreTest.o: 'utf-8' codec can't decode byte 0xd5 in position 60: invalid continuation byte
+Error reading file Mode1ScoreTest.o: 'utf-8' codec can't decode byte 0xe8 in position 40: invalid continuation byte
 Mode1Score.cpp:
 #include "Mode1Score.h"
 
@@ -322,7 +322,7 @@ GTEST_DIR := /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest/build/l
 GMOCK_DIR := /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest/build/lib
 
 # Object files and dependencies
-TEST_OBJ := $(BUILD_DIR)/Player.o $(BUILD_DIR)/GameState.o $(BUILD_DIR)/Mode1TieBreaker.o $(BUILD_DIR)/Mode1ScoreTest.o $(BUILD_DIR)/PinState.o $(BUILD_DIR)/Mode1Score.o $(BUILD_DIR)/TranslateConstant.o
+TEST_OBJ := $(BUILD_DIR)/WinSequences.o $(BUILD_DIR)/Mode1ScoreTest.o $(BUILD_DIR)/Player.o $(BUILD_DIR)/GameState.o $(BUILD_DIR)/Mode1TieBreaker.o $(BUILD_DIR)/Mode1ScoreTest.o $(BUILD_DIR)/PinState.o $(BUILD_DIR)/Mode1Score.o $(BUILD_DIR)/TranslateConstant.o
 DEPS := $(GTEST_DIR)/libgtest.a $(GTEST_DIR)/libgtest_main.a $(GMOCK_DIR)/libgmock.a $(GMOCK_DIR)/libgmock_main.a
 
 TARGET := $(BUILD_DIR)/Mode1ScoreTest  # Main target (unit tests)
@@ -337,6 +337,36 @@ $(TARGET): $(TEST_OBJ) $(DEPS)  # Build the unit test executable
 	$(CXX) $(CXXFLAGS) -o $@ $^ -lgtest -lgtest_main -lgmock -lpthread
 
 $(BUILD_DIR)/%.o: %.cpp # Compile the unit test source file
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+
+
+$(BUILD_DIR)Mode1TieBreaker.o: ../Mode1TieBreaker/Mode1TieBreaker.cpp
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+$(BUILD_DIR)/WinSequences.o: ../WinSequences/WinSequences.cpp
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+$(BUILD_DIR)/PointLeds.o: ../PointLeds/PointLeds.cpp
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+$(BUILD_DIR)/ServeLeds.o: ../ServeLeds/ServeLeds.cpp
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+$(BUILD_DIR)/SetLeds.o: ../SetLeds/SetLeds.cpp
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+$(BUILD_DIR)/PointLeds.o: ../PointLeds/PointLeds.cpp
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+$(BUILD_DIR)/GameLeds.o: ../GameLeds/GameLeds.cpp
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
@@ -420,7 +450,7 @@ class Mode1Score {
     PointLeds _pointLeds;
     GameLeds _gameLeds;
     SetLeds _setLeds;
-    Mode1WinSequences _mode1WinSequences;
+    WinSequences _mode1WinSequences;
     Undo _undo;
     ScoreBoard* _scoreBoard; };
 #endif
@@ -428,7 +458,9 @@ class Mode1Score {
 GameState.o:
 Error reading file GameState.o: 'utf-8' codec can't decode byte 0xaa in position 60: invalid start byte
 Mode1Score.o:
-Error reading file Mode1Score.o: 'utf-8' codec can't decode byte 0xbc in position 41: invalid start byte
+Error reading file Mode1Score.o: 'utf-8' codec can't decode byte 0x88 in position 40: invalid start byte
+WinSequences.o:
+Error reading file WinSequences.o: 'utf-8' codec can't decode byte 0xc0 in position 41: invalid start byte
 TranslateConstant.o:
 Error reading file TranslateConstant.o: 'utf-8' codec can't decode byte 0xd8 in position 40: invalid continuation byte```
 
@@ -438,36 +470,9 @@ My issue is as follows: I am getting the following error when running:
 ```
 
 ``` error
-g++   -std=c++14 -Wall -Wextra -g -o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1ScoreTest /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Player.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/GameState.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1TieBreaker.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1ScoreTest.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/PinState.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1Score.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/TranslateConstant.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest/build/lib/libgtest.a /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest/build/lib/libgtest_main.a /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest/build/lib/libgmock.a /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest/build/lib/libgmock_main.a -lgtest -lgtest_main -lgmock -lpthread
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1TieBreaker.o: in function `Mode1TieBreaker::Mode1TieBreaker(IPlayer*, IPlayer*, PinInterface*, GameState*, History*)':
-/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:18: undefined reference to `PointLeds::PointLeds(IPlayer*, IPlayer*, PinInterface*)'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:18: undefined reference to `GameLeds::GameLeds(IPlayer*, IPlayer*, PinInterface*)'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:18: undefined reference to `ServeLeds::ServeLeds(PinInterface*, GameState*)'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:18: undefined reference to `SetLeds::SetLeds(IPlayer*, IPlayer*, PinInterface*)'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:18: undefined reference to `Mode1WinSequences::Mode1WinSequences(IPlayer*, IPlayer*, PinInterface*, GameState*)'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:18: undefined reference to `Undo::Undo(IPlayer*, IPlayer*, PinInterface*, GameState*)'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:18: undefined reference to `Mode1WinSequences::~Mode1WinSequences()'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:18: undefined reference to `SetLeds::~SetLeds()'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:18: undefined reference to `ServeLeds::~ServeLeds()'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:18: undefined reference to `GameLeds::~GameLeds()'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:18: undefined reference to `PointLeds::~PointLeds()'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1TieBreaker.o: in function `Mode1TieBreaker::~Mode1TieBreaker()':
-/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:20: undefined reference to `Undo::~Undo()'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:20: undefined reference to `Mode1WinSequences::~Mode1WinSequences()'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:20: undefined reference to `SetLeds::~SetLeds()'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:20: undefined reference to `ServeLeds::~ServeLeds()'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:20: undefined reference to `GameLeds::~GameLeds()'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:20: undefined reference to `PointLeds::~PointLeds()'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1TieBreaker.o: in function `Mode1TieBreaker::mode1TBButtonFunction()':
-/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:38: undefined reference to `GameTimer::gameDelay(int)'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:39: undefined reference to `Undo::setMode1Undo(History*)'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:45: undefined reference to `GameTimer::gameDelay(int)'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:46: undefined reference to `Undo::mode1Undo(History*)'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:50: undefined reference to `GameTimer::gameDelay(int)'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:51: undefined reference to `Undo::setMode1Undo(History*)'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:57: undefined reference to `GameTimer::gameDelay(int)'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../Mode1TieBreaker/Mode1TieBreaker.cpp:58: undefined reference to `Undo::mode1Undo(History*)'
-/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1TieBreaker.o: in function `Mode1TieBreaker::tieBreaker()':
+g++   -std=c++14 -Wall -Wextra -g -o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1ScoreTest /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/WinSequences.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1ScoreTest.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Player.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/GameState.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1TieBreaker.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/PinState.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1Score.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/TranslateConstant.o /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest/build/lib/libgtest.a /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest/build/lib/libgtest_main.a /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest/build/lib/libgmock.a /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest/build/lib/libgmock_main.a -lgtest -lgtest_main -lgmock -lpthread
+/usr/bin/ld: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/WinSequences.o: in function `WinSequences::~WinSequences()':
+/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/../WinSequences/WinSequences.cpp:4: undefined reference to `SetWin::~SetWin()'
 ...
 make: *** [Makefile:24: /home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1ScoreTest] Error 1
 ```

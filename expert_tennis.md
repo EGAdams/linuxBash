@@ -20,19 +20,19 @@ void Mode1Score::mode1P1Games() {
                 _setLeds.updateSets();
                 if ( _player1->getSets() == _player2->getSets()) {        // <-------------<< Set Tie Break
                     std::cout << "*** calling p1TBSetWinSequence() ***" << std::endl;
-                    _mode1WinSequences.p1TBSetWinSequence();
+                    _WinSequences.p1TBSetWinSequence();
                     _gameState->setSetTieBreak( 1 );
                     _mode1TieBreaker.setTieBreakEnable();
                 } else if ( _player1->getSets() == SETS_TO_WIN_MATCH ) {
                     std::cout << "*** calling p1MatchWinSequence() ***" << std::endl;
-                    _mode1WinSequences.p1MatchWinSequence();             // <-------------<< Match Win
+                    _WinSequences.p1MatchWinSequence();             // <-------------<< Match Win
                     _gameState->stopGameRunning();
                 } else {                                                 // <-------------<< Set Win
                     std::cout << "*** /// calling p1SetWinSequence() point gap is 2 /// ***" << std::endl;
                     _gameState->setPlayer1SetHistory( _player1->getSetHistory());
                     _gameState->setPlayer2SetHistory( _player2->getSetHistory());
                     _gameState->setCurrentSet( _gameState->getCurrentSet() + 1 );
-                    _mode1WinSequences.p1SetWinSequence();
+                    _WinSequences.p1SetWinSequence();
                     _setLeds.updateSets();
                     GameTimer::gameDelay( _gameState->getWinDelay());
                     _resetGame(); }
@@ -44,7 +44,7 @@ void Mode1Score::mode1P1Games() {
                 _gameLeds.updateGames();
                 _gameState->setPlayer1SetHistory( _player1->getSetHistory());
                 _gameState->setPlayer2SetHistory( _player2->getSetHistory());
-                _mode1WinSequences.p1GameWinSequence();  // sets player points to zero
+                _WinSequences.p1GameWinSequence();  // sets player points to zero
                 _resetGame();
             }}
     } else {
@@ -52,7 +52,7 @@ void Mode1Score::mode1P1Games() {
         _gameLeds.updateGames();
         _gameState->setPlayer1SetHistory( _player1->getSetHistory());
         _gameState->setPlayer2SetHistory( _player2->getSetHistory());
-        _mode1WinSequences.p1GameWinSequence();
+        _WinSequences.p1GameWinSequence();
         _resetGame(); }}
 ```
 
