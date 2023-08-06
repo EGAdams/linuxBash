@@ -1,12 +1,10 @@
 #
 # Plan and execute agent
 #
-# mabybe later? https://python.langchain.com/docs/use_cases/graph/tot
-#
 from langchain.chat_models import ChatOpenAI
 from langchain_experimental.plan_and_execute import PlanAndExecute, load_agent_executor, load_chat_planner
 from langchain.llms import OpenAI
-from langchain import SerpAPIWrapper
+# from langchain import SerpAPIWrapper
 from langchain.agents.tools import Tool
 from langchain import LLMMathChain
 from langchain.tools import Tool
@@ -50,7 +48,7 @@ def shell_function(command: str) -> str:
     output, _ = process.communicate()
     return output.decode()
 
-search = SerpAPIWrapper()
+# search = SerpAPIWrapper()
 llm = OpenAI(temperature=0)
 llm_math_chain = LLMMathChain.from_llm(llm=llm, verbose=True)
 tools = [
@@ -60,11 +58,11 @@ tools = [
         args_schema=ShellSchema,
         description="useful for when you need to execute shell commands"
     ),
-    Tool(
-        name = "Search",
-        func=search.run,
-        description="useful for when you need to answer questions about current events"
-    ),
+    # Tool(
+    #     name = "Search",
+    #     func=search.run,
+    #     description="useful for when you need to answer questions about current events"
+    # ),
     Tool(
         name="Calculator",
         func=llm_math_chain.run,

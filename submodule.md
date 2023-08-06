@@ -6,6 +6,8 @@ To make a GitHub submodule, follow these steps:
    ```
    git submodule add https://github.com/smol-ai/developer.git
    git submodule add https://github.com/yoheinakajima/babyagi.git
+   git submodule add https://github.com/EGAdams/SMOL_AI.git
+   git submodule add https://github.com/paul-gauthier/aider.git
    ```
 4. Git will clone the repository and add it as a submodule in your project.
 5. Commit the changes to your repository using `git commit -m "Added submodule"`.

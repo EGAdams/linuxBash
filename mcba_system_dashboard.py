@@ -29,7 +29,7 @@ def main():
         # cd to the directory where the script is located
         #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
         # open vscode in the directory
-        os.system( "./clean_all_but_admin.sh" )
+        os.system( "./delete_all_but_admin.sh" )
         main()
 
     elif choice == "2":
