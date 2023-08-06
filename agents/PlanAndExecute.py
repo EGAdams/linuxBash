@@ -1,6 +1,8 @@
 #
 # Plan and execute agent
 #
+# mabybe later? https://python.langchain.com/docs/use_cases/graph/tot
+#
 from langchain.chat_models import ChatOpenAI
 from langchain_experimental.plan_and_execute import PlanAndExecute, load_agent_executor, load_chat_planner
 from langchain.llms import OpenAI
