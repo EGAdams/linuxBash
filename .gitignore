@@ -14,3 +14,4 @@ agents/gpt3_logs
 pinecone_chat_dave_s/key_openai.txt
 gpt3_logs
 pinecone_chat_dave_s/key_openai.txt
+node_modules
