@@ -6,3 +6,11 @@ conf.txt
 .env
 clean_all_but_admin.sh
 clean_keep_users_conversatons.sh
+agents/key_openai.txt
+agents/key_pinecone.txt
+agents/clear_pincone_database.py
+agents/nexus
+agents/gpt3_logs
+pinecone_chat_dave_s/key_openai.txt
+gpt3_logs
+pinecone_chat_dave_s/key_openai.txt
