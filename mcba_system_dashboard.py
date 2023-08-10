@@ -19,6 +19,10 @@ def main():
     print("     3. show all tables\n\n")
     print("     4. open car wash page and click on phone icon\n\n")
     print("     5. open log viewer\n\n")
+    print("     g. delete all guests.  keep admin\n\n") 
+    print("     m. delete all messages.\n\n") 
+    print("     j. clear monitored objects table.\n\n") 
+    print("     c. delete all conversations.\n\n") 
     print("     6. Exit\n\n")
 
     choice = input("    Please select an option: \n\n    >")
@@ -65,8 +69,42 @@ def main():
         os.system( "npm run start" )
         main()
 
-    elif choice == "4":
+    elif choice == "6":
         print("Goodbye!")
+        # exit the program
+        exit()
+    
+    elif choice == "g":
+        print("deleting all guests... " )
+        # cd to the directory where the script is located
+        #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
+        # open vscode in the directory
+        os.system( "./delete_guests.sh" )
+        main()
+    
+    elif choice == "m":
+        print("deleting all messages... " )
+        # cd to the directory where the script is located
+        #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
+        # open vscode in the directory
+        os.system( "./delete_all_messages.sh" )
+        main()
+    
+    elif choice == "c":
+        print("deleting all conversations... " )
+        # cd to the directory where the script is located
+        #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
+        # open vscode in the directory
+        os.system( "./delete_all_conversations.sh" )
+        main()
+    
+    elif choice == "j":
+        print("cleaning the monitored objects from the jewelry machine... " )
+        # cd to the directory where the script is located
+        #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
+        # open vscode in the directory
+        os.system( "./delete_monitors.sh" )
+        main()
 
     else:  # if the user enters anything other than 1, 2, 3 or 4 then the program will exit with an error message.
 

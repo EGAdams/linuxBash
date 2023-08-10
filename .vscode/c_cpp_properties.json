@@ -3,7 +3,9 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest/googlemock/*",
+                "/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
