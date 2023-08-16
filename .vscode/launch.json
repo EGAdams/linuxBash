@@ -8,7 +8,7 @@
             "name": "C++ unit test",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/SMOL_AI/tennis_unit_tests/PinInterface/PinInterfaceTest",
+            "program": "${workspaceFolder}/SMOL_AI/tennis_unit_tests/Mode1Score/run_tests",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

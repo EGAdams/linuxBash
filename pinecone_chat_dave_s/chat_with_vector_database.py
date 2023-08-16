@@ -37,7 +37,7 @@ def timestamp_to_datetime( unix_time ):
 def gpt3_embedding(content, engine='text-embedding-ada-002' ):
     content = content.encode(encoding='ASCII',errors='ignore' ).decode()  # fix any UNICODE errors
     response = openai.Embedding.create( input=content,engine=engine )
-    vector = response[ 'data' ][0][ 'embedding' ]  # this is a normal list
+    vector = response[ 'data' ][ 0 ][ 'embedding' ]  # this is a normal list
     return vector
 
 

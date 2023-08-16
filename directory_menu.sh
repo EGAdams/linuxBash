@@ -16,6 +16,9 @@ display_result() {
     --msgbox "$result" 0 0
 }
 
+echo "entering while loop... "
+echo;
+
 while true; do
   exec 3>&1
   selection=$(dialog \
