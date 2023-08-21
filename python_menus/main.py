@@ -22,6 +22,9 @@ def main():
     print("     4. mcba menu\n")
     print("     5. open tree-sitter implementation code base\n")
     print("     6. open linux bash workspace in vscode\n")
+    print("     7. open current tennis matrix workspace in vscode\n")
+    print("     8. open current test fixture workspace( SMOL_AI ) in vscode\n")
+    print("     9. The LangChain Agent Plan\n")
     print("     x. Exit\n")
 
     choice = input("    Please select an option: \n    >")
@@ -62,9 +65,8 @@ def main():
             # API Keys
             git_token = os.getenv("GIT_TOKEN", "")
             print ( git_token )
-            exit(0)
             child.sendline( git_token )
-
+            
             # Wait for the process to complete
             child.expect(pexpect.EOF)
             print(child.before.decode('utf-8'))
@@ -110,6 +112,30 @@ def main():
         os.chdir( "/home/adamsl/linuxBash" )
         # open vscode in the directory
         os.system( "code ." )
+        main()
+    
+    elif choice == "7":
+        print("opening current tennis matrix repository in vscode... " )
+        # cd to the directory where the script is located
+        os.chdir( "/home/adamsl/rpi-rgb-led-matrix" )
+        # open vscode in the directory
+        os.system( "code ." )
+        main()
+    
+    elif choice == "8":
+        print("openning current test fixture workspace( SMOL_AI ) in vscode... " )
+        # cd to the directory where the script is located
+        os.chdir( "/home/adamsl/linuxBash/SMOL_AI" )
+        # open vscode in the directory
+        os.system( "code ." )
+        main()
+    
+    elif choice == "9":
+        print("opening test fixture for tennis matrix repository in vscode... " )
+        # cd to the directory where the script is located
+        # os.chdir( "/home/adamsl/linuxBash/project_management/plan.md" )
+        # open vscode in the directory
+        os.system( "code  /home/adamsl/linuxBash/project_management/plan.md" )
         main()
     
     # elif choice == "5":
