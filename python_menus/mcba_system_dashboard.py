@@ -3,75 +3,54 @@
 # The menu should be able to go back to the main menu from the other scripts.
 # The menu should be able to execute the other scripts more than once.
 import os
-import dotenv
-import pexpect
 
 def main():
     print( "                                                 " )
     print( "                                                 " )
     print( "                                                 " )
     print( "      ///////////////////////////////////////////" )
-    print( "      "                                            )
-    print( "      Welcome to the main menu"                    )
-    print( "      "                                            )
+    print( "      Welcome to the main MCBA System Dashboard"                    )
     print( "      ///////////////////////////////////////////" )
     print( "\n")
-    print("     1. make mode 1 score tests\n")
-    print("     2. run mode 1 score tests\n")
-    print("     3. git push\n")
-    print("     exit. Exit\n")
+    print("     1. clean all tables.  keep admin")
+    print("     2. clean all tables.  keep users, conversations, and admin")
+    print("     3. show all tables")
+    print("     4. open car wash page and click on phone icon")
+    print("     5. open log viewer")
+    print("     h. show mycustom table" )
+    print("     t. delete all messages with est in them") 
+    print("     keys. show gcm_keys table" )
+    print("     g. delete all guests.  keep admin") 
+    print("     m. delete all messages.") 
+    print("     j. clear monitored objects table.") 
+    print("     c. delete all conversations.") 
+    print("     6. Exit")
 
-    choice = input("    Please select an option: \n    >")
-    print( "                                                 " )
+    choice = input("    Please select an option: notbash$")
+    print( "                                     " )
 
     if choice == "1":
-        print("making mode 1 score tests... " )
-        # open a child process to execute script
-        os.chdir( "/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/" )
-        os.system( "make" )
+        print("clearing all table data.  keeping admin info... " )
+        # cd to the directory where the script is located
+        #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
+        # open vscode in the directory
+        os.system( "./delete_all_but_admin.sh" )
         main()
 
     elif choice == "2":
-        print( "running mode 1 score tests..." )
+        print( "clearing all table data.  keeping user, conversation and admin info... " )
         # open a child process to execute script 2
-        os.chdir( "/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/" )
-        os.system("./run_tests" )
-        input( "Press Enter to continue..." )
+        os.system(" ./delete_all_but_users_conversations_admin.sh " )
         main()
         
     elif choice == "3":
-        print( "pushing git... " )
-        # get git token from .env file
-        git_token = os.getenv("GIT_TOKEN", "")
-        print ( "git token: " + git_token )
+        print( "showing all tables... " )
         # open a child process to execute script 3
-        try:
-            # Start the git push process
-            print ( "starting git push..." )
-            child = pexpect.spawn('git push')
-
-            # Wait for the username prompt and send the username
-            child.expect('Username for .*:')
-            child.sendline( "egadams" )
-
-            # Wait for the password prompt and send the password
-            child.expect('Password for .*:')
-            # API Keys
-            git_token = os.getenv("GIT_TOKEN", "")
-            print ( git_token )
-            exit(0)
-            child.sendline( git_token )
-
-            # Wait for the process to complete
-            child.expect(pexpect.EOF)
-            print(child.before.decode('utf-8'))
-            
-        except pexpect.ExceptionPexpect as e:
-            print("Encountered an error:", e)
+        os.system( "./show_all_tables.sh " )
         main()
 
     elif choice == "4":
-        print( "pushing git... " )
+        print( "opening car wash page and clicking on phone icon... " )
         # change to directory: ~/ai_generated_projects/car_wash_test
         os.chdir( "/home/adamsl/ai_generated_projects/car_wash_test" )
         

@@ -3,6 +3,8 @@
 # The menu should be able to go back to the main menu from the other scripts.
 # The menu should be able to execute the other scripts more than once.
 import os
+import dotenv
+import pexpect
 
 def main():
     print( "                                                 " )
@@ -10,49 +12,69 @@ def main():
     print( "                                                 " )
     print( "      ///////////////////////////////////////////" )
     print( "      "                                            )
-    print( "      Welcome to the main MCBA System Dashboard"                    )
+    print( "      Welcome to the main menu"                    )
     print( "      "                                            )
     print( "      ///////////////////////////////////////////" )
     print( "\n")
-    print("     1. clean all tables.  keep admin\n\n")
-    print("     2. clean all tables.  keep users, conversations, and admin\n\n")
-    print("     3. show all tables\n\n")
-    print("     4. open car wash page and click on phone icon\n\n")
-    print("     5. open log viewer\n\n")
-    print("     h. show mycustom table\n\n" )
-    print("     t. delete all messages with est in them\n\n") 
-    print("     keys. show gcm_keys table\n\n" )
-    print("     g. delete all guests.  keep admin\n\n") 
-    print("     m. delete all messages.\n\n") 
-    print("     j. clear monitored objects table.\n\n") 
-    print("     c. delete all conversations.\n\n") 
-    print("     6. Exit\n\n")
+    print("     1. make mode 1 score tests\n")
+    print("     2. run mode 1 score tests\n")
+    print("     3. git push\n")
+    print("     4. mcba menu\n")
+    print("     5. open tree-sitter implementation code base\n")
+    print("     6. open linux bash workspace in vscode\n")
+    print("     x. Exit\n")
 
-    choice = input("    Please select an option: \n\n    >")
+    choice = input("    Please select an option: \n    >")
     print( "                                                 " )
 
     if choice == "1":
-        print("clearing all table data.  keeping admin info... " )
-        # cd to the directory where the script is located
-        #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
-        # open vscode in the directory
-        os.system( "./delete_all_but_admin.sh" )
+        print("making mode 1 score tests... " )
+        # open a child process to execute script
+        os.chdir( "/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/" )
+        os.system( "make" )
         main()
 
     elif choice == "2":
-        print( "clearing all table data.  keeping user, conversation and admin info... " )
+        print( "running mode 1 score tests..." )
         # open a child process to execute script 2
-        os.system(" ./delete_all_but_users_conversations_admin.sh " )
+        os.chdir( "/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/" )
+        os.system("./run_tests" )
+        input( "Press Enter to continue..." )
         main()
         
     elif choice == "3":
-        print( "showing all tables... " )
+        print( "pushing git... " )
+        # get git token from .env file
+        git_token = os.getenv("GIT_TOKEN", "")
+        print ( "git token: " + git_token )
         # open a child process to execute script 3
-        os.system( "./show_all_tables.sh " )
+        try:
+            # Start the git push process
+            print ( "starting git push..." )
+            child = pexpect.spawn('git push')
+
+            # Wait for the username prompt and send the username
+            child.expect('Username for .*:')
+            child.sendline( "egadams" )
+
+            # Wait for the password prompt and send the password
+            child.expect('Password for .*:')
+            # API Keys
+            git_token = os.getenv("GIT_TOKEN", "")
+            print ( git_token )
+            exit(0)
+            child.sendline( git_token )
+
+            # Wait for the process to complete
+            child.expect(pexpect.EOF)
+            print(child.before.decode('utf-8'))
+            
+        except pexpect.ExceptionPexpect as e:
+            print("Encountered an error:", e)
         main()
 
-    elif choice == "4":
-        print( "opening car wash page and clicking on phone icon... " )
+    elif choice == "45":
+        print( "pushing git... " )
         # change to directory: ~/ai_generated_projects/car_wash_test
         os.chdir( "/home/adamsl/ai_generated_projects/car_wash_test" )
         
@@ -65,19 +87,44 @@ def main():
 
         main()
 
-    elif choice == "5":
-        print("openining log viewer... " )
-        # open a child process to execute script
-        os.chdir( "/home/adamsl/the-factory" )
-        os.system( "npm run start" )
+    elif choice == "4":
+        print( "opening mcba menu... " )
+        # clear terminal screen
+        os.system( "clear" )
+        os.system( "python3 mcba_system_dashboard.py " )
         main()
+    
+    
+
+    elif choice == "5":
+        print("opening tree-sitter implementation... " )
+        # cd to the directory where the script is located
+        os.chdir( "/home/adamsl/openai-search-codebase-and-chat-about-it" )
+        # open vscode in the directory
+        os.system( "code ." )
+        main()
+
+    elif choice == "6":
+        print("opening linux bash repository in vscode... " )
+        # cd to the directory where the script is located
+        os.chdir( "/home/adamsl/linuxBash" )
+        # open vscode in the directory
+        os.system( "code ." )
+        main()
+    
+    # elif choice == "5":
+    #     print("openining log viewer... " )
+    #     # open a child process to execute script
+    #     os.chdir( "/home/adamsl/the-factory" )
+    #     os.system( "npm run start" )
+    #     main()
     
     elif choice == "h":
         print( "showing mycusom table... " )
         os.system( "./show_mycustom_tables.sh " )
         main()
         
-    elif choice == "6":
+    elif choice == "x":
         print("Goodbye!")
         # exit the program
         exit()
