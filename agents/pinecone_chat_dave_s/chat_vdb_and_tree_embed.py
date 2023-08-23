@@ -16,7 +16,7 @@ from tree_sitter import Language, Parser
 
 TURBO_16K_MODEL = "gpt-3.5-turbo-16k"
 TURBO_MODEL = "gpt-3.5-turbo"
-CURRENT_DIRECTORY = "/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/pinecone_chat_dave_s/"
+CURRENT_DIRECTORY = "/home/adamsl/linuxBash/agents/pinecone_chat_dave_s/"
 CACHED_EMBEDDINGS_PATH = CURRENT_DIRECTORY + "cached_embeddings/"
 
 # GO_LANGUAGE = (Language('build/my-languages.so', 'go'), "*.go")
@@ -27,6 +27,23 @@ CACHED_EMBEDDINGS_PATH = CURRENT_DIRECTORY + "cached_embeddings/"
 CPP_LANGUAGE   = (Language('/home/adamsl/linuxBash/agents/pinecone_chat_dave_s/build/my-languages.so', 'cpp'), "*.cpp")
 
 current_language = CPP_LANGUAGE
+
+
+def load_conversation( results_arg ):  # comes from:  vdb.query( vector = embedded_user_input, top_k = convo_length )
+    result = list()
+    for matching_unique_id in results_arg[ 'matches' ]:
+        filename = 'nexus/%s.json' % matching_unique_id[ 'id' ]
+        # if filename exists, load it and append it to the result list, otherwise skip it
+        if not os.path.exists( filename ):
+            print ( 'file not found:', filename )
+            continue
+        else:
+            print ( 'file found:', filename )
+        info = load_json( 'nexus/%s.json' % matching_unique_id[ 'id' ])
+        result.append( info )
+    ordered = sorted( result, key=lambda d: d[ 'time' ], reverse=False )  # sort them all chronologically
+    messages = [ i[ 'message' ] for i in ordered ]
+    return '\n'.join( messages ).strip()
 
 # File Operations
 def open_file(filepath):
@@ -67,14 +84,19 @@ def get_functions(filepath):
     codestr = open(filepath).read().replace("\r", "\n")
     parser = Parser()
     # parser.set_language( "cpp" ) # TODO: take out hard coded language
-    parser.set_language( current_language ).expect("Error loading Cpp grammar");
+    parser.set_language( current_language[ 0 ])
     tree = parser.parse(bytes(codestr, "utf8"))
     cursor = tree.walk()
     cursor.goto_first_child()
     functions = []
     while True:
-        if cursor.node_type == 'function':
-            functions.append(codestr[cursor.start_byte:cursor.end_byte])
+        print( "cursor.node.type: ", cursor.node.type )
+        print( "cursor.node: ", cursor.node.text )
+        print( "cursor.goto_next_sibling(): ", cursor.goto_next_sibling() )
+        print( "cursor.goto_first_child(): ", cursor.goto_first_child() )
+        print( "cursor.goto_parent(): ", cursor.goto_parent() )
+        if cursor.node.type == 'function_definition':
+            functions.append(codestr[cursor.node.start_byte:cursor.node.end_byte])
         if not cursor.goto_next_sibling():
             break
     return functions
@@ -93,6 +115,12 @@ def save_code_chunks_and_embeddings(chunks, embeddings, directory="nexus"):
 
 # Main Functionality
 def main():
+    # Initialize Pinecone connection (assuming you have a namespace/environment setup)
+    openai.api_key = open_file( 'key_openai.txt' )
+    thePineconeKey = open_file( 'key_pinecone.txt' )
+    pinecone.init( thePineconeKey, environment='northamerica-northeast1-gcp' )
+    vdb = pinecone.Index( "debug-memory" )
+    convo_length = 30
     while True:
         print("Choose an option:")
         print("1. Run a query from a prompt stored in a file.")
@@ -104,7 +132,7 @@ def main():
             # TODO: Handle option 1
             pass
         elif choice == "2":
-            # TODO: Handle option 2
+            user_input = input( '\n\nUSER: ' )
             pass
         elif choice == "3":
             if os.path.exists( CACHED_EMBEDDINGS_PATH ):
@@ -119,13 +147,10 @@ def main():
                     file.write( code_root )
                     
             # TODO: take out hard coded path
-            code_root = "/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1ScoreTest.cpp"
+            code_root = "/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/Mode1Score.cpp"
             code_chunks = get_functions( code_root )
             embeddings = generate_embeddings_for_code_chunks(code_chunks)
             save_code_chunks_and_embeddings(code_chunks, embeddings)
-            
-            # Initialize Pinecone connection (assuming you have a namespace/environment setup)
-            pinecone.init(api_key="YOUR_PINECONE_API_KEY")  # TODO: Replace with your Pinecone API key
             
             # Saving and upserting to Pinecone
             for chunk, embedding in zip(code_chunks, embeddings):
@@ -137,16 +162,58 @@ def main():
                 save_json(f'nexus/{unique_id}.json', metadata)
                 
                 # Upsert the chunk and its embedding to Pinecone
-                pinecone.upsert(items={unique_id: embedding})
+                # pinecone.upsert(items={unique_id: embedding})
             
-            # Close the Pinecone connection
-            pinecone.deinit()
-            print("Codebase read, chunks saved and embeddings generated.")
+            # Close the Pinecone connection... maybe not necessary?
+            
+            print( "Codebase read, chunks saved and embeddings generated." )
+            continue
+        
         elif choice == "4":
             print("Goodbye!")
             break
         else:
             print("Invalid choice. Please try again.")
+            continue
+        
+        ###
+        data_for_pinecone_upsert = list()   # initialize the list that will ultimately be 
+        timestamp = time()                  # upserted to the vector database
+        timestring = timestamp_to_datetime( timestamp )
+        embedded_user_input = gpt3_embedding( user_input )
+        unique_id = str( uuid4())
+        metadata = { 'speaker': 'USER', 'time': timestamp, 'message': user_input, 'timestring': timestring, 'uuid': unique_id }
+        save_json( 'nexus/%s.json' % unique_id, metadata ) # <<--- save to .json on local ---<<<
+        data_for_pinecone_upsert.append(( unique_id, embedded_user_input ))  # <<--- this data is going to pinecone vdb ---<<<
+        ###
+        ###  Now we have the user input not only saved to our local file, but it is also placed in the built-in mutable
+        ###  sequence that we will ultimately be inserted into the vector database under the same unique_id.
+        ###
+        results = vdb.query( vector=embedded_user_input, top_k=convo_length )# search for relevant message unique ids in vsd
+        conversation = load_conversation( results )  # with these unique ids, which where very cheap to aquire, we load the
+                                                     # relevant conversation data from our local file system
+        prompt = open_file( 'prompt_response.txt' ).replace( '<<CONVERSATION>>', conversation ).replace( '<<MESSAGE>>', user_input )
+        ###
+        ai_completion_text = ai_completion( prompt )  # <<-- send the prompt created from the template to the model ---<<<
+        timestamp = time()
+        timestring = timestamp_to_datetime( timestamp )
+        embedded_ai_completion = gpt3_embedding( ai_completion_text )
+        unique_id = str( uuid4())
+        metadata = { 'speaker': 'RAVEN', 'time': timestamp, 'message': ai_completion_text,
+                     'timestring': timestring, 'uuid': unique_id }
+        ###
+        save_json( 'nexus/%s.json' % unique_id, metadata ) # <<--- save ai answer to a .json file ---<<<
+        ###
+        data_for_pinecone_upsert.append(( unique_id, embedded_ai_completion )) # <--- add ai answer to data to be upserted ---<<<
+        vdb.upsert( data_for_pinecone_upsert ) # <----------------------------------- upsert the data to pinecone ------------<<<
+        print( '\n\nRAVEN: %s' % ai_completion_text )  
+        
+        # just noticed that the unique_id is being used in the upsert and
+        # the save_json, so it's being saved twice. How are we referencing both?
+        # we make a unique id for the data here on our file system.  the vector database
+        # returns the unique_ids that have relevance.  we use those ids to get the relevant data from
+        # our file system.  the unique_id from the vector database links to the unique id on the local file
+        # system that has the complete relevant information.
 
 if __name__ == "__main__":
     main()

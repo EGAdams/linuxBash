@@ -1,0 +1,7 @@
+{
+  "message": "The mode 1 score test is a statistical test used in regression analysis to assess the significance of a categorical predictor variable. It is specifically used when the predictor variable has more than two categories.\n\nIn regression analysis, the mode 1 score test compares the likelihood of the model with the predictor variable included to the likelihood of the model without the predictor variable. The test determines whether the predictor variable significantly improves the model's fit.\n\nThe mode 1 score test calculates a test statistic, typically based on the difference in log-likelihoods between the two models. This test statistic follows a chi-squared distribution, and its p-value is used to determine the significance of the predictor variable.\n\nIn summary, the mode 1 score test helps determine whether a categorical predictor variable has a significant impact on the outcome variable in regression analysis.",
+  "speaker": "RAVEN",
+  "time": 1692724283.2952092,
+  "timestring": "Tuesday, August 22, 2023 at 01:11PM ",
+  "uuid": "5e0eafed-20e6-4e31-b626-001bb2517500"
+}

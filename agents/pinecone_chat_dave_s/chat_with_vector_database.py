@@ -11,7 +11,7 @@ import pinecone
 
 TURBO_16K_MODEL     = "gpt-3.5-turbo-16k"
 TURBO_MODEL         = "gpt-3.5-turbo"
-CURRENT_DIRECTORY   = "/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/pinecone_chat_dave_s/"
+CURRENT_DIRECTORY   = "/home/adamsl/linuxBash/agents/pinecone_chat_dave_s/"
 
 def open_file(filepath):
     with open( CURRENT_DIRECTORY + filepath, 'r', encoding='utf-8' ) as infile:
