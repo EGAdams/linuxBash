@@ -6,7 +6,7 @@ Make Agents one at a time for tasks.
 
 Here are the LangChain components:
 # Agents
-- how to get started.
+## Tools
 ---
 # Memory
 - How to add memory to an agent - https://docs.langchain.com/docs/components/agents/
@@ -62,26 +62,35 @@ To: `if cursor.node.type == 'function':`
 Both issues were successfully identified and resolved, allowing the script to run without errors.
 
 # Update August 21, 2023
-The embeddings seem to go in fine now, but the can not be read.  They can be read by the original script 
+The embeddings seem to go in fine now, but the can not be read by the python file that writes the embeddings.  They can be read by the original python script for some reason. 
 ``` file
 chat_with_vector_database.py   
 ```
 This is good news.  We will be able to piece together a tool with this.  do not lose this information.
 ### 
 ### 
-### Next Steps
-``` next_steps
-- Output Raven's code to a file.  It is to hard to decipher in the terminal.
-- Add a menu item for the Plan and Execute Agent.  Put the Agent into the conversation with vdb.
+## Next Steps
+### Output Raven's code to a file.  It is to hard to decipher in the terminal.
+- How are we supposed to "output code to a file"?
+- this is the spinning sand that I always talk about.
+We need a FileWriter Agent or an HTMLWriter Agent.
+---
+### 
+---
+# Next Steps
+---
+### 
+---
+# Build an Agent from the meta stack.  This will be the first agent that we build.  
+## will be a Plan and Execute Agent.  It will be able to do the following:
+- Plan and Execute something if I ask it to.
 
-```
+
+### Add a menu item for the Plan and Execute Agent.  Put the Agent into the conversation with vdb.
 
 
 ---
-# Operation SnowBall is born.
---- 
-
-
+## Operation SnowBall is born.
 ---
     
 
