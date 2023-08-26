@@ -126,7 +126,8 @@ def main():
         print("1. Run a query from a prompt stored in a file.")
         print("2. Run a query from the command line.")
         print("3. Read an entire codebase.")
-        print("4. Exit.")
+        print("4. fire up the Plan and Execute Agent.")
+        print("x. Exit.")
         choice = input("Enter your choice: ")
         if choice == "1":
             # TODO: Handle option 1
@@ -170,6 +171,11 @@ def main():
             continue
         
         elif choice == "4":
+            print( "initializing Plan and Execute Agent..." )
+            
+            break
+        
+        elif choice == "x":
             print("Goodbye!")
             break
         else:

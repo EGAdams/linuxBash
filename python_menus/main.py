@@ -93,7 +93,7 @@ def main():
         print( "opening mcba menu... " )
         # clear terminal screen
         os.system( "clear" )
-        os.system( "python3 mcba_system_dashboard.py " )
+        os.system( "python3 /home/adamsl/linuxBash/python_menus/mcba_system_dashboard.py " )
         main()
     
     

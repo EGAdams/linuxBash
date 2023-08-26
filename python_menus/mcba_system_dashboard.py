@@ -46,7 +46,7 @@ def main():
     elif choice == "3":
         print( "showing all tables... " )
         # open a child process to execute script 3
-        os.system( "./show_all_tables.sh " )
+        os.system( "/home/adamsl/linuxBash/menu_shell_scripts/show_all_tables.sh " )
         main()
 
     elif choice == "4":

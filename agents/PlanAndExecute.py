@@ -42,7 +42,7 @@ def handle_exception(exception: Exception, context: str) -> str:
     return f"An error occurred while {context}. Please check the inputs and try again."
 
 class ShellSchema(BaseModel):
-    command: str = Field( description="The shell command to execute on a wsl 2 ubuntu linux subsystem for windows 10 followed by a redirect of stderr to dev null." )
+    command: str = Field( description="Find one article of AI news." )
     # 2>&1 otherwise we pay for tokens to read a bunch of "Permission Denied" errors!
 
 def shell_function(command: str) -> str:
@@ -51,7 +51,8 @@ def shell_function(command: str) -> str:
     return output.decode()
 
 search = SerpAPIWrapper()
-llm = OpenAI(temperature=0)
+# instantiate llm.  use gpt-3.5-turbo
+llm = OpenAI( temperature=0, engine="gpt-3.5-turbo" )
 llm_math_chain = LLMMathChain.from_llm(llm=llm, verbose=True)
 tools = [
     Tool(
@@ -95,7 +96,7 @@ exception_agent = ExceptionHandlerAgent(executor=exception_agent_executor, verbo
 ### this ran successfully one time, but no html output.
 
 try:
-    agent.run( """- Read this html link: ``` link http://127.0.0.1:5500/pexpect/doc/index.template.html ``` and output an html summary of the contents of the link.""" )
+    agent.run( """Get one article about the latest AI news.""" )
 
 except Exception as e:
     print ( f"- Handle the exception '{str(e)}' that occurred while executing the plan." )

@@ -84,7 +84,28 @@ We need a FileWriter Agent or an HTMLWriter Agent.
 # Build an Agent from the meta stack.  This will be the first agent that we build.  
 ## will be a Plan and Execute Agent.  It will be able to do the following:
 - Plan and Execute something if I ask it to.
+- how to hook this into the pinecone memory?
+- just put it in the loop for now.
 
+Here is the prompt that I used:
+``` prompt
+Get three articles about the latest AI news today.
+```
+### Results: The model is hallucinating, i think.  Here is what happens when I try to run the Plan and Execute Agent:
+Observation: The 5 Best Websites to Stay Up-to-Date with the Latest AI News (2023)
+Thought:To select three articles that are both from reputable sources and cover the latest AI news, you can search for reputable news sources that specifically cover AI news. Then, you can check the publication dates of the articles to ensure they are the latest news. Finally, you can read the summaries or headlines of the articles to determine if they are relevant to the latest AI news.
+
+Action:
+```
+{
+  "action": "Search",
+  "action_input": "reputable news sources for AI news"
+}
+```
+
+This repeats forever... wtf...
+
+## Next Steps: Debug the Plan and Execute Agent
 
 ### Add a menu item for the Plan and Execute Agent.  Put the Agent into the conversation with vdb.
 
