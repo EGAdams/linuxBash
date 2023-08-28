@@ -21,6 +21,7 @@ echo;
 
 while true; do
   exec 3>&1
+  echo "decalring selection... "
   selection=$(dialog \
     --backtitle "Main Directory Menu" \
     --title "Menu" \
@@ -134,4 +135,5 @@ while true; do
       break
     ;;  
   esac
+  echo "done with case selection."
 done

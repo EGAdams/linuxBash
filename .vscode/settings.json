@@ -68,5 +68,6 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest"
 }
