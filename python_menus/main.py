@@ -8,6 +8,8 @@ import pexpect
 
 def main():
     print( "                                                 " )
+    # print the current path
+    print( "current path: " + os.getcwd() )
     print( "                                                 " )
     print( "                                                 " )
     print( "      ///////////////////////////////////////////" )
@@ -25,6 +27,7 @@ def main():
     print("     7. open current tennis matrix workspace in vscode\n")
     print("     8. open current test fixture workspace( SMOL_AI ) in vscode\n")
     print("     9. The LangChain Agent Plan\n")
+    print("     o. open this file in vscode for editing\n")
     print("     x. Exit\n")
 
     choice = input("    Please select an option: \n    >")
@@ -135,7 +138,16 @@ def main():
         # cd to the directory where the script is located
         # os.chdir( "/home/adamsl/linuxBash/project_management/plan.md" )
         # open vscode in the directory
-        os.system( "code  /home/adamsl/linuxBash/project_management/plan.md" )
+        os.system( "code  /home/adamsl/linuxBash/project-management/next_steps.md" )
+        main()
+    
+    # elif choice == "5":
+    elif choice == "o":
+        print("opening python menu directory in vscode... " )
+        # cd to the directory where the script is located
+        # os.chdir( "/home/adamsl/linuxBash/project_management/plan.md" )
+        # open vscode in the directory
+        os.system( "code  /home/adamsl/linuxBash/python_menus/" )
         main()
     
     # elif choice == "5":

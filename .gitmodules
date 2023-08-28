@@ -13,3 +13,6 @@
 [submodule "langchain"]
 	path = langchain
 	url = https://github.com/EGAdams/langchain.git
+[submodule "project-management"]
+	path = project-management
+	url = https://github.com/EGAdams/project-management.git
