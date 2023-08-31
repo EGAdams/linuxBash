@@ -1,0 +1,42 @@
+sequenceDiagram
+    participant M as MainViewController
+    participant S as SpeedometerView
+    participant C as CustomizationViewController
+    participant D as DataStorageManager
+    participant N as NetworkingManager
+    participant A as AnimationHelper
+    participant L as LocationHelper
+    participant U as UserDefaultsHelper
+    participant H as NetworkHelper
+
+    M->>+S: viewDidLoad()
+    M->>+D: viewDidLoad()
+    M->>+N: viewDidLoad()
+    M->>+L: viewDidLoad()
+    M->>+U: viewDidLoad()
+
+    M->>+L: startUpdatingLocation()
+    L->>-M: getCurrentSpeed()
+    M->>+S: setSpeed(speed)
+
+    M->>+D: retrieveSpeedometerMetrics()
+    D->>-M: SpeedometerMetrics
+    M->>+S: setRimImage(image)
+    M->>+S: setFaceImage(image)
+    M->>+S: setTicksImage(image)
+
+    M->>+C: viewDidLoad()
+    C->>-M: customizationOptions
+    M->>+S: setRimImage(image)
+    M->>+S: setFaceImage(image)
+    M->>+S: setTicksImage(image)
+
+    M->>+S: setSpeed(speed)
+    M->>+D: saveSpeedometerMetrics(metrics)
+    M->>+N: syncWithOtherApps()
+
+    M->>+A: animateSpeedometerView(speedometerView, metrics)
+    A->>-M: animatedSpeedometerView
+
+    M->>-S: speedometerView
+    S->>-M: updatedSpeedometerView

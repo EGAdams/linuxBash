@@ -1,0 +1,9 @@
+SwiftSVG
+SVGKit
+Lottie
+CoreDataKit
+MagicalRecord
+SnapKit
+PureLayout
+Alamofire
+SwiftyJSON

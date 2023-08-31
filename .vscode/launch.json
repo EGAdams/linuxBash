@@ -34,7 +34,8 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "justMyCode": false
+            "justMyCode": true,
+            "args": [ "Develop an iOS application for iPad and iPhone that functions as an airplane speedometer gauge. Use Swift and UIKit for the main development. Ensure real-time representation of speed, yaw, and other metrics. Incorporate customizable visual elements (rim, face, ticks) and leverage Core Animation for smooth visual transitions. Implement functionalities to adjust, save, and retrieve gauge metrics using Core Data. Prioritize compatibility across iOS devices and ensure an intuitive user experience. Provide synchronization capabilities with other aviation-related iOS applications." ]
         }
     ]
 }

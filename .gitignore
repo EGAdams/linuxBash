@@ -14,3 +14,4 @@ agents/gpt3_logs
 gpt3_logs
 node_modules
 pinecone_chat_dave_s/key_openai.txt
+project-management
