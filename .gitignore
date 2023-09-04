@@ -15,3 +15,10 @@ gpt3_logs
 node_modules
 pinecone_chat_dave_s/key_openai.txt
 project-management
+workspace/
+temp_action.md
+temp_design_prompt.md
+write_code_prompt.md
+write_tasks_prompt.md
+logs/log.txt
+workspace/AirplaneSpeedometerGauge/requirements.txt
