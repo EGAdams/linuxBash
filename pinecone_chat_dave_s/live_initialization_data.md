@@ -1,65 +1,19 @@
-import os
-import openai
-import json
-import numpy as np
-from numpy.linalg import norm
-import re
-from time import time, sleep
-from uuid import uuid4
-import datetime
-import lancedb
-import pandas as pd
+Here is the relevant Python code:
+```python
+def add(self, unique_id_arg, embedded_user_input_arg, metadata_arg ):
+        data = {
+            "unique_id": unique_id_arg,
+            "embedded_user_input": embedded_user_input_arg,
+            "metadata": metadata_arg }
+        
+        print( data )
+        dataframe = pd.DataFrame([ data ])
+        self.table.add( dataframe )
+```
 
-def open_file(filepath):
-    with open(filepath, 'r', encoding='utf-8') as infile:
-        return infile.read()
-
-def save_file(filepath, content):
-    with open(filepath, 'w', encoding='utf-8') as outfile:
-        outfile.write(content)
-
-def timestamp_to_datetime(unix_time):
-    return datetime.datetime.fromtimestamp(unix_time).strftime("%A, %B %d, %Y at %I:%M%p %Z")
-
-def gpt3_embedding(content, engine='text-embedding-ada-002'):
-    content = content.encode(encoding='ASCII', errors='ignore').decode()
-    response = openai.Embedding.create(input=content, engine=engine)
-    vector = response['data'][0]['embedding']
-    return vector
-
-def ai_completion(prompt, engine='gpt-3.5-turbo', temp=0.0, top_p=1.0, tokens=400, freq_pen=0.0, pres_pen=0.0, stop=['USER:', 'RAVEN:']):
-    max_retry = 5
-    retry = 0
-    prompt = prompt.encode(encoding='ASCII',errors='ignore' ).decode()
-    while True:
-        try:
-            response = openai.Completion.createChatCompletion(
-                model=engine,
-                prompt=prompt,
-                temperature=temp,
-                max_tokens=tokens,
-                top_p=top_p,
-                frequency_penalty=freq_pen,
-                presence_penalty=pres_pen,
-                stop=stop)
-            text = response[ 'choices' ][0][ 'text' ].strip()
-            text = re.sub( '[\r\n]+', '\n', text )
-            text = re.sub( '[\t ]+', ' ', text )
-            filename = '%s_gpt3.txt' % time()
-            if not os.path.exists( 'gpt3_logs' ):
-                os.makedirs( 'gpt3_logs' )
-            save_file( 'gpt3_logs/%s' % filename, prompt + '\n\n==========\n\n' + text )
-            return text
-        except Exception as oops:
-            retry += 1
-            if retry >= max_retry:
-                return "GPT3 error: %s" % oops
-            print( 'Error communicating with OpenAI:', oops )
-            sleep(1)
-
-initialization_data = {
-    'unique_id': '2c9a93d5-3631-4faa-8eac-a99b92e45d50', 
-    'vector': [-0.07254597, -0.00345811,  0.038447  ,  0.025837  , -0.01153462,
+Here is the output of "print( data )" from the above code:
+```output
+{'unique_id': '2c9a93d5-3631-4faa-8eac-a99b92e45d50', 'embedded_user_input': array([[-0.07254597, -0.00345811,  0.038447  ,  0.025837  , -0.01153462,
          0.05443505,  0.04415885, -0.03636164,  0.04025393,  0.07552634,
          0.05359982,  0.00822271, -0.01921194,  0.09719925, -0.05354664,
          0.06897003,  0.01113722,  0.06425729,  0.04223888, -0.05898998,
@@ -161,128 +115,22 @@ initialization_data = {
          0.00987345,  0.05255824, -0.08698288,  0.10400596, -0.00647114,
         -0.00831464,  0.0055213 ,  0.01613558, -0.10711982,  0.00563591,
          0.03591603,  0.00221161, -0.01541905, -0.0879847 , -0.05289326,
-        -0.04107964, -0.04039652],
-    'speaker': 'USER', 
-    'time': 1695146425.0193892, 
-    'message': 'this is a test.', 
-    'timestring': 'Tuesday, September 19, 2023 at 02:00PM '
-}
+        -0.04107964, -0.04039652]], dtype=float32), 'metadata': {'speaker': 'USER', 'time': 1695146425.0193892, 'message': 'help', 'timestring': 'Tuesday, September 19, 2023 at 02:00PM ', 'uuid': '2c9a93d5-3631-4faa-8eac-a99b92e45d50'}}
+```
 
-import pyarrow as pa
-class LanceTable:
-    def __init__(self):
-        # Initialize lancedb
-        self.db = lancedb.connect("/tmp/fresh-lancedb")
-        
-        self.schema = pa.schema([
+Here is the schema that I am using when creating the table:
+```python
+schema = pa.schema([
             pa.field("unique_id", pa.string()),
-            pa.field("vector", pa.list_(pa.float32())),
-            pa.field("speaker", pa.string()),
-            pa.field("time", pa.float64()),
-            pa.field("message", pa.string()),
-            pa.field("timestring", pa.string()),
+            pa.field("embedded_user_input", pa.list_(pa.list_(pa.float32()))),
+            pa.field("metadata", pa.struct([
+                pa.field("message", pa.string()),
+                pa.field("speaker", pa.string()),
+                pa.field("time", pa.float64()),
+                pa.field("timestring", pa.string()),
+                pa.field("uuid", pa.string())
+            ]))
         ])
+```
 
-
-        # Create the table with the defined schema
-        table_name = "lance-table"
-        if table_name in self.db.table_names():
-            print( "table %s already exists" % table_name )
-            self.db.drop_table(table_name)  # Drop the table if it already exists
-            self.table = self.db.create_table( table_name, schema=self.schema )
-        else:
-            print( "creating table: %s" % table_name )
-            self.table = self.db.create_table( table_name, schema=self.schema )
-        
-        # Insert the provided data into the table
-        # self.table_initialized = False
-        # self.table = None
-        print(json.dumps(initialization_data, indent=4))
-        # Ensure 'embedded_user_input' is a numpy array
-        embedded_user_input = np.array(initialization_data['vector'])
-
-        # Flatten the array
-        flattened_input = embedded_user_input.flatten().tolist()
-        initialization_data[ "vector" ] = flattened_input
-        dataframe = pd.DataFrame([ initialization_data ])
-        arrow_table = pa.Table.from_pandas(dataframe, schema=self.schema)
-
-        # self.table.add( dataframe )
-        self.table.add( arrow_table )
-        
-    def add(self, unique_id_arg, embedded_message, speaker, timestamp, message, timestring ):
-        # Ensure 'embedded_user_input' is a numpy array
-        # embedded_user_input = np.array( embedded_message )
-
-        # Flatten the array
-        # flattened_input = embedded_user_input.flatten().tolist()
-        # embedded_user_input = flattened_input
-        
-        # embedded_user_input = np.array(embedded_message['vector'])
-
-        # Flatten the array
-        # flattened_input = embedded_user_input.flatten().tolist()
-        # embedded_message[ "vector" ] = flattened_input
-        
-        data = {
-            "unique_id": unique_id_arg,
-            "vector": embedded_message,
-            "speaker": speaker,
-            "time": timestamp,
-            "message": message,
-            "timestring": timestring
-        }
-        
-        print( data )
-        dataframe = pd.DataFrame([ data ])
-        arrow_table = pa.Table.from_pandas(dataframe, schema=self.schema )
-
-        # self.table.add( dataframe )
-        self.table.add( arrow_table )
-        
-lanceTable = LanceTable()
-
-import tensorflow_hub as hub
-# Load the Universal Sentence Encoder
-encoder = hub.load('https://tfhub.dev/google/universal-sentence-encoder/4')
-
-if __name__ == '__main__':
-    openai.api_key = open_file('/home/adamsl/linuxBash/pinecone_chat_dave_s/key_openai.txt')
-    
-    while True:
-        # user_input = input('\n\nUSER: ')
-        user_input = "hi"
-        timestamp = time()
-        timestring = timestamp_to_datetime(timestamp)
-        unique_id = str(uuid4())       
-        embedded_user_input = encoder([ user_input ]).numpy() # Convert the text into vector form
-        # embedded_user_input = gpt3_embedding(ai_completion_text)
-        unique_id = str(uuid4())
-        speaker   = 'RAVEN'
-        message = user_input 
-        embedded_user_input = np.array( embedded_user_input )
-        flattened_input = [float(item) for item in embedded_user_input.flatten().tolist()]
-
-        # Insert User's input to lancedb
-        lanceTable.add( unique_id, flattened_input, speaker, timestamp, message, timestring )
-       
-        
-        # Search for relevant message unique ids in lancedb
-        results = lanceTable.table.search( flattened_input ).limit( 30 ).to_df()
-        conversation = "\n".join(results['message'].tolist())
-        
-        prompt = open_file('prompt_response.txt').replace('<<CONVERSATION>>', conversation).replace('<<MESSAGE>>', user_input)
-        ai_completion_text = ai_completion(prompt)
-        timestamp = time()
-        timestring = timestamp_to_datetime(timestamp)
-        embedded_ai_completion = gpt3_embedding(ai_completion_text)
-        unique_id = str(uuid4())
-        speaker   = 'RAVEN'
-        thetimestamp = timestamp
-        message = ai_completion_text 
-        timestring = timestring
-        
-        # Insert AI's response to lancedb
-        lanceTable.table.add([( unique_id, embedded_ai_completion, speaker, timestamp, timestring )])
-        
-        print('\n\nRAVEN: %s' % ai_completion_text)
+Does the data match the schema?

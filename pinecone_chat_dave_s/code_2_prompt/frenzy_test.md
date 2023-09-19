@@ -1,62 +1,55 @@
-import os
-import openai
-import json
-import numpy as np
-from numpy.linalg import norm
-import re
-from time import time, sleep
-from uuid import uuid4
-import datetime
-import lancedb
-import pandas as pd
+# Your Role
+- Expert Python Developer
+- My helpful assistant
+- My teacher
 
-def open_file(filepath):
-    with open(filepath, 'r', encoding='utf-8') as infile:
-        return infile.read()
+# Your Task
+- Help me debug this error
+  
+### Error
+```error
+Traceback (most recent call last):
+  File "/home/adamsl/.pyenv/versions/3.10.6/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/adamsl/.pyenv/versions/3.10.6/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/adamsl/.vscode-server/extensions/ms-python.python-2023.16.0/pythonFiles/lib/python/debugpy/adapter/../../debugpy/launcher/../../debugpy/__main__.py", line 39, in <module>
+    cli.main()
+  File "/home/adamsl/.vscode-server/extensions/ms-python.python-2023.16.0/pythonFiles/lib/python/debugpy/adapter/../../debugpy/launcher/../../debugpy/../debugpy/server/cli.py", line 430, in main
+    run()
+  File "/home/adamsl/.vscode-server/extensions/ms-python.python-2023.16.0/pythonFiles/lib/python/debugpy/adapter/../../debugpy/launcher/../../debugpy/../debugpy/server/cli.py", line 284, in run_file
+    runpy.run_path(target, run_name="__main__")
+  File "/home/adamsl/.vscode-server/extensions/ms-python.python-2023.16.0/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_runpy.py", line 321, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/home/adamsl/.vscode-server/extensions/ms-python.python-2023.16.0/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_runpy.py", line 135, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/home/adamsl/.vscode-server/extensions/ms-python.python-2023.16.0/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_runpy.py", line 124, in _run_code
+    exec(code, run_globals)
+  File "/home/adamsl/linuxBash/pinecone_chat_dave_s/chat_with_lancedb.py", line 233, in <module>
+    lanceTable = LanceTable()
+  File "/home/adamsl/linuxBash/pinecone_chat_dave_s/chat_with_lancedb.py", line 210, in __init__
+    self.table.add( dataframe )
+  File "/home/adamsl/.pyenv/versions/3.10.6/lib/python3.10/site-packages/lancedb/table.py", line 547, in add
+    data = _sanitize_data(
+  File "/home/adamsl/.pyenv/versions/3.10.6/lib/python3.10/site-packages/lancedb/table.py", line 66, in _sanitize_data
+    data = _sanitize_schema(
+  File "/home/adamsl/.pyenv/versions/3.10.6/lib/python3.10/site-packages/lancedb/table.py", line 896, in _sanitize_schema
+    return pa.Table.from_arrays(
+  File "pyarrow/table.pxi", line 3862, in pyarrow.lib.Table.from_arrays
+  File "pyarrow/table.pxi", line 1450, in pyarrow.lib._sanitize_arrays
+  File "pyarrow/array.pxi", line 354, in pyarrow.lib.asarray
+  File "pyarrow/table.pxi", line 552, in pyarrow.lib.ChunkedArray.cast
+  File "/home/adamsl/.pyenv/versions/3.10.6/lib/python3.10/site-packages/pyarrow/compute.py", line 403, in cast
+    return call_function("cast", [arr], options, memory_pool)
+  File "pyarrow/_compute.pyx", line 572, in pyarrow._compute.call_function
+  File "pyarrow/_compute.pyx", line 367, in pyarrow._compute.Function.call
+  File "pyarrow/error.pxi", line 144, in pyarrow.lib.pyarrow_internal_check_status
+  File "pyarrow/error.pxi", line 121, in pyarrow.lib.check_status
+pyarrow.lib.ArrowNotImplementedError: Unsupported cast from fixed_size_list<item: float>[512] to list using function cast_list
+```
 
-def save_file(filepath, content):
-    with open(filepath, 'w', encoding='utf-8') as outfile:
-        outfile.write(content)
-
-def timestamp_to_datetime(unix_time):
-    return datetime.datetime.fromtimestamp(unix_time).strftime("%A, %B %d, %Y at %I:%M%p %Z")
-
-def gpt3_embedding(content, engine='text-embedding-ada-002'):
-    content = content.encode(encoding='ASCII', errors='ignore').decode()
-    response = openai.Embedding.create(input=content, engine=engine)
-    vector = response['data'][0]['embedding']
-    return vector
-
-def ai_completion(prompt, engine='gpt-3.5-turbo', temp=0.0, top_p=1.0, tokens=400, freq_pen=0.0, pres_pen=0.0, stop=['USER:', 'RAVEN:']):
-    max_retry = 5
-    retry = 0
-    prompt = prompt.encode(encoding='ASCII',errors='ignore' ).decode()
-    while True:
-        try:
-            response = openai.Completion.createChatCompletion(
-                model=engine,
-                prompt=prompt,
-                temperature=temp,
-                max_tokens=tokens,
-                top_p=top_p,
-                frequency_penalty=freq_pen,
-                presence_penalty=pres_pen,
-                stop=stop)
-            text = response[ 'choices' ][0][ 'text' ].strip()
-            text = re.sub( '[\r\n]+', '\n', text )
-            text = re.sub( '[\t ]+', ' ', text )
-            filename = '%s_gpt3.txt' % time()
-            if not os.path.exists( 'gpt3_logs' ):
-                os.makedirs( 'gpt3_logs' )
-            save_file( 'gpt3_logs/%s' % filename, prompt + '\n\n==========\n\n' + text )
-            return text
-        except Exception as oops:
-            retry += 1
-            if retry >= max_retry:
-                return "GPT3 error: %s" % oops
-            print( 'Error communicating with OpenAI:', oops )
-            sleep(1)
-
+### Data packet used
+```python
 initialization_data = {
     'unique_id': '2c9a93d5-3631-4faa-8eac-a99b92e45d50', 
     'vector': [-0.07254597, -0.00345811,  0.038447  ,  0.025837  , -0.01153462,
@@ -165,22 +158,39 @@ initialization_data = {
     'speaker': 'USER', 
     'time': 1695146425.0193892, 
     'message': 'this is a test.', 
-    'timestring': 'Tuesday, September 19, 2023 at 02:00PM '
+    'timestring': 'Tuesday, September 19, 2023 at 02:00PM ', 
+    'uuid': '2c9a93d5-3631-4faa-8eac-a99b92e45d50'
 }
+```
 
-import pyarrow as pa
-class LanceTable:
-    def __init__(self):
+### Schema for the table
+```python
+schema = pa.schema([
+    pa.field("unique_id", pa.string()),
+    pa.field("vector", pa.list_(pa.float32())),
+    pa.field("speaker", pa.string()),
+    pa.field("time", pa.float64()),
+    pa.field("message", pa.string()),
+    pa.field("timestring", pa.string()),
+    pa.field("uuid", pa.string())
+])
+```
+
+### Code that caused the error
+```python
+def __init__(self):
         # Initialize lancedb
         self.db = lancedb.connect("/tmp/fresh-lancedb")
-        
-        self.schema = pa.schema([
+        import pyarrow as pa
+
+        schema = pa.schema([
             pa.field("unique_id", pa.string()),
             pa.field("vector", pa.list_(pa.float32())),
             pa.field("speaker", pa.string()),
             pa.field("time", pa.float64()),
             pa.field("message", pa.string()),
             pa.field("timestring", pa.string()),
+            pa.field("uuid", pa.string())
         ])
 
 
@@ -189,10 +199,10 @@ class LanceTable:
         if table_name in self.db.table_names():
             print( "table %s already exists" % table_name )
             self.db.drop_table(table_name)  # Drop the table if it already exists
-            self.table = self.db.create_table( table_name, schema=self.schema )
+            self.table = self.db.create_table( table_name, schema=schema )
         else:
             print( "creating table: %s" % table_name )
-            self.table = self.db.create_table( table_name, schema=self.schema )
+            self.table = self.db.create_table( table_name, schema=schema )
         
         # Insert the provided data into the table
         # self.table_initialized = False
@@ -205,84 +215,7 @@ class LanceTable:
         flattened_input = embedded_user_input.flatten().tolist()
         initialization_data[ "vector" ] = flattened_input
         dataframe = pd.DataFrame([ initialization_data ])
-        arrow_table = pa.Table.from_pandas(dataframe, schema=self.schema)
+        self.table.add( dataframe )
+    ```
 
-        # self.table.add( dataframe )
-        self.table.add( arrow_table )
-        
-    def add(self, unique_id_arg, embedded_message, speaker, timestamp, message, timestring ):
-        # Ensure 'embedded_user_input' is a numpy array
-        # embedded_user_input = np.array( embedded_message )
-
-        # Flatten the array
-        # flattened_input = embedded_user_input.flatten().tolist()
-        # embedded_user_input = flattened_input
-        
-        # embedded_user_input = np.array(embedded_message['vector'])
-
-        # Flatten the array
-        # flattened_input = embedded_user_input.flatten().tolist()
-        # embedded_message[ "vector" ] = flattened_input
-        
-        data = {
-            "unique_id": unique_id_arg,
-            "vector": embedded_message,
-            "speaker": speaker,
-            "time": timestamp,
-            "message": message,
-            "timestring": timestring
-        }
-        
-        print( data )
-        dataframe = pd.DataFrame([ data ])
-        arrow_table = pa.Table.from_pandas(dataframe, schema=self.schema )
-
-        # self.table.add( dataframe )
-        self.table.add( arrow_table )
-        
-lanceTable = LanceTable()
-
-import tensorflow_hub as hub
-# Load the Universal Sentence Encoder
-encoder = hub.load('https://tfhub.dev/google/universal-sentence-encoder/4')
-
-if __name__ == '__main__':
-    openai.api_key = open_file('/home/adamsl/linuxBash/pinecone_chat_dave_s/key_openai.txt')
-    
-    while True:
-        # user_input = input('\n\nUSER: ')
-        user_input = "hi"
-        timestamp = time()
-        timestring = timestamp_to_datetime(timestamp)
-        unique_id = str(uuid4())       
-        embedded_user_input = encoder([ user_input ]).numpy() # Convert the text into vector form
-        # embedded_user_input = gpt3_embedding(ai_completion_text)
-        unique_id = str(uuid4())
-        speaker   = 'RAVEN'
-        message = user_input 
-        embedded_user_input = np.array( embedded_user_input )
-        flattened_input = [float(item) for item in embedded_user_input.flatten().tolist()]
-
-        # Insert User's input to lancedb
-        lanceTable.add( unique_id, flattened_input, speaker, timestamp, message, timestring )
-       
-        
-        # Search for relevant message unique ids in lancedb
-        results = lanceTable.table.search( flattened_input ).limit( 30 ).to_df()
-        conversation = "\n".join(results['message'].tolist())
-        
-        prompt = open_file('prompt_response.txt').replace('<<CONVERSATION>>', conversation).replace('<<MESSAGE>>', user_input)
-        ai_completion_text = ai_completion(prompt)
-        timestamp = time()
-        timestring = timestamp_to_datetime(timestamp)
-        embedded_ai_completion = gpt3_embedding(ai_completion_text)
-        unique_id = str(uuid4())
-        speaker   = 'RAVEN'
-        thetimestamp = timestamp
-        message = ai_completion_text 
-        timestring = timestring
-        
-        # Insert AI's response to lancedb
-        lanceTable.table.add([( unique_id, embedded_ai_completion, speaker, timestamp, timestring )])
-        
-        print('\n\nRAVEN: %s' % ai_completion_text)
+    Adding the last dataframe to the table causes the error.
