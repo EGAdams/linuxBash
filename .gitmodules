@@ -22,3 +22,6 @@
 [submodule "MetaGPT"]
 	path = MetaGPT
 	url = https://github.com/EGAdams/MetaGPT.git
+[submodule "open-interpreter"]
+	path = open-interpreter
+	url = https://github.com/KillianLucas/open-interpreter.git

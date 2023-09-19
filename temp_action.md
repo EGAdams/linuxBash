@@ -1,160 +1,130 @@
 
 # Context
 [Architect: ## Implementation approach
-To implement the airplane speedometer gauge application for iOS devices, we will follow the following approach:
+To design a concise, usable, and complete iOS system for the gauge widget, we will follow the following approach:
 
-1. **Real-time representation of speed and other metrics**: We will use the Core Location framework to access the device's GPS data and retrieve the speed and other relevant metrics in real-time.
+1. **Data Management**: We will use Core Data as the primary data management framework for the gauge widget. Core Data provides a high-level interface for managing the model layer objects in the application. It offers features like data persistence, data validation, and undo/redo support. Core Data is a powerful and widely used framework in iOS development.
 
-2. **Customization options for visual elements**: We will leverage the power of Core Animation to create customizable visual elements for the speedometer gauge, such as the rim, face, and ticks. We will use open-source libraries like SwiftSVG or SVGKit to import vector graphics for the visual elements.
+2. **User Interface**: For the user interface, we will use SwiftUI. SwiftUI is a modern UI framework introduced by Apple in iOS 13. It provides a declarative syntax for building user interfaces, making it easier to create complex layouts and animations. SwiftUI also offers built-in support for dynamic type, dark mode, and accessibility features.
 
-3. **Smooth visual transitions**: We will utilize Core Animation to create smooth visual transitions and animations for the speedometer gauge. We can use open-source libraries like Lottie or Hero to simplify the animation implementation.
+3. **Networking**: To handle network requests, we will use Alamofire. Alamofire is a widely used networking library in the iOS community. It provides a simple and elegant API for making HTTP requests, handling responses, and managing network tasks. Alamofire also supports features like authentication, background requests, and request chaining.
 
-4. **Adjust, save, and retrieve gauge metrics using Core Data**: We will use Core Data to store and manage the gauge metrics. Core Data provides a powerful and efficient way to persist data in iOS applications. We can use open-source libraries like CoreDataKit or MagicalRecord to simplify the Core Data implementation.
+4. **Database**: For persistent storage of gauge metrics, we will use SQLite.swift. SQLite.swift is a type-safe, Swift-friendly wrapper around SQLite. It provides a convenient API for working with SQLite databases, including creating tables, inserting, updating, and querying data. SQLite.swift is lightweight, easy to use, and well-documented.
 
-5. **Compatibility across iOS devices**: We will ensure compatibility across different iOS devices, including iPad and iPhone, by utilizing the Auto Layout system provided by UIKit. Auto Layout allows us to create adaptive user interfaces that adjust to different screen sizes and orientations.
-
-6. **Intuitive user experience**: We will focus on creating a clean and intuitive user interface that is easy to navigate and understand. We can use open-source libraries like SnapKit or PureLayout to simplify the layout and constraint management.
-
-7. **Synchronization capabilities with other aviation-related iOS applications**: We will implement synchronization capabilities by integrating with aviation-related APIs or by implementing data exchange protocols like JSON or XML. We can use open-source libraries like Alamofire or SwiftyJSON to simplify the networking and data parsing tasks.
+5. **Testing**: For unit testing, we will use XCTest, the built-in testing framework provided by Apple. XCTest offers a comprehensive set of tools and APIs for writing and running tests. It supports features like test assertions, test expectations, and test coverage analysis. XCTest is widely used in the iOS development community and integrates well with Xcode.
 
 ## Swift Package Name
 ```swift
-"AirplaneSpeedometerGauge"
+"AviationGaugeWidget"
 ```
 
 ## File List
 ```swift
 [
-    "MainViewController.swift",
-    "SpeedometerView.swift",
-    "CustomizationViewController.swift",
-    "DataStorageManager.swift",
-    "NetworkingManager.swift",
-    "Models/SpeedometerMetrics.swift",
-    "Helpers/AnimationHelper.swift",
-    "Helpers/LocationHelper.swift",
-    "Helpers/UserDefaultsHelper.swift",
-    "Helpers/NetworkHelper.swift",
-    "Resources/Assets.xcassets",
-    "Resources/CustomizationOptions.json",
-    "Resources/NetworkingConfig.plist"
+    "MainView.swift",
+    "GaugeView.swift",
+    "Speedometer.swift",
+    "YawGauge.swift",
+    "DataManager.swift",
+    "NetworkManager.swift",
+    "DatabaseManager.swift",
+    "TestManager.swift",
+    "TestReport.swift",
+    "Utils.swift"
 ]
 ```
 
 ## Data Structures and Interface Definitions
 ```mermaid
 classDiagram
-    class MainViewController{
-        -SpeedometerView speedometerView
-        -CustomizationViewController customizationViewController
-        -DataStorageManager dataStorageManager
-        -NetworkingManager networkingManager
-        +void viewDidLoad()
-        +void updateSpeedometerMetrics(SpeedometerMetrics metrics)
-        +void saveSpeedometerMetrics(SpeedometerMetrics metrics)
-        +SpeedometerMetrics retrieveSpeedometerMetrics()
-        +void syncWithOtherApps()
+    class MainView{
+        +var gaugeView: GaugeView
+        +func startTest()
+        +func endTest()
     }
 
-    class SpeedometerView{
-        -UIImageView rimImageView
-        -UIImageView faceImageView
-        -UIImageView ticksImageView
-        -UILabel speedLabel
-        +void setSpeed(int speed)
-        +void setRimImage(UIImage image)
-        +void setFaceImage(UIImage image)
-        +void setTicksImage(UIImage image)
+    class GaugeView{
+        +var speedometer: Speedometer
+        +var yawGauge: YawGauge
+        +func customizeAppearance()
     }
 
-    class CustomizationViewController{
-        -UITableView customizationOptionsTableView
-        -[CustomizationOption] customizationOptions
-        +void viewDidLoad()
-        +void saveCustomizationOptions()
+    class Speedometer{
+        +var speed: Double
+        +func updateSpeed(newSpeed: Double)
     }
 
-    class DataStorageManager{
-        +void saveMetrics(SpeedometerMetrics metrics)
-        +SpeedometerMetrics retrieveMetrics()
+    class YawGauge{
+        +var yaw: Double
+        +func updateYaw(newYaw: Double)
     }
 
-    class NetworkingManager{
-        +void syncWithOtherApps()
+    class DataManager{
+        +func adjustMetrics(metric: String, value: Double)
+        +func saveMetrics()
+        +func retrieveMetrics() -> [String: Double]
     }
 
-    class SpeedometerMetrics{
-        +int speed
-        +int yaw
-        +int otherMetrics
+    class NetworkManager{
+        +func sendRequest(url: String, parameters: [String: Any], completion: (Result<Data, Error>) -> Void)
     }
 
-    class AnimationHelper{
-        +void animateSpeedometerView(SpeedometerView speedometerView, SpeedometerMetrics metrics)
+    class DatabaseManager{
+        +func createTable(tableName: String)
+        +func insertData(tableName: String, data: [String: Any])
+        +func updateData(tableName: String, data: [String: Any], condition: String)
+        +func queryData(tableName: String, condition: String) -> [[String: Any]]
     }
 
-    class LocationHelper{
-        +void startUpdatingLocation()
-        +void stopUpdatingLocation()
-        +CLLocationCoordinate2D getCurrentLocation()
-        +double getCurrentSpeed()
+    class TestManager{
+        +func runTest()
+        +func writeTestReport(report: TestReport)
     }
 
-    class UserDefaultsHelper{
-        +void saveObject(object: Any, forKey: String)
-        +Any retrieveObject(forKey: String)
+    class TestReport{
+        +var testName: String
+        +var testResult: String
+        +var testDate: Date
     }
 
-    class NetworkHelper{
-        +void sendRequest(url: URL, parameters: [String: Any], completion: (Data?, Error?) -> Void)
-        +void parseResponse(data: Data) -> [String: Any]
+    class Utils{
+        +static func formatSpeed(speed: Double) -> String
+        +static func formatYaw(yaw: Double) -> String
     }
+
+    MainView "1" -- "1" GaugeView: has
+    GaugeView "1" -- "1" Speedometer: has
+    GaugeView "1" -- "1" YawGauge: has
+    DataManager "1" -- "1" NetworkManager: has
+    DataManager "1" -- "1" DatabaseManager: has
+    DataManager "1" -- "1" TestManager: has
+    TestManager "1" -- "1" TestReport: has
 ```
 
 ## Program Call Flow
 ```mermaid
 sequenceDiagram
-    participant M as MainViewController
-    participant S as SpeedometerView
-    participant C as CustomizationViewController
-    participant D as DataStorageManager
-    participant N as NetworkingManager
-    participant A as AnimationHelper
-    participant L as LocationHelper
-    participant U as UserDefaultsHelper
-    participant H as NetworkHelper
+    participant M as MainView
+    participant G as GaugeView
+    participant D as DataManager
+    participant N as NetworkManager
+    participant DB as DatabaseManager
+    participant TM as TestManager
+    participant TR as TestReport
+    participant U as Utils
 
-    M->>+S: viewDidLoad()
-    M->>+D: viewDidLoad()
-    M->>+N: viewDidLoad()
-    M->>+L: viewDidLoad()
-    M->>+U: viewDidLoad()
-
-    M->>+L: startUpdatingLocation()
-    L->>-M: getCurrentSpeed()
-    M->>+S: setSpeed(speed)
-
-    M->>+D: retrieveSpeedometerMetrics()
-    D->>-M: SpeedometerMetrics
-    M->>+S: setRimImage(image)
-    M->>+S: setFaceImage(image)
-    M->>+S: setTicksImage(image)
-
-    M->>+C: viewDidLoad()
-    C->>-M: customizationOptions
-    M->>+S: setRimImage(image)
-    M->>+S: setFaceImage(image)
-    M->>+S: setTicksImage(image)
-
-    M->>+S: setSpeed(speed)
-    M->>+D: saveSpeedometerMetrics(metrics)
-    M->>+N: syncWithOtherApps()
-
-    M->>+A: animateSpeedometerView(speedometerView, metrics)
-    A->>-M: animatedSpeedometerView
-
-    M->>-S: speedometerView
-    S->>-M: updatedSpeedometerView
+    M->>G: startTest()
+    G->>D: adjustMetrics(metric, value)
+    D->>N: sendRequest(url, parameters)
+    N-->>D: completion(result)
+    D->>DB: insertData(tableName, data)
+    D->>DB: queryData(tableName, condition)
+    DB-->>D: data
+    D->>TM: writeTestReport(report)
+    TM->>TR: init(testName, testResult, testDate)
+    TR-->>TM: report
+    TM-->>M: report
+    M->>G: endTest()
 ```
 
 ## Anything Unclear

@@ -27,6 +27,7 @@ def main():
     print("     7. open current tennis matrix workspace in vscode\n")
     print("     8. open current test fixture workspace( SMOL_AI ) in vscode\n")
     print("     9. The LangChain Agent Plan\n")
+    print("     s. open swift startup in chrome gpt\n")
     print("     o. open this file in vscode for editing\n")
     print("     x. Exit\n")
 
@@ -139,6 +140,14 @@ def main():
         # os.chdir( "/home/adamsl/linuxBash/project_management/plan.md" )
         # open vscode in the directory
         os.system( "code  /home/adamsl/linuxBash/project-management/next_steps.md" )
+        main()
+    
+    elif choice == "s":
+        print("opening main swift startup in folder chrome-meta-gpt using vscode... " )
+        # cd to the directory where the script is located
+        # os.chdir( "/home/adamsl/linuxBash/project_management/plan.md" )
+        # open vscode in the directory
+        os.system( "code  /home/adamsl/linuxBash/chrome-meta-gpt/swift_startup.py" )
         main()
     
     # elif choice == "5":
