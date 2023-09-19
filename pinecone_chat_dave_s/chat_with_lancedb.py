@@ -8,7 +8,7 @@ from time import time, sleep
 from uuid import uuid4
 import datetime
 import lancedb
-import pandas as pd
+import pandas as pd 
 
 def open_file(filepath):
     with open(filepath, 'r', encoding='utf-8') as infile:
