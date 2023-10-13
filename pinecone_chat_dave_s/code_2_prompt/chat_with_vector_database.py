@@ -42,7 +42,7 @@ def gpt3_embedding(content, engine='text-embedding-ada-002' ):
 
 
 
-def ai_completion(prompt, engine='gpt-3.5-turbo-16k', temp=0.0, top_p=1.0, tokens=400, freq_pen=0.0, pres_pen=0.0, stop=[ 'USER:', 'RAVEN:' ]):
+def ai_completion(prompt, engine='gpt-3.5-turbo', temp=0.0, top_p=1.0, tokens=400, freq_pen=0.0, pres_pen=0.0, stop=[ 'USER:', 'RAVEN:' ]):
     max_retry = 5
     retry = 0
     prompt = prompt.encode(encoding='ASCII',errors='ignore' ).decode()

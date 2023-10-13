@@ -172,43 +172,44 @@ import pyarrow as pa
 class LanceTable:
     def __init__(self):
         # Initialize lancedb
-        self.db = lancedb.connect("/tmp/fresh-lancedb")
+        self.db = lancedb.connect( "/tmp/fresh-lancedb" )
         
-        self.schema = pa.schema([
-            pa.field("unique_id", pa.string()),
-            pa.field("vector", pa.list_(pa.float32())),
-            pa.field("speaker", pa.string()),
-            pa.field("time", pa.float64()),
-            pa.field("message", pa.string()),
-            pa.field("timestring", pa.string()),
-        ])
+        # self.schema = pa.schema([
+        #     pa.field("unique_id", pa.string()),
+        #     pa.field("vector", pa.list_(pa.float32())),
+        #     pa.field("speaker", pa.string()),
+        #     pa.field("time", pa.float64()),
+        #     pa.field("message", pa.string()),
+        #     pa.field("timestring", pa.string()),
+        # ])
 
 
         # Create the table with the defined schema
+        panda_data_frame = pd.DataFrame([ initialization_data ])
         table_name = "lance-table"
         if table_name in self.db.table_names():
             print( "table %s already exists" % table_name )
             self.db.drop_table(table_name)  # Drop the table if it already exists
-            self.table = self.db.create_table( table_name, schema=self.schema )
+            self.table = self.db.create_table( table_name, panda_data_frame )
         else:
             print( "creating table: %s" % table_name )
-            self.table = self.db.create_table( table_name, schema=self.schema )
+            self.table = self.db.create_table( table_name, panda_data_frame )
         
         # Insert the provided data into the table
         # self.table_initialized = False
         # self.table = None
         print(json.dumps(initialization_data, indent=4))
         # Ensure 'embedded_user_input' is a numpy array
-        embedded_user_input = np.array(initialization_data['vector'])
+        # embedded_user_input = np.array(initialization_data['vector'])
 
-        # Flatten the array
-        flattened_input = embedded_user_input.flatten().tolist()
-        initialization_data[ "vector" ] = flattened_input
-        dataframe = pd.DataFrame([ initialization_data ])
-        arrow_table = pa.Table.from_pandas(dataframe, schema=self.schema)
+        # # Flatten the array
+        # flattened_input = embedded_user_input.flatten().tolist()
+        # initialization_data[ "vector" ] = flattened_input
+        # dataframe = pd.DataFrame([ initialization_data ])
+        # arrow_table = pa.Table.from_pandas(dataframe, panda_data_frame)
 
+        # self.table.add( arrow_table )
         # self.table.add( dataframe )
-        self.table.add( arrow_table )
         
     def add(self, unique_id_arg, embedded_message, speaker, timestamp, message, timestring ):
         # Ensure 'embedded_user_input' is a numpy array
@@ -233,12 +234,12 @@ class LanceTable:
             "timestring": timestring
         }
         
-        print( data )
+        # print( data )
         dataframe = pd.DataFrame([ data ])
-        arrow_table = pa.Table.from_pandas(dataframe, schema=self.schema )
+        # arrow_table = pa.Table.from_pandas(dataframe, panda_data_frame )
 
-        # self.table.add( dataframe )
-        self.table.add( arrow_table )
+        # self.table.add( arrow_table )
+        self.table.add( dataframe )
         
 lanceTable = LanceTable()
 
@@ -255,34 +256,49 @@ if __name__ == '__main__':
         timestamp = time()
         timestring = timestamp_to_datetime(timestamp)
         unique_id = str(uuid4())       
-        embedded_user_input = encoder([ user_input ]).numpy() # Convert the text into vector form
-        # embedded_user_input = gpt3_embedding(ai_completion_text)
-        unique_id = str(uuid4())
-        speaker   = 'RAVEN'
+        # embedded_user_input = encoder([ user_input ]).numpy() # Convert the text into vector form
+        # embedded_user_input = gpt3_embedding( user_input )
+        embedded_user_input = lanceTable.table.embedding_functions[ 'vector' ].function.compute_query_embeddings( user_input )[ 0 ]
+        speaker   = 'USER'
         message = user_input 
-        embedded_user_input = np.array( embedded_user_input )
-        flattened_input = [float(item) for item in embedded_user_input.flatten().tolist()]
+        # embedded_user_input = np.array( embedded_user_input )
+        # flattened_input = [float(item) for item in embedded_user_input.flatten().tolist()]
 
         # Insert User's input to lancedb
-        lanceTable.add( unique_id, flattened_input, speaker, timestamp, message, timestring )
-       
+        lanceTable.add( unique_id, embedded_user_input, speaker, timestamp, message, timestring )
+
+        query_builder = lanceTable.LanceVectorQueryBuilder( lanceTable.table, embedded_user_input, 'vector' )
         
         # Search for relevant message unique ids in lancedb
-        results = lanceTable.table.search( flattened_input ).limit( 30 ).to_df()
-        conversation = "\n".join(results['message'].tolist())
+        # results = lanceTable.table.search( embedded_user_input ).limit( 30 ).to_df()
         
-        prompt = open_file('prompt_response.txt').replace('<<CONVERSATION>>', conversation).replace('<<MESSAGE>>', user_input)
-        ai_completion_text = ai_completion(prompt)
-        timestamp = time()
-        timestring = timestamp_to_datetime(timestamp)
-        embedded_ai_completion = gpt3_embedding(ai_completion_text)
-        unique_id = str(uuid4())
-        speaker   = 'RAVEN'
-        thetimestamp = timestamp
-        message = ai_completion_text 
-        timestring = timestring
+        results = query_builder.to_arrow()
+        
+        dataframe = results.to_pandas()
+        
+        print ( dataframe )
+        
+        chance_to_quit = input( "Press q to quit: " )
+        if chance_to_quit == "q":
+            break
+        
+        break
+        
+        # print ( results )
+        # conversation = "\n".join(results['message'].tolist())
+        
+        # prompt = open_file('prompt_response.txt').replace('<<CONVERSATION>>', conversation).replace('<<MESSAGE>>', user_input)
+        # ai_completion_text = ai_completion(prompt)
+        # timestamp = time()
+        # timestring = timestamp_to_datetime(timestamp)
+        # embedded_ai_completion = gpt3_embedding(ai_completion_text)
+        # unique_id = str(uuid4())
+        # speaker   = 'RAVEN'
+        # thetimestamp = timestamp
+        # message = ai_completion_text 
+        # timestring = timestring
         
         # Insert AI's response to lancedb
-        lanceTable.table.add([( unique_id, embedded_ai_completion, speaker, timestamp, timestring )])
+        # lanceTable.table.add([( unique_id, embedded_ai_completion, speaker, timestamp, timestring )])
         
-        print('\n\nRAVEN: %s' % ai_completion_text)
+        # print('\n\nRAVEN: %s' % ai_completion_text)

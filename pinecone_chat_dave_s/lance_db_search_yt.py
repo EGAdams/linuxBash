@@ -15,7 +15,7 @@ import os
 # Configuring the environment variable OPENAI_API_KEY
 if "OPENAI_API_KEY" not in os.environ:
     # OR set the key here as a variable
-    openai.api_key = "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"
+    openai.api_key = ""
     
 assert len(openai.Model.list()["data"]) > 0
 
@@ -64,6 +64,7 @@ def create_prompt(query, context):
                 "\n\n---\n\n".join(context.text) +
                 prompt_end
             )    
+    print ( "prompt:", prompt )
     return prompt
 
 def complete(prompt):

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshooting Android Studio Device Connection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h2 {
+            color: #2C3E50;
+        }
+        ul {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Troubleshooting Android Studio Device Connection</h1>
+<p>Date: 2023-09-27</p>
+
+<h2>Initial Problem</h2>
+<p>The Android device was greyed out in Android Studio, and the play and debug buttons were also grayed out. The error displayed was: "ADB IDEA: No device found".</p>
+
+<h2>Steps Taken</h2>
+
+<ul>
+    <li>Ensured that a device/emulator was running and USB Debugging was enabled.</li>
+    <li>Checked for device authorization prompt on the Android device.</li>
+    <li>Restarted ADB server from the terminal.</li>
+    <li>Verified USB cable and port functionality.</li>
+    <li>Checked for appropriate device drivers (especially relevant for Windows users).</li>
+    <li>Ensured only one ADB instance was running.</li>
+    <li>Updated Android Studio and SDK tools to the latest versions.</li>
+    <li>Checked connected devices using the `adb devices` terminal command.</li>
+    <li>Restarted Android Studio.</li>
+    <li>Synced project with Gradle files both from Android Studio and the terminal.</li>
+    <li>Invalidated caches and restarted Android Studio.</li>
+    <li>Checked the active build variant and run/debug configuration.</li>
+    <li>Restarted ADB in different modes (USB and default) and checked its version.</li>
+    <li>Viewed real-time logs from the device using `adb logcat`.</li>
+    <li>Reset ADB authentication keys.</li>
+    <li>Ensured Android project view was active in Android Studio.</li>
+    <li>Restarted ADB directly from Android Studio.</li>
+    <li>Ensured Android Studio recognized the project as an Android project.</li>
+    <li>Re-imported the project in Android Studio after deleting the `.idea` directory and `.iml` files.</li>
+    <li>Checked for any pending Android Studio updates or plugin updates.</li>
+</ul>
+
+<h2>Conclusion</h2>
+<p>Despite extensive troubleshooting, the issue with Android Studio not recognizing the connected device persists. Further investigation, possibly consulting Android Studio logs or the Android Studio issue tracker, might be required to fully resolve the issue.</p>
+
+</body>
+</html>

@@ -1,18 +1,13 @@
-import lancedb
-import pyarrow as pa
-import pandas as pd
-import numpy as np
-import datetime
-from time import time, sleep
-from uuid import uuid4
+# Your Role
+- Expert Python Developer
+- Expert PyArrow Developer
+- Expert Python Debugger
 
-import tensorflow_hub as hub
-# Load the Universal Sentence Encoder
-encoder = hub.load('https://tfhub.dev/google/universal-sentence-encoder/4')
+# Your Task
+- Given the relevant pieces of code, debug the error message below
 
-def timestamp_to_datetime(unix_time):
-    return datetime.datetime.fromtimestamp(unix_time).strftime("%A, %B %d, %Y at %I:%M%p %Z")
-
+## Main method
+```python
 initialization_data = {
     'unique_id': '2c9a93d5-3631-4faa-8eac-a99b92e45d50', 
     'vector': [-0.07254597, -0.00345811,  0.038447  ,  0.025837  , -0.01153462,
@@ -123,6 +118,10 @@ initialization_data = {
     'message': 'this is a test.', 
     'timestring': 'Tuesday, September 19, 2023 at 02:00PM '
 }
+
+# Initialize lancedb
+lance_database = lancedb.connect("/tmp/fresh-lancedb")
+
 database_schema = pa.schema([
     pa.field("unique_id", pa.string()),
     pa.field("vector", pa.list_(pa.float32())),
@@ -131,27 +130,6 @@ database_schema = pa.schema([
     pa.field("message", pa.string()),
     pa.field("timestring", pa.string()),
 ])
-
-vector_np = np.array( initialization_data[ "vector" ], dtype=np.float32 )
-# flattened_input = original_list.flatten().tolist()
-# original_list[ "vector" ] = flattened_input
-dataframe = pd.DataFrame([ initialization_data ])
-# arrow_table = pa.Table.from_pandas(dataframe, database_schema)
-
-hi_user_input = encoder([ "hi" ])
-
-initialization_data = {
-    'unique_id': '2c9a93d5-3631-4faa-8eac-a99b92e45d50', 
-    'vector': dataframe,
-    'speaker': 'USER', 
-    'time': 1695146425.0193892, 
-    'message': 'this is a test.', 
-    'timestring': 'Tuesday, September 19, 2023 at 02:00PM '
-}
-
-# Initialize lancedb
-lance_database = lancedb.connect("/tmp/fresh-lancedb")
-
 
 table_name = "lance-table" # Create the table with the defined schema
 if table_name in lance_database.table_names():
@@ -170,29 +148,161 @@ else:
             
 uri = "/tmp/fresh-lancedb"
 lance_database = lancedb.connect(uri)
-
-# user_input = input('\n\nUSER: ')
-user_input = "hi"
-timestamp = time()
-timestring = timestamp_to_datetime(timestamp)
-unique_id = str(uuid4())       
-embedded_user_input = encoder([ user_input ]).numpy() # Convert the text into vector form
-# embedded_user_input = gpt3_embedding(ai_completion_text)
-unique_id = str(uuid4())
-speaker   = 'RAVEN'
-message = user_input 
-embedded_user_input = np.array( embedded_user_input )
-flattened_input = [float(item) for item in embedded_user_input.flatten().tolist()]
-
-result = lance_table.search( flattened_input ).limit(2).to_df()
+result = lance_table.search([100, 100]).limit(2).to_df()
 print( result )
+```
 
+## Search method for LanceDB
+```python
+def search(
+        self,
+        query: Optional[Union[VEC, str]] = None,
+        vector_column_name: str = VECTOR_COLUMN_NAME,
+        query_type: str = "auto",
+    ) -> LanceQueryBuilder:
+        """Create a search query to find the nearest neighbors
+        of the given query vector.
 
+        Parameters
+        ----------
+        query: str, list, np.ndarray, default None
+            The query to search for. If None then
+            the select/where/limit clauses are applied to filter
+            the table
+        vector_column_name: str, default "vector"
+            The name of the vector column to search.
+        query_type: str, default "auto"
+            "vector", "fts", or "auto"
+            If "auto" then the query type is inferred from the query;
+            If `query` is a list/np.ndarray then the query type is "vector";
+            If `query` is a string, then the query type is "vector" if the
+            table has embedding functions else the query type is "fts"
 
+        Returns
+        -------
+        LanceQueryBuilder
+            A query builder object representing the query.
+            Once executed, the query returns selected columns, the vector,
+            and also the "_distance" column which is the distance between the query
+            vector and the returned vector.
+        """
+        raise NotImplementedError
+```
 
-# stay open!!!!!!!!!!
+## LanceQueryBuilder create method
+    
+```python
+class LanceQueryBuilder(ABC):
+    @classmethod
+    def create(
+        cls,
+        table: "lancedb.table.Table",
+        query: Optional[Union[np.ndarray, str]],
+        query_type: str,
+        vector_column_name: str,
+    ) -> LanceQueryBuilder:
+        if query is None:
+            return LanceEmptyQueryBuilder(table)
 
-# table = lance_database.create_table("my_table",
-#                          data=[{"vector": [3.1, 4.1], "item": "foo", "price": 10.0},
-#                                {"vector": [5.9, 26.5], "item": "bar", "price": 20.0}])
-# lance_table = lance_database.open_table( "lance-table" )
+        query, query_type = cls._resolve_query(
+            table, query, query_type, vector_column_name
+        )
+
+        if isinstance(query, str):
+            # fts
+            return LanceFtsQueryBuilder(table, query)
+
+        if isinstance(query, list):
+            query = np.array(query, dtype=np.float32)
+        elif isinstance(query, np.ndarray):
+            query = query.astype(np.float32)
+        else:
+            raise TypeError(f"Unsupported query type: {type(query)}")
+
+        return LanceVectorQueryBuilder(table, query, vector_column_name)
+    def to_arrow(self) -> pa.Table:
+        """
+        Execute the query and return the results as an
+        [Apache Arrow Table](https://arrow.apache.org/docs/python/generated/pyarrow.Table.html#pyarrow.Table).
+
+        In addition to the selected columns, LanceDB also returns a vector
+        and also the "_distance" column which is the distance between the query
+        vector and the returned vectors.
+        """
+        vector = self._query if isinstance(self._query, list) else self._query.tolist()
+        query = Query(
+            vector=vector,
+            filter=self._where,
+            k=self._limit,
+            metric=self._metric,
+            columns=self._columns,
+            nprobes=self._nprobes,
+            refine_factor=self._refine_factor,
+            vector_column=self._vector_column,
+        )
+        return self._table._execute_query(query)
+```
+
+## LanceVectorQueryBuilder
+``` python
+class LanceVectorQueryBuilder(LanceQueryBuilder):
+    """
+    A builder for nearest neighbor queries for LanceDB.
+
+    Examples
+    --------
+    >>> import lancedb
+    >>> data = [{"vector": [1.1, 1.2], "b": 2},
+    ...         {"vector": [0.5, 1.3], "b": 4},
+    ...         {"vector": [0.4, 0.4], "b": 6},
+    ...         {"vector": [0.4, 0.4], "b": 10}]
+    >>> db = lancedb.connect("./.lancedb")
+    >>> table = db.create_table("my_table", data=data)
+    >>> (table.search([0.4, 0.4])
+    ...       .metric("cosine")
+    ...       .where("b < 10")
+    ...       .select(["b"])
+    ...       .limit(2)
+    ...       .to_df())
+       b      vector  _distance
+    0  6  [0.4, 0.4]        0.0
+    """
+
+    def __init__(
+        self,
+        table: "lancedb.table.Table",
+        query: Union[np.ndarray, list],
+        vector_column: str = VECTOR_COLUMN_NAME,
+    ):
+        super().__init__(table)
+        self._query = query
+        self._metric = "L2"
+        self._nprobes = 20
+        self._refine_factor = None
+        self._vector_column = vector_column
+```
+
+## Error
+```bash
+Exception has occurred: ValueError       (note: full exception trace is shown but execution is paused at: _run_module_as_main)
+LanceError(IO): KNNFlatExec node: query column vector is not a vector
+  File "/home/adamsl/.pyenv/versions/3.10.6/lib/python3.10/site-packages/lance/dataset.py", line 1023, in to_reader
+    return self._scanner.to_pyarrow()
+  File "/home/adamsl/.pyenv/versions/3.10.6/lib/python3.10/site-packages/lance/dataset.py", line 1020, in to_table
+    return self.to_reader().read_all()
+  File "/home/adamsl/.pyenv/versions/3.10.6/lib/python3.10/site-packages/lance/dataset.py", line 273, in to_table
+    ).to_table()
+  File "/home/adamsl/.pyenv/versions/3.10.6/lib/python3.10/site-packages/lancedb/table.py", line 838, in _execute_query
+    return ds.to_table(
+  File "/home/adamsl/.pyenv/versions/3.10.6/lib/python3.10/site-packages/lancedb/query.py", line 331, in to_arrow
+    return self._table._execute_query(query)
+  File "/home/adamsl/.pyenv/versions/3.10.6/lib/python3.10/site-packages/lancedb/query.py", line 135, in to_df
+    return self.to_arrow().to_pandas()
+  File "/home/adamsl/linuxBash/lancedb_starter.py", line 145, in <module>
+    result = lance_table.search([100, 100]).limit(2).to_df()
+  File "/home/adamsl/.pyenv/versions/3.10.6/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/adamsl/.pyenv/versions/3.10.6/lib/python3.10/runpy.py", line 196, in _run_module_as_main (Current frame)
+    return _run_code(code, main_globals, None,
+ValueError: LanceError(IO): KNNFlatExec node: query column vector is not a vector
+```

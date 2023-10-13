@@ -219,3 +219,6 @@ def __init__(self):
     ```
 
     Adding the last dataframe to the table causes the error.
+
+    https://chat.openai.com/share/dd048a27-38e7-4a00-b7b4-58458f2cb329
+    

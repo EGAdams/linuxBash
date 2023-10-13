@@ -29,6 +29,7 @@ def main():
     print("     9. The LangChain Agent Plan\n")
     print("     s. open swift startup in chrome gpt\n")
     print("     o. open this file in vscode for editing\n")
+    print("     air. open the airport project plan\n")
     print("     x. Exit\n")
 
     choice = input("    Please select an option: \n    >")
@@ -140,6 +141,14 @@ def main():
         # os.chdir( "/home/adamsl/linuxBash/project_management/plan.md" )
         # open vscode in the directory
         os.system( "code  /home/adamsl/linuxBash/project-management/next_steps.md" )
+        main()
+    
+    elif choice == "air":
+        print("opening acceleration doc... " )
+        # cd to the directory where the script is located
+        # os.chdir( "/home/adamsl/linuxBash/project_management/plan.md" )
+        # open vscode in the directory
+        os.system( "code  /home/adamsl/linuxBash/acceleration_documentation.md" )
         main()
     
     elif choice == "s":
