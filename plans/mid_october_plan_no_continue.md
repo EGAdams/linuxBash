@@ -5,7 +5,8 @@
 
 [Still needs answer](https://chat.openai.com/share/7e6c2981-dc59-4e61-97c4-47f02d8fba4f)
 
-================= ME START ====================
+[Research on Memory Storage](https://chat.openai.com/share/77886708-1a8a-4e75-945c-4ed759c690b8)
+
 # Your roles
 - My teacher
 - My helpful assistant
@@ -52,6 +53,7 @@
 
 ### Research memory
 - Find out what type of memory we can give the AI agent.  I would prefer to start by just using a vector store that we could put on the hard drive.
+- [gpt4 found this](https://aws.amazon.com/blogs/database/the-role-of-vector-datastores-in-generative-ai-applications/)
 
 ### Research the latest AI agent available
 - At the time of this writing, AutoGen by Microsoft seems to have the best looking code base for using AI agents to write code so far.  There is also MetaGPT which is also well written.We need to seardh the web frequently to find out if anyone has found a way to help us in reaching any of our AI coding assistant build goals.  So Google for the latest news on AI coding assistants.
@@ -68,10 +70,6 @@
 - Let's make a plan for the next 20 hours this doesn't include sleep.
 - Be creative about how to distribute the remaining time that I haven't specified.  Keep in mind that you will be teaching me how to create AI agents to perform tasks, so try to incorporate that into the plan.
 
-=================== ME END ====================
-
-
-
-================== YOU START ====================
-
-Certainly!  Before we make a plan, I will need a little more information from you.  First, I would like to know...
+---
+Please begin your analysis and planning now.
+---
