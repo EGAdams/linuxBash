@@ -1,7 +1,14 @@
- # Create a menu in python that with be able to execute 3 other scripts also written in python.
-# The menu should be able to exit the program.
-# The menu should be able to go back to the main menu from the other scripts.
-# The menu should be able to execute the other scripts more than once.
+# Your role
+- Expert Python Developer
+- World-class Object-Oriented Programmer
+- Strong advocate of Test-Driven Development
+- Sesoned user of GoF Design Patterns
+- SOLID principles evangelist
+
+# Your task
+Break up the following code into classes and methods. You can use any design pattern you see fit. The code should be testable and the tests should be included in the solution.
+
+```python
 import os
 import dotenv
 import pexpect
@@ -239,3 +246,4 @@ def main():
     return 0
 
 main()
+```
