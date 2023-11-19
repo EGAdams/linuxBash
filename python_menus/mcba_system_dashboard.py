@@ -4,6 +4,8 @@
 # The menu should be able to execute the other scripts more than once.
 import os
 
+SHELL_SCRIPTS_DIR = "/home/adamsl/linuxBash/menu_shell_scripts"
+
 def main():
     print( "                                                 " )
     print( "                                                 " )
@@ -15,18 +17,18 @@ def main():
     print("     1. clean all tables.  keep admin")
     print("     2. clean all tables.  keep users, conversations, and admin")
     print("     3. show all tables")
+    print("     m. delete all messages.") 
+    print("     c. delete all conversations.") 
+    print("     j. clear monitored objects table.") 
     print("     4. open car wash page and click on phone icon")
     print("     5. open log viewer")
     print("     h. show mycustom table" )
     print("     t. delete all messages with est in them") 
     print("     keys. show gcm_keys table" )
     print("     g. delete all guests.  keep admin") 
-    print("     m. delete all messages.") 
-    print("     j. clear monitored objects table.") 
-    print("     c. delete all conversations.") 
-    print("     6. Exit")
+    print("     6. Exit \n" )
 
-    choice = input("    Please select an option: notbash$")
+    choice = input("    Please select an option: >>----> ") 
     print( "                                     " )
 
     if choice == "1":
@@ -34,7 +36,7 @@ def main():
         # cd to the directory where the script is located
         #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
         # open vscode in the directory
-        os.system( "./delete_all_but_admin.sh" )
+        os.system ( SHELL_SCRIPTS_DIR + "/delete_all_but_admin.sh" )
         main()
 
     elif choice == "2":
@@ -64,14 +66,14 @@ def main():
         main()
 
     elif choice == "5":
-        print("openining log viewer... " )
+        print("opening log viewer... " )
         # open a child process to execute script
         os.chdir( "/home/adamsl/the-factory" )
         os.system( "npm run start" )
         main()
     
     elif choice == "h":
-        print( "showing mycusom table... " )
+        print( "showing mycustom table... " )
         os.system( "./show_mycustom_tables.sh " )
         main()
         
@@ -103,7 +105,7 @@ def main():
         # cd to the directory where the script is located
         #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
         # open vscode in the directory
-        os.system( "./delete_all_messages.sh" )
+        os.system( SHELL_SCRIPTS_DIR + "/delete_all_messages.sh" )
         main()
     
     elif choice == "c":
@@ -111,7 +113,7 @@ def main():
         # cd to the directory where the script is located
         #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
         # open vscode in the directory
-        os.system( "./delete_all_conversations.sh" )
+        os.system( SHELL_SCRIPTS_DIR + "/delete_all_conversations.sh" )
         main()
     
     elif choice == "j":
@@ -119,7 +121,7 @@ def main():
         # cd to the directory where the script is located
         #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
         # open vscode in the directory
-        os.system( "./delete_monitors.sh" )
+        os.system( SHELL_SCRIPTS_DIR + "/delete_monitors.sh" )
         main()
 
     else:  # if the user enters anything other than 1, 2, 3 or 4 then the program will exit with an error message.

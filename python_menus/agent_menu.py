@@ -5,6 +5,7 @@
 import os
 import dotenv
 import pexpect
+import openai  # Corrected import
 
 def main():
     os.system( "clear" )
@@ -15,24 +16,26 @@ def main():
     print( "                                                 " )
     print( "      ///////////////////////////////////////////" )
     print( "      "                                            )
-    print( "      Welcome to the main menu"                    )
+    print( "      Welcome to the agent menu"                    )
     print( "      "                                            )
     print( "      ///////////////////////////////////////////" )
     print( "\n")
-    print("     l. open linux bash workspace in vscode\n")
+    # print("     l. open linux bash workspace in vscode\n")
     # print("     2. run mode 1 score tests\n")
     # print("     3. git push\n")
     # print("     5. open tree-sitter implementation code base\n")
     # print("     7. open current tennis matrix workspace in vscode\n")
     # print("     8. open current test fixture workspace( SMOL_AI ) in vscode\n")
     
-    print( "     m. mcba menu\n" )        
+    print( "     c. create an agent\n" )        
     
-    print( "     a. airport project\n" )     
+    print( "     ct. create a tool\n" )
     
-    print( "     t. the matrix\n" )
+    print( "     u. open a chat with an agent that uses tools\n" )    
     
-    print( "     k. ai research\n" )
+    print( "     tennis. use the tennis agent\n" )
+    
+    print( "     l. list agents\n" )
     
     # print("     m. make mode 1 score tests\n")
     # print("     s. open swift startup in chrome gpt\n")
@@ -44,6 +47,21 @@ def main():
     
     choice = input("\n    Please select an option: \n    > ")
     print( "                                                 " )
+    
+    if choice == "ct":
+        os.system( "python3 /home/adamsl/linuxBash/OpenAI_Agent_Swarm/tool_creator_exec.py" )
+        input( "Press Enter to continue..." )
+        main()
+
+    if choice == "l":
+        print(openai.Model.list())  # Corrected usage
+        input("Press Enter to continue...")
+        main()
+
+    if choice == "u":
+        os.system( "python3 /home/adamsl/linuxBash/OpenAI_Agent_Swarm/tool_user_exec.py" )
+        input( "Press Enter to continue..." )
+        main()
 
     if choice == "4":
         print("making mode 1 score tests... " )
@@ -61,14 +79,7 @@ def main():
         print( "      "                                            )
         print( "      ///////////////////////////////////////////" )
         print( "1.")
-    
-    elif choice == "k":
-        # run agent.py 
-        print( "opening ai research menu... " )
-        # clear terminal screen
-        os.system( "clear" )
-        os.system( "python3 /home/adamsl/linuxBash/python_menus/agent_menu.py" )
-    
+
     elif choice == "2":
         print( "running mode 1 score tests..." )
         # open a child process to execute script 2

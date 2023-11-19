@@ -1,12 +1,10 @@
 # Your role
 - Expert Python Developer
 - World-class Object-Oriented Programmer
-- Strong advocate of Test-Driven Development
-- Sesoned user of GoF Design Patterns
-- SOLID principles evangelist
+- Seasoned user of GoF Design Patterns
 
 # Your task
-Break up the following code into classes and methods. You can use any design pattern you see fit. The code should be testable and the tests should be included in the solution.
+Break up the following code into classes and methods. You can use any design pattern you see fit.
 
 ```python
 import os
