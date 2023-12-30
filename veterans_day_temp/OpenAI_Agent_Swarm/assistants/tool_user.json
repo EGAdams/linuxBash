@@ -1,0 +1,78 @@
+{
+    "assistant_id": "asst_INiWJeGLi4SbcgtDVu4tSerI",
+    "assistant_details": {
+        "build_params": {
+            "model": "gpt-3.5-turbo-1106",
+            "name": "Tool User",
+            "description": "Assistant to use tools made by the tool creator.",
+            "instructions": "Use the tools to accomplish the task",
+            "tools": [
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "create_mermaid_diagram",
+                        "description": "This tool generates the source text for a Mermaid diagram from a given Python source code using the OpenAI API.",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "python_file_path": {
+                                    "type": "string",
+                                    "description": "The file path of the Python source code."
+                                },
+                                "diagram_type": {
+                                    "type": "string",
+                                    "enum": [
+                                        "sequence",
+                                        "flowchart",
+                                        "mindmap"
+                                    ],
+                                    "description": "The type of Mermaid diagram to create (sequence, flowchart, or mindmap)."
+                                }
+                            },
+                            "required": [
+                                "python_file_path",
+                                "diagram_type"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "write_code_to_directory",
+                        "description": "This tool writes code to a specified directory.",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "directory": {
+                                    "type": "string",
+                                    "description": "The directory where the code will be written."
+                                },
+                                "file_name": {
+                                    "type": "string",
+                                    "description": "The name of the file to be created."
+                                },
+                                "code": {
+                                    "type": "string",
+                                    "description": "The code to be written to the file."
+                                }
+                            },
+                            "required": [
+                                "directory",
+                                "file_name",
+                                "code"
+                            ]
+                        }
+                    }
+                }
+            ],
+            "file_ids": [],
+            "metadata": {}
+        },
+        "file_paths": [],
+        "functions": {
+            "create_mermaid_diagram": "import openai\n\nopenai.api_key = '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'\n\ndef extract_code_structure(python_file_path):\n    with open(python_file_path, 'r') as file:\n        code_content = file.read()\n    return code_content\n\ndef create_mermaid_diagram(python_file_path, diagram_type):\n    code_structure = extract_code_structure(python_file_path)\n    prompt = f\"Generate the source text for a {diagram_type} Mermaid diagram based on this Python code:\\n\\n```python\\n{code_structure}\\n```\\n\"\n\n    response = openai.Completion.create(\n        model='gpt-3.5-turbo',\n        prompt=prompt,\n        max_tokens=150\n    )\n\n    mermaid_diagram_source = response.choices[0].text.strip()\n    return mermaid_diagram_source",
+            "write_code_to_directory": "import os\n\ndef write_code_to_directory(directory, file_name, code):\n    file_path = os.path.join(directory, file_name)\n    with open(file_path, 'w') as file:\n        file.write(code)\n    return f'Code successfully written to {file_path}'"
+        }
+    }
+}

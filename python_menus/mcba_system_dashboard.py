@@ -49,6 +49,7 @@ def main():
         print( "showing all tables... " )
         # open a child process to execute script 3
         os.system( "/home/adamsl/linuxBash/menu_shell_scripts/show_all_tables.sh " )
+        # os.system( "python3 ./linuxBash/python_menus/show_table_clean.py" )
         main()
 
     elif choice == "4":

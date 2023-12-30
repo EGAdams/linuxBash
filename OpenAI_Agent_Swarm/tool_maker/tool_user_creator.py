@@ -6,7 +6,7 @@ import os
 import time
 import json
 
-from utils import chat as chat_loop
+from shared.utils import chat as chat_loop
 
 from openai import OpenAI
 client = OpenAI() # be sure to set your OPENAI_API_KEY environment variable

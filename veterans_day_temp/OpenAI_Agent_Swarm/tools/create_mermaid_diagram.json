@@ -1,0 +1,19 @@
+{
+    "name": "create_mermaid_diagram",
+    "description": "This tool generates the source text for a Mermaid diagram from a given Python source code using the OpenAI API.",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "python_file_path": {
+                "type": "string",
+                "description": "The file path of the Python source code."
+            },
+            "diagram_type": {
+                "type": "string",
+                "enum": ["sequence", "flowchart", "mindmap"],
+                "description": "The type of Mermaid diagram to create (sequence, flowchart, or mindmap)."
+            }
+        },
+        "required": ["python_file_path", "diagram_type"]
+    }
+}

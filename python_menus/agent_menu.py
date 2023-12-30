@@ -29,7 +29,7 @@ def main():
     
     print( "     c. create an agent\n" )        
     
-    print( "     ct. create a tool\n" )
+    print( "     t. create a tool\n" )
     
     print( "     u. open a chat with an agent that uses tools\n" )    
     
@@ -48,7 +48,7 @@ def main():
     choice = input("\n    Please select an option: \n    > ")
     print( "                                                 " )
     
-    if choice == "ct":
+    if choice == "t":
         os.system( "python3 /home/adamsl/linuxBash/OpenAI_Agent_Swarm/tool_creator_exec.py" )
         input( "Press Enter to continue..." )
         main()

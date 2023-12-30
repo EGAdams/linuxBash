@@ -73,5 +73,6 @@
     "cmake.sourceDirectory": "/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/googletest",
     "cSpell.words": [
         "floridascarwash"
-    ]
+    ],
+    "cmake.configureOnOpen": true
 }

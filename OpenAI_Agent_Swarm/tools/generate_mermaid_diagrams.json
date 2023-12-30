@@ -1,0 +1,5 @@
+{
+    "name": "generate_mermaid_diagrams",
+    "description": "This tool analyzes a Python source file and creates different types of Mermaid diagrams, each represented in a separate Markdown file with a description and code fences.",
+    "parameters": "{\"type\": \"object\", \"properties\": {\"source_code\": {\"type\": \"string\", \"description\": \"The Python source file content to be analyzed.\"}, \"output_path\": {\"type\": \"string\", \"description\": \"The path where the generated Markdown files will be saved.\"}}, \"required\": [\"source_code\", \"output_path\"]}"
+}

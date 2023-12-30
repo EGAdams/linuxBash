@@ -2,17 +2,21 @@
     "name": "write_code_to_directory",
     "description": "This tool writes code to a specified directory.",
     "parameters": {
-        "directory": {
-            "type": "string",
-            "description": "The directory where the code will be written."
+        "type": "object",
+        "properties": {
+            "directory": {
+                "type": "string",
+                "description": "The directory where the code will be written."
+            },
+            "file_name": {
+                "type": "string",
+                "description": "The name of the file to be created."
+            },
+            "code": {
+                "type": "string",
+                "description": "The code to be written to the file."
+            }
         },
-        "file_name": {
-            "type": "string",
-            "description": "The name of the file to be created."
-        },
-        "code": {
-            "type": "string",
-            "description": "The code to be written to the file."
-        }
+        "required": ["directory", "file_name", "code"]
     }
 }

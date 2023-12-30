@@ -34,6 +34,8 @@ def main():
     
     print( "     k. ai research\n" )
     
+    print( "     s. start a timer\n" )
+    
     # print("     m. make mode 1 score tests\n")
     # print("     s. open swift startup in chrome gpt\n")
     # print("     o. open this file in vscode for editing\n")
@@ -68,6 +70,15 @@ def main():
         # clear terminal screen
         os.system( "clear" )
         os.system( "python3 /home/adamsl/linuxBash/python_menus/agent_menu.py" )
+    
+    elif choice == "s":
+        # run agent.py 
+        print( "opening timer.py ... " )
+        # clear terminal screen
+        os.system( "clear" )
+        os.system( "python3 /home/adamsl/agent_eve/timer.py" )
+        input( "Press Enter to continue..." )
+        main()
     
     elif choice == "2":
         print( "running mode 1 score tests..." )
@@ -198,8 +209,11 @@ def main():
         exit()
     
     elif choice == "t":
-        print ( "deleting test messages..." )
-        os.system( "./delete_test_messages.sh" )
+        print( "openning the latest matrix project... " )
+        # cd to the directory where the script is located
+        #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
+        # open vscode in the directory
+        os.system( "python3 the_matrix_project.py " )
         main()
     
     elif choice == "keys":

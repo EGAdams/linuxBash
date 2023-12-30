@@ -1,16 +1,43 @@
 {
-    "assistant_id": "asst_KCwy8iOjEFq7im7EBUN2gDWA",
+    "assistant_id": "asst_OpBPalAis7rUJmxOiQhvkFxh",
     "assistant_details": {
         "build_params": {
             "model": "gpt-3.5-turbo-1106",
             "name": "Tool User",
             "description": "Assistant to use tools made by the tool creator.",
             "instructions": "Use the tools to accomplish the task",
-            "tools": [],
+            "tools": [
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "generate_mermaid_diagrams",
+                        "description": "This tool analyzes a Python source file and creates different types of Mermaid diagrams, each represented in a separate Markdown file with a description and code fences.",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "source_code": {
+                                    "type": "string",
+                                    "description": "The Python source file content to be analyzed."
+                                },
+                                "output_path": {
+                                    "type": "string",
+                                    "description": "The path where the generated Markdown files will be saved."
+                                }
+                            },
+                            "required": [
+                                "source_code",
+                                "output_path"
+                            ]
+                        }
+                    }
+                }
+            ],
             "file_ids": [],
             "metadata": {}
         },
         "file_paths": [],
-        "functions": {}
+        "functions": {
+            "generate_mermaid_diagrams": "from mermaid_generator import generate_all_diagrams\n\ndef generate_mermaid_diagrams(source_code, output_path):\n    # Analyze the source code and create diagrams\n    diagrams = generate_all_diagrams(source_code)\n    \n    # Save each diagram to a separate Markdown file\n    for diagram_type, diagram_code in diagrams.items():\n        file_name = f'{output_path}/{diagram_type}.md'\n        with open(file_name, 'w') as f:\n            f.write(f'# {diagram_type.replace('_', ' ').title()} Diagram\\n\\n')\n            f.write('```mermaid\\n')\n            f.write(diagram_code)\n            f.write('\\n```')\n    \n    return {'message': 'Mermaid diagrams created and saved to specified path.'}"
+        }
     }
 }
