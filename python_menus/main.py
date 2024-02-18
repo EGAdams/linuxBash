@@ -36,6 +36,8 @@ def main():
     
     print( "     s. start a timer\n" )
     
+    print( "     99sw. open the swarm 99 project\n" )
+    
     # print("     m. make mode 1 score tests\n")
     # print("     s. open swift startup in chrome gpt\n")
     # print("     o. open this file in vscode for editing\n")
@@ -46,6 +48,12 @@ def main():
     
     choice = input("\n    Please select an option: \n    > ")
     print( "                                                 " )
+
+    if choice == "99sw":
+        print( "opening swarm 99 project... " )
+        # open a child process to execute script
+        os.chdir( "/home/adamsl/linuxBash/swarm_99" )
+        
 
     if choice == "4":
         print("making mode 1 score tests... " )

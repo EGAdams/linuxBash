@@ -1,11 +1,30 @@
 # Your role
 - Expert Python Developer
 - World-class Object-Oriented Programmer
-- Seasoned user of GoF Design Patterns
+- Seasoned user of The Gang of Four Design Patterns
 
 # Your task
-Break up the following code into classes and methods. You can use any design pattern you see fit.
+- Break up the following code into classes and methods. You can use any design pattern you see fit.
+- During your refactoring process, make at least one object that reads a configuration file and runs the appropriate commands.
+  - an example:
+  - ``` 1.) Execute the Python run.py script.
+        - Action - run.py
+        - Change to Working Directory - /home/adamsl
+        - Open Subprocess - false
+        - Use the Expect library - false
+        ...
 
+        2.) Open the AI Research Menu
+        - Action - ai_menu.py
+        - Change to Working Directory - /home/adamsl
+        - Open Subprocess - true
+        - Use the Expect Library - false
+        ...
+
+        n. ) ...
+    ```
+    
+# Source Code to Refactor
 ```python
 import os
 import dotenv
@@ -25,28 +44,16 @@ def main():
     print( "      ///////////////////////////////////////////" )
     print( "\n")
     print("     l. open linux bash workspace in vscode\n")
-    # print("     2. run mode 1 score tests\n")
-    # print("     3. git push\n")
-    # print("     5. open tree-sitter implementation code base\n")
-    # print("     7. open current tennis matrix workspace in vscode\n")
-    # print("     8. open current test fixture workspace( SMOL_AI ) in vscode\n")
-    
+  
     print( "     m. mcba menu\n" )        
     
     print( "     a. airport project\n" )     
     
     print( "     t. the matrix\n" )
     
-    print( "     k. ai research\n" )
+    print( "     k. ai research\n" )  # dont forget about the tree-sitter implementation code base
     
-    # print("     m. make mode 1 score tests\n")
-    # print("     s. open swift startup in chrome gpt\n")
-    # print("     o. open this file in vscode for editing\n")
     print("     x. Exit\n")
-
-    #print("     air. open the airport project plan\n")
-    #print("     9. The LangChain Agent Plan\n")
-    
     choice = input("\n    Please select an option: \n    > ")
     print( "                                                 " )
 
@@ -69,7 +76,6 @@ def main():
 
     elif choice == "2":
         print( "running mode 1 score tests..." )
-        # open a child process to execute script 2
         os.chdir( "/home/adamsl/linuxBash/SMOL_AI/tennis_unit_tests/Mode1Score/" )
         os.system("./run_tests" )
         input( "Press Enter to continue..." )
@@ -77,28 +83,18 @@ def main():
         
     elif choice == "3":
         print( "pushing git... " )
-        # get git token from .env file
-        git_token = os.getenv("GIT_TOKEN", "")
+        git_token = os.getenv("GIT_TOKEN", "") # get git token from .env file
         print ( "git token: " + git_token )
-        # open a child process to execute script 3
-        try:
-            # Start the git push process
-            print ( "starting git push..." )
+        try:  # open a child process to execute script 3
+            print ( "starting git push..." ) # Start the git push process
             child = pexpect.spawn('git push')
-
-            # Wait for the username prompt and send the username
-            child.expect('Username for .*:')
+            child.expect('Username for .*:') # Wait for the username prompt and send the username
             child.sendline( "egadams" )
-
-            # Wait for the password prompt and send the password
-            child.expect('Password for .*:')
-            # API Keys
-            git_token = os.getenv("GIT_TOKEN", "")
+            child.expect('Password for .*:') # Wait for the password prompt and send the password
+            git_token = os.getenv("GIT_TOKEN", "") # API Keys
             print ( git_token )
             child.sendline( git_token )
-            
-            # Wait for the process to complete
-            child.expect(pexpect.EOF)
+            child.expect(pexpect.EOF) # Wait for the process to complete
             print(child.before.decode('utf-8'))
             
         except pexpect.ExceptionPexpect as e:
@@ -116,72 +112,51 @@ def main():
 
     elif choice == "4":
         print( "opening mcba menu... " )
-        # clear terminal screen
-        os.system( "clear" )
+        os.system( "clear" ) # clear terminal screen
         os.system( "python3 /home/adamsl/linuxBash/python_menus/mcba_system_dashboard.py " )
         main()
     
     elif choice == "5":
         print("opening tree-sitter implementation... " )
-        # cd to the directory where the script is located
         os.chdir( "/home/adamsl/openai-search-codebase-and-chat-about-it" )
-        # open vscode in the directory
         os.system( "code ." )
         main()
 
     elif choice == "6":
         print("opening linux bash repository in vscode... " )
-        # cd to the directory where the script is located
         os.chdir( "/home/adamsl/linuxBash" )
-        # open vscode in the directory
         os.system( "code ." )
         main()
     
     elif choice == "7":
         print("opening current tennis matrix repository in vscode... " )
-        # cd to the directory where the script is located
         os.chdir( "/home/adamsl/rpi-rgb-led-matrix" )
-        # open vscode in the directory
         os.system( "code ." )
         main()
     
     elif choice == "8":
         print("openning current test fixture workspace( SMOL_AI ) in vscode... " )
-        # cd to the directory where the script is located
         os.chdir( "/home/adamsl/linuxBash/SMOL_AI" )
-        # open vscode in the directory
         os.system( "code ." )
         main()
     
     elif choice == "9":
         print("opening test fixture for tennis matrix repository in vscode... " )
-        # cd to the directory where the script is located
-        # os.chdir( "/home/adamsl/linuxBash/project_management/plan.md" )
-        # open vscode in the directory
         os.system( "code  /home/adamsl/linuxBash/project-management/next_steps.md" )
         main()
     
     elif choice == "air":
         print("opening acceleration doc... " )
-        # cd to the directory where the script is located
-        # os.chdir( "/home/adamsl/linuxBash/project_management/plan.md" )
-        # open vscode in the directory
         os.system( "code  /home/adamsl/linuxBash/acceleration_documentation.md" )
         main()
     
     elif choice == "s":
         print("opening main swift startup in folder chrome-meta-gpt using vscode... " )
-        # cd to the directory where the script is located
-        # os.chdir( "/home/adamsl/linuxBash/project_management/plan.md" )
-        # open vscode in the directory
         os.system( "code  /home/adamsl/linuxBash/chrome-meta-gpt/swift_startup.py" )
         main()
 
     elif choice == "o":
         print("opening python menu directory in vscode... " )
-        # cd to the directory where the script is located
-        # os.chdir( "/home/adamsl/linuxBash/project_management/plan.md" )
-        # open vscode in the directory
         os.system( "code  /home/adamsl/linuxBash/python_menus/" )
         main()
     
@@ -192,7 +167,6 @@ def main():
         
     elif choice == "x":
         print("Goodbye!")
-        # exit the program
         exit()
     
     elif choice == "t":
@@ -207,33 +181,21 @@ def main():
     
     elif choice == "g":
         print("deleting all guests... " )
-        # cd to the directory where the script is located
-        #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
-        # open vscode in the directory
         os.system( "./delete_guests.sh" )
         main()
     
     elif choice == "m":
         print("deleting all messages... " )
-        # cd to the directory where the script is located
-        #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
-        # open vscode in the directory
         os.system( "./delete_all_messages.sh" )
         main()
     
     elif choice == "c":
         print("deleting all conversations... " )
-        # cd to the directory where the script is located
-        #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
-        # open vscode in the directory
         os.system( "./delete_all_conversations.sh" )
         main()
     
     elif choice == "j":
         print("cleaning the monitored objects from the jewelry machine... " )
-        # cd to the directory where the script is located
-        #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
-        # open vscode in the directory
         os.system( "./delete_monitors.sh" )
         main()
 

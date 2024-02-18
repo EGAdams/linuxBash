@@ -30,7 +30,18 @@ class PopulateFileList:
         now_string = now.strftime( "%Y-%m-%d %H:%M" )
         print( "Starting FTP process at " + now_string + "\n" )
         log_file_name = "ftp_logs/ftp_log" + now_string + ".txt"
-        log_file = open(log_file_name, 'w')
+        # open log file name if it exists.  If not create it
+        log_file = None
+        if os.path.exists( log_file_name ):
+            log_file = open(log_file_name, 'a')
+        else:
+            # get the current working directory
+            cwd = os.getcwd()
+            print ( cwd )
+            # change to the ftp_logs directory
+            os.chdir( "./pickle_ball/" )
+            log_file = open(log_file_name, 'w')
+    
         log_file.write( "Starting FTP process at " + now_string + "\n" )
         log_file.close()
 
@@ -50,7 +61,7 @@ class PopulateFileList:
                     env_file.write( "FTP_PASSWORD=" + input( "Enter FTP password:  " ))
                     env_file.close()
                     print( "FTP_USER and FTP_PASSWORD environment variables set. Please restart the program." )
-                    sys.exit()
+                    #sys.exit()
 
                 ftp.login( ftp_user, ftp_password )  # login as user anonymous, passwd anonymous@ (usually email address is used as password) - passwd is being sent in clear text!
                 print( "\nLogged into americansjewelry.com" )  # connection message from server is printed on stdout (screen)

@@ -16,7 +16,7 @@ def print_menu(files):
 def main():
     chosen_zip_file = ""
     workingPickleballDirectory  = "/mnt/c/Users/EG/Desktop/2022/may/2nd_week/pickle_cpp"
-    pickleballLibraryServerPath = "/public_html/scoreprolibraries/chinese_remote_system"             # path to the pickleball libraries on the server
+    pickleballLibraryServerPath = "/public_html/largo_spa/scoreprolibraries/chinese_remote_system"             # path to the pickleball libraries on the server
     listGenerator               = file_list_module.PopulateFileList( pickleballLibraryServerPath )
     files                       = listGenerator.execute()
     files.sort()

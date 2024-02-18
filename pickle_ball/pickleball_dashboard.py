@@ -15,7 +15,7 @@ def main():
     print( "      "                                            )
     print( "      ///////////////////////////////////////////" )
     print( "\n")
-    print("     1. open pickeball view project\n\n")
+    print("     1. open pickleball view project\n\n")
     print("     2. open pickleball cpp\n\n")
     print("     3. open the chinese remote system project\n\n")
     print("     4. run the remote electron from package.json\n\n")
@@ -28,21 +28,21 @@ def main():
     print( "                                                 " )
 
     if choice == "1":
-        print( "openning pickleball view... " )
+        print( "opening pickleball view... " )
         os.system( "sleep 1" )
-        os.system( "powershell.exe code c:/Users/EG/Desktop/2022/may/2nd_week/pickleball_view" )
+        os.system( "'/mnt/c/Users/EG/AppData/Local/Programs/Microsoft VS Code/bin/code' /mnt/c/Users/EG/Desktop/2022/may/2nd_week/pickleball_view" )
         main()
 
     elif choice == "2":
-        print( "openning pickleball C++ project... " )
+        print( "opening pickleball C++ project... " )
         os.system( "sleep 1" )
-        os.system( "powershell.exe code c:/Users/EG/Desktop/2022/may/2nd_week/pickle_cpp" )
+        os.system( "'/mnt/c/Users/EG/AppData/Local/Programs/Microsoft VS Code/bin/code' /mnt/c/Users/EG/Desktop/2022/may/2nd_week/pickle_cpp" )
         main()
         
     elif choice == "3":
-        print( "openning the chinese remote system project... " )
+        print( "opening the chinese remote system project... " )
         os.system( "sleep 1" )
-        os.system( "powershell.exe code c:/Users/EG/Desktop/2022/august/5th_week/chinese_remote_system" )
+        os.system( "'/mnt/c/Users/EG/AppData/Local/Programs/Microsoft VS Code/bin/code' /mnt/c/Users/EG/Desktop/2022/august/5th_week/chinese_remote_system" )
         main()
 
     elif choice == "4":
@@ -58,14 +58,14 @@ def main():
         main()
 
     elif choice == "5":
-        print( "openning the pickleball view ... " )
+        print( "opening the pickleball view ... " )
         os.chdir( "/mnt/c/Users/EG/Desktop/2022/may/2nd_week/pickleball_view/" )
         os.system( "sleep 1" )
         # print the current directory
         print( "print changed directory to " )
         os.system( "pwd" )
         os.system( "sleep 1" )
-        print( "running picklball view electron from project... " )
+        print( "running pickleball view electron from project... " )
         os.system( "npm run start" )
         main()
 
@@ -79,14 +79,14 @@ def main():
         os.system( "sleep 1" )
         os.system( "powershell.exe ./compile.bat" )
 
-        print( "openning the pickleball view ... " )
+        print( "opening the pickleball view ... " )
         os.chdir( "/mnt/c/Users/EG/Desktop/2022/may/2nd_week/pickleball_view/" )
         os.system( "sleep 1" )
         # print the current directory
         print( "print changed directory to " )
         os.system( "pwd" )
         os.system( "sleep 1" )
-        print( "running picklball view electron from project... " )
+        print( "running pickleball view electron from project... " )
         # make an os system call to open the pickleball view in a separate thread
         thread = Thread( target=start_npm )
         thread.start()

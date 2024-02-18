@@ -14,6 +14,7 @@ def main():
     print( "      Welcome to the main MCBA System Dashboard"                    )
     print( "      ///////////////////////////////////////////" )
     print( "\n")
+    print("     a. adb dashboard\n")
     print("     1. clean all tables.  keep admin")
     print("     2. clean all tables.  keep users, conversations, and admin")
     print("     3. show all tables")
@@ -30,6 +31,14 @@ def main():
 
     choice = input("    Please select an option: >>----> ") 
     print( "                                     " )
+
+    if choice == "a":
+        print("opening menu for adb commands... " )
+        # cd to the directory where the script is located
+        #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
+        # open vscode in the directory
+        os.system ( "python3 /home/adamsl/linuxBash/python_menus/adb_dashboard.py")
+        main()
 
     if choice == "1":
         print("clearing all table data.  keeping admin info... " )

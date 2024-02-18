@@ -3,7 +3,8 @@
 
 import os
 source_directory      = "/mnt/c/Users/EG/Desktop/2022/may/2nd_week/pickle_cpp"
-destination_directory = "/mnt/c/Users/EG/Desktop/2022/june/3rd_week/pickleball_library"
+# destination_directory = "/mnt/c/Users/EG/Desktop/2022/june/3rd_week/pickleball_library"
+destination_directory = "/mnt/c/Users/EG/libraries"
 
 for folder in os.listdir(source_directory):
     if os.path.isdir(os.path.join(source_directory, folder)):
