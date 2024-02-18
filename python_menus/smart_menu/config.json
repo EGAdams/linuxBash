@@ -1,0 +1,17 @@
+[
+    {
+      "title": "Open Notepad",
+      "action": "notepad.exe",
+      "workingDirectory": "",
+      "openInSubprocess": true,
+      "useExpectLibrary": false
+    },
+    {
+      "title": "List Directory",
+      "action": "dir",
+      "workingDirectory": "C:\\",
+      "openInSubprocess": false,
+      "useExpectLibrary": false
+    }
+  ]
+  
