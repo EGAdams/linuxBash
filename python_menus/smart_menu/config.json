@@ -22,5 +22,17 @@
         "action": "whereis code",
         "working_directory": "",
         "open_in_subprocess": false
+    },
+    {
+        "title": "Show Command History",
+        "action": "history",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "cat ~/.bashrc",
+        "action": "cat ~/.bashrc",
+        "working_directory": "",
+        "open_in_subprocess": false
     }
 ]

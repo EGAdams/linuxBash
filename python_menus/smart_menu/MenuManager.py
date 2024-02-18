@@ -1,5 +1,6 @@
 from ConfigReader import ConfigReader
-from Menu import Menu
+# from Menu import Menu
+from DialogMenu import DialogMenu
 from MenuItem import MenuItem
 from CommandExecutor import CommandExecutor
 import json
@@ -78,7 +79,7 @@ class MenuManager:
     #     self.save_to_config()
 
 def main():
-    menu = Menu()
+    menu = DialogMenu()
     menu_manager = MenuManager(menu, "path_to_config.json")
     menu_manager.load_menus()
     menu.display_and_select(menu_manager)
