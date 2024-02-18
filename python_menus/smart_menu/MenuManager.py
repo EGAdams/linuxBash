@@ -7,99 +7,81 @@ import shutil
 import os
 
 class MenuManager:
-    def __init__(self, config_file_path):
-        self.config_file_path = config_file_path
-        self.menus = {}  # Key: menu title, Value: Menu object
+    def __init__(self, menu, config_path):
+        self.menu = menu
+        self.config_path = config_path
 
     def load_menus(self):
-        """Loads menus and menu items from the configuration file."""
-        config = ConfigReader.read_config(self.config_file_path)
-        # if the config length is zero, exit
-        # if config is empty, exit
-        if ( len( config ) == 0 ):
-            print( "*** ERROR: there is no configriation information, exiting ***" )
-            exit()
-        for menu_config in config:
-            menu_title = menu_config.get("title", "Main Menu")
-            if menu_title not in self.menus:
-                self.menus[menu_title] = Menu(menu_title)
-
+        """Loads the menu items from the configuration file."""
+        config_data = ConfigReader.read_config(self.config_path)
+        for item_config in config_data:
             menu_item = MenuItem(
-                title=menu_config.get("title"),
-                action=menu_config.get("action"),
-                working_directory=menu_config.get("workingDirectory", ""),
-                open_in_subprocess=menu_config.get("openSubprocess", False),
-                use_expect_library=menu_config.get("useExpectLibrary", False)
+                title=item_config['title'],
+                action=item_config['action'],
+                working_directory=item_config.get('workingDirectory', ''),
+                open_in_subprocess=item_config.get('openInSubprocess', False),
+                use_expect_library=item_config.get('useExpectLibrary', False)
             )
-            self.menus[menu_title].add_item(menu_item)
+            self.menu.add_item(menu_item)
 
-    def display_menu(self, menu_id):
-        """Displays the specified menu and handles user input, including adding new menu items."""
-        menu = self.menus[menu_id]  # Assuming menus are stored in a dictionary
+    def display_menu(self):
+        """Displays the menu and handles user input."""
         while True:
-            menu.display()
-            choice = input("Select an option: ")
-
-            if choice.isdigit() and int(choice) <= len(menu.items):
-                # Handle menu item selection
-                selected_item = menu.items[int(choice) - 1]
-                selected_item.execute()
-            elif choice == str(len(menu.items) + 1):
-                break  # Exit the menu
-            elif choice == str(len(menu.items) + 2):
-                menu.add_new_item_interactively()  # Add a new menu item
+            # self.menu.display_and_select()
+            choice = input("Please select an option: ")
+            if choice.isdigit():
+                choice = int(choice)
+                if 1 <= choice <= len(self.menu.items):
+                    self.menu.items[choice - 1].execute()
+                elif choice == len(self.menu.items) + 1:
+                    break  # Exit the menu
+                elif choice == len(self.menu.items) + 2:
+                    self.add_menu_item()
             else:
                 print("Invalid selection. Please try again.")
 
-    def add_menu_item(self, menu_id):
-        """Collects information from the user to add a new menu item to the specified menu."""
+    def add_menu_item(self):
+        """Collects information from the user to add a new menu item."""
         print("Adding a new menu item...")
-
         title = input("Enter the title for the new menu item: ")
         action = input("Enter the command to execute: ")
         working_directory = input("Enter the full path to the directory: ")
-        open_in_subprocess_input = input("Should this command open in a separate window (yes/no)? ")
-        use_expect_library_input = input("Should use the Expect library (yes/no)? ")
+        open_in_subprocess_str = input("Should this command open in a separate window (yes/no)? ")
+        use_expect_library_str = input("Should use the Expect library (yes/no)? ")
 
-        open_in_subprocess = open_in_subprocess_input.strip().lower() == 'yes'
-        use_expect_library = use_expect_library_input.strip().lower() == 'yes'
+        open_in_subprocess = open_in_subprocess_str.lower() == 'yes'
+        use_expect_library = use_expect_library_str.lower() == 'yes'
 
-        # Create the new MenuItem
-        new_item = MenuItem(title, action, working_directory, open_in_subprocess, use_expect_library)
+        new_menu_item = MenuItem(title, action, working_directory, open_in_subprocess, use_expect_library)
+        self.menu.add_item(new_menu_item)
+        print("New menu item added successfully.")
+        self.save_menus_to_config()
 
-        # Adding the new item to the specified menu
-        if menu_id in self.menus:
-            self.menus[menu_id].add_item(new_item)
-            print("New menu item added successfully.")
-            
-            # Save changes to configuration file
-            self.save_menus_to_config()
-        else:
-            print(f"Menu with ID {menu_id} not found.")
-        
     def save_menus_to_config(self):
-        """Serializes and saves the menu structure to the configuration file with a backup."""
-        # Create a backup of the current configuration file
-        backup_path = f"{self.config_path}.bak"
-        try:
-            # Only create a backup if the configuration file already exists
-            if os.path.exists(self.config_path):
-                shutil.copyfile(self.config_path, backup_path)
-                print("Backup of the configuration file created.")
-                
-            # Serialize the menu structure
-            config_data = [menu.to_dict() for menu in self.menus.values()]  # Assuming Menu has a to_dict method
+        """Serializes and saves the menu structure to the configuration file."""
+        config_data = [item.to_dict() for item in self.menu.items]
+        with open(self.config_path, 'w') as config_file:
+            json.dump(config_data, config_file, indent=4)
+        print("Menu configuration saved.")
 
-            # Save the updated configuration
-            with open(self.config_path, 'w') as config_file:
-                json.dump(config_data, config_file, indent=4)
-                
-            print("Menu configuration saved successfully.")
-        except Exception as e:
-            # In case of an error, restore from the backup
-            if os.path.exists(backup_path):
-                shutil.copyfile(backup_path, self.config_path)
-                print("An error occurred. Configuration restored from backup.")
-            else:
-                print("An error occurred, but no backup was available.")
-            print(f"Error details: {e}")
+    def save_to_config(self):
+        """Saves the current menu configuration to a file."""
+        with open(self.config_path, 'w') as config_file:
+            json.dump(self.menu.to_dict_list(), config_file, indent=4)
+        print("Menu configuration saved.")
+        
+    # def add_new_item(self):
+    #     # Existing code to add a new item
+    #     self.menu.add_item(new_item)
+    #     print("New menu item added successfully.")
+    #     # Save the updated menu configuration
+    #     self.save_to_config()
+
+def main():
+    menu = Menu()
+    menu_manager = MenuManager(menu, "path_to_config.json")
+    menu_manager.load_menus()
+    menu.display_and_select(menu_manager)
+
+if __name__ == "__main__":
+    main()

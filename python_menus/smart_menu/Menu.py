@@ -2,38 +2,51 @@
 from MenuItem import MenuItem
 
 class Menu:
-    def __init__(self, title):
-        self.title = title
-        self.items = []  # List to hold menu items
+    def __init__(self, items=None):
+        self.items = items if items else []
 
     def add_item(self, item):
-        """Adds a new MenuItem to the menu."""
-        if isinstance(item, MenuItem):
-            self.items.append(item)
-        else:
-            raise TypeError("item must be an instance of MenuItem")
+        self.items.append(item)
 
-    def display(self):
-        """Displays the menu items and prompts for user selection."""
-        print(f"\n{self.title}\n" + "-" * len(self.title))
-        for index, item in enumerate(self.items, start=1):
-            print(f"{index}. {item.title}")
+    def display_and_select(self, menu_manager):
+        while True:
+            for index, item in enumerate(self.items, start=1):
+                print(f"{index}. {item.title}")
+            print(f"{len(self.items) + 1}. Exit this menu")
+            print(f"{len(self.items) + 2}. Add a menu item")
 
-        # Adding extra menu options as per requirements
-        print(f"{len(self.items) + 1}. Exit this menu")
-        print(f"{len(self.items) + 2}. Add a menu item")
-
-        # Placeholder for user input handling and executing the selected menu item.
-        # This will involve interaction with MenuManager and CommandExecutor.
-        choice = input("Please select an option: ")
-        print(f"You have selected: {choice}")
+            choice = input("Please select an option: ")
+            if choice.isdigit():
+                choice = int(choice)
+                if 1 <= choice <= len(self.items):
+                    self.items[choice - 1].execute()
+                elif choice == len(self.items) + 1:
+                    break
+                elif choice == len(self.items) + 2:
+                    menu_manager.add_menu_item()
+            else:
+                print("Invalid selection. Please try again.")
     
-    def to_dict(self):
-        """Serializes the menu item to a dictionary."""
-        return {
-            "title": self.title,
-            "action": self.action,
-            "workingDirectory": self.working_directory,
-            "openInSubprocess": self.open_in_subprocess,
-            "useExpectLibrary": self.use_expect_library
-        }
+    
+
+    def add_new_item(self):
+        title = input("Enter title for new item: ")
+        command = input("Enter command to execute: ")
+        working_directory = input("Enter the working directory (optional): ")
+        open_in_subprocess = input("Open in a subprocess? (yes/no): ").lower() == 'yes'
+        use_expect_library = input("Use the expect library? (yes/no): ").lower() == 'yes'
+        new_item = MenuItem( title, command, working_directory, open_in_subprocess, use_expect_library )
+        self.add_item( new_item )
+    
+    def to_dict_list(self):
+        """Serializes the menu's items into a list of dictionaries."""
+        return [item.to_dict() for item in self.items]
+
+def main():
+    menu = Menu()
+    # Example adding initial menu items
+    menu.add_item(MenuItem("List current directory", "ls"))
+    menu.display_and_select()
+
+if __name__ == "__main__":
+    main()

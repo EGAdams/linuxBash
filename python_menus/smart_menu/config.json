@@ -1,17 +1,26 @@
 [
     {
-      "title": "Open Notepad",
-      "action": "notepad.exe",
-      "workingDirectory": "",
-      "openInSubprocess": true,
-      "useExpectLibrary": false
+        "title": "Open Notepad",
+        "action": "notepad.exe",
+        "working_directory": "",
+        "open_in_subprocess": false
     },
     {
-      "title": "List Directory",
-      "action": "dir",
-      "workingDirectory": "C:\\",
-      "openInSubprocess": false,
-      "useExpectLibrary": false
+        "title": "List Directory",
+        "action": "ls",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Show JSON Config",
+        "action": "cat /home/adamsl/linuxBash/python_menus/smart_menu/config.json",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Show vscode installations",
+        "action": "whereis code",
+        "working_directory": "",
+        "open_in_subprocess": false
     }
-  ]
-  
+]
