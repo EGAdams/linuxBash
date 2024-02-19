@@ -30,9 +30,39 @@
         "open_in_subprocess": false
     },
     {
-        "title": "cat ~/.bashrc",
-        "action": "cat ~/.bashrc",
+        "title": "Show the Plan",
+        "action": "echo 'showing plan...'",
         "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Open Interpreter",
+        "action": "interpreter -y --model=gpt-3.5-turbo-1106 -ak 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 -b 2.00",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Open auto memgpt workspace",
+        "action": "code /home/adamsl/agent_99/",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "First Submenu",
+        "action": null,
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "chat with autogen memgpt",
+        "action": "python3 app.py",
+        "working_directory": "/home/adamsl/agent_99/autogen/autogen/autogen_memgpt",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Switch to the Agent 99 environment",
+        "action": "source environment_for_agent_99/bin/activate",
+        "working_directory": "/home/adamsl/agent_99",
         "open_in_subprocess": false
     }
 ]

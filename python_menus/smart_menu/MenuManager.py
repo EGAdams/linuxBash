@@ -1,14 +1,17 @@
 from ConfigReader import ConfigReader
-# from Menu import Menu
-from DialogMenu import DialogMenu
+from Menu import Menu
+# from DialogMenu import DialogMenu
 from MenuItem import MenuItem
 from CommandExecutor import CommandExecutor
 import json
+from SmartMenuItem import SmartMenuItem
+
+# and for the DialogMenu...
 import shutil
 import os
 
 class MenuManager:
-    def __init__(self, menu, config_path):
+    def __init__(self, menu: Menu, config_path: str):
         self.menu = menu
         self.config_path = config_path
 
@@ -16,12 +19,13 @@ class MenuManager:
         """Loads the menu items from the configuration file."""
         config_data = ConfigReader.read_config(self.config_path)
         for item_config in config_data:
+            print( item_config.get('working_directory', '' ))
             menu_item = MenuItem(
                 title=item_config['title'],
                 action=item_config['action'],
-                working_directory=item_config.get('workingDirectory', ''),
-                open_in_subprocess=item_config.get('openInSubprocess', False),
-                use_expect_library=item_config.get('useExpectLibrary', False)
+                working_directory=item_config.get('working_directory', ''),
+                open_in_subprocess=item_config.get('open_in_subprocess', False),
+                use_expect_library=item_config.get('use_expect_library', False)
             )
             self.menu.add_item(menu_item)
 
@@ -42,18 +46,20 @@ class MenuManager:
                 print("Invalid selection. Please try again.")
 
     def add_menu_item(self):
-        """Collects information from the user to add a new menu item."""
         print("Adding a new menu item...")
         title = input("Enter the title for the new menu item: ")
-        action = input("Enter the command to execute: ")
-        working_directory = input("Enter the full path to the directory: ")
-        open_in_subprocess_str = input("Should this command open in a separate window (yes/no)? ")
-        use_expect_library_str = input("Should use the Expect library (yes/no)? ")
+        is_submenu = input("Is this a submenu? (yes/no): ").lower() == 'yes'
 
-        open_in_subprocess = open_in_subprocess_str.lower() == 'yes'
-        use_expect_library = use_expect_library_str.lower() == 'yes'
+        if is_submenu:
+            new_menu_item = SmartMenuItem(title, sub_menu=Menu())
+            print("Submenu added. Remember to add items to this submenu.")
+        else:
+            action = input("Enter the command to execute: ")
+            working_directory = input("Enter the full path to the directory: ")
+            open_in_subprocess = input("Should this command open in a separate window (yes/no)? ").lower() == 'yes'
+            use_expect_library = input("Should use the Expect library (yes/no)? ").lower() == 'yes'
+            new_menu_item = SmartMenuItem(title, action, working_directory, open_in_subprocess, use_expect_library)
 
-        new_menu_item = MenuItem(title, action, working_directory, open_in_subprocess, use_expect_library)
         self.menu.add_item(new_menu_item)
         print("New menu item added successfully.")
         self.save_menus_to_config()
@@ -79,7 +85,7 @@ class MenuManager:
     #     self.save_to_config()
 
 def main():
-    menu = DialogMenu()
+    menu = Menu()
     menu_manager = MenuManager(menu, "path_to_config.json")
     menu_manager.load_menus()
     menu.display_and_select(menu_manager)

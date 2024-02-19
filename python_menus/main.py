@@ -25,6 +25,7 @@ def main():
     # print("     5. open tree-sitter implementation code base\n")
     # print("     7. open current tennis matrix workspace in vscode\n")
     # print("     8. open current test fixture workspace( SMOL_AI ) in vscode\n")
+    print( "     kk. open smart menu\n")
     
     print( "     m. mcba menu\n" )        
     
@@ -49,10 +50,20 @@ def main():
     choice = input("\n    Please select an option: \n    > ")
     print( "                                                 " )
 
+
+
+    if choice == "kk":
+        print( "opening smart menu... " )
+        # open a child process to execute script
+        os.chdir( "/home/adamsl/linuxBash/python_menus/smart_menu" )
+        os.system( "python3 test_smart_menu_system.py" )
+        main()
+    
     if choice == "99sw":
         print( "opening swarm 99 project... " )
         # open a child process to execute script
         os.chdir( "/home/adamsl/linuxBash/swarm_99" )
+        
         
 
     if choice == "4":
