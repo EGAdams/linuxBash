@@ -62,7 +62,7 @@ def main():
     if choice == "99sw":
         print( "opening swarm 99 project... " )
         # open a child process to execute script
-        os.chdir( "/home/adamsl/linuxBash/swarm_99" )
+        os.chdir( "/home/adamsl/swarm_99" )
         
         
 

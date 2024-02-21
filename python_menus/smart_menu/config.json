@@ -64,5 +64,17 @@
         "action": "source environment_for_agent_99/bin/activate",
         "working_directory": "/home/adamsl/agent_99",
         "open_in_subprocess": false
+    },
+    {
+        "title": "Open Linux Bash Workspace",
+        "action": "code /home/adamsl/linuxBash",
+        "working_directory": "/home/adamsl/linuxBash",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Set OPENAI_API_KEY",
+        "action": "export OPENAI_API_KEY=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",
+        "working_directory": ".",
+        "open_in_subprocess": false
     }
 ]
