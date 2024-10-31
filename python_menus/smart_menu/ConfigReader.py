@@ -2,7 +2,7 @@ import json
 
 class ConfigReader:
     @staticmethod
-    def read_config(file_path):
+    def read_config(file_path) -> dict:
         """
         Reads a configuration file and returns its contents as a data structure.
         
