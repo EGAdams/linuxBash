@@ -12,8 +12,8 @@ class Menu:
         while True:
             for index, item in enumerate(self.items, start=1):
                 print(f"{index}. {item.title}")
-            print(f"{len(self.items) + 1}. Exit this menu")
-            print(f"{len(self.items) + 2}. Add a menu item")
+            print( f"{len(self.items) + 1}. Add a menu item" )
+            print("x. Exit")
 
             choice = input("Please select an option: ")
             if choice.isdigit():
@@ -21,11 +21,14 @@ class Menu:
                 if 1 <= choice <= len(self.items):   #
                     self.items[choice - 1].execute() # Shabaaam! This is the line that executes the command
                 elif choice == len(self.items) + 1:  #
-                    break
-                elif choice == len(self.items) + 2:
                     menu_manager.add_menu_item()
+                    break
+
             else:
-                print("Invalid selection. Please try again.")
+                if choice == "x":
+                    exit( 0 )
+                else:
+                    print("choice: " + choice + " is an invalid selection. Please try again.")
     
     
 
