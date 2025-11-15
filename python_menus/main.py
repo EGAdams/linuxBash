@@ -25,19 +25,21 @@ def main():
     # print("     5. open tree-sitter implementation code base\n")
     # print("     7. open current tennis matrix workspace in vscode\n")
     # print("     8. open current test fixture workspace( SMOL_AI ) in vscode\n")
+    print( "     r. start the non-profit System Servers\n" )
     print( "     kk. open smart menu\n")
     
     print( "     m. mcba menu\n" )        
     
     print( "     a. airport project\n" )     
     
-    print( "     t. the matrix\n" )
+    print( "     t. todo list menu\n" )
     
     print( "     k. ai research\n" )
     
     print( "     s. start a timer\n" )
     
     print( "     99sw. open the swarm 99 project\n" )
+
     
     # print("     m. make mode 1 score tests\n")
     # print("     s. open swift startup in chrome gpt\n")
@@ -82,6 +84,15 @@ def main():
         print( "      "                                            )
         print( "      ///////////////////////////////////////////" )
         print( "1.")
+
+
+    elif choice == "r":
+        print( "starting non-profit system dashboard... " )
+        os.system( "/home/adamsl/planner/start_sys_admin_dash.sh" )
+
+        print( "starting server for the expense categorizer... " )
+        os.system( "/home/adamsl/planner/office-assistant/start_server.sh" )
+
     
     elif choice == "k":
         # run agent.py 
@@ -228,11 +239,11 @@ def main():
         exit()
     
     elif choice == "t":
-        print( "openning the latest matrix project... " )
+        print( "openning the todo list menu... " )
         # cd to the directory where the script is located
         #os.chdir( "/home/adamsl/zero_w_projects/temp/rpi-rgb-led-matrix" )
-        # open vscode in the directory
-        os.system( "python3 the_matrix_project.py " )
+        # open python interface main in new sub process
+        os.system( "python3 /home/adamsl/the_function_caller/todo_list_tools/python_interface_main.py" )
         main()
     
     elif choice == "keys":

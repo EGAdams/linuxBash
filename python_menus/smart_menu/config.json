@@ -76,5 +76,41 @@
         "action": "export OPENAI_API_KEY=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",
         "working_directory": ".",
         "open_in_subprocess": false
+    },
+    {
+        "title": "Open New Window",
+        "action": " /mnt/c/Users/NewUser/AppData/Local/Microsoft/WindowsApps/wt.exe new-tab --profile Ubun",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Next Pane",
+        "action": "tmux select-pane -t :.+",
+        "working_directory": ".",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Vertical Split",
+        "action": "tmux split-window",
+        "working_directory": ".",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Start Planner Agent",
+        "action": "python3 /home/adamsl/the_function_caller/agents/planner_agent/planner_agent_exe.py",
+        "working_directory": ".",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Start Collaborating",
+        "action": "python3 /home/adamsl/the_function_caller/agents/start_collaborating.py",
+        "working_directory": ".",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Start Collaborator",
+        "action": "python3 /home/adamsl/the_function_caller/agents/message_collaborator_agent/collaborator.py",
+        "working_directory": ".",
+        "open_in_subprocess": false
     }
 ]
