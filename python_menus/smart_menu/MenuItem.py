@@ -22,8 +22,11 @@ class MenuItem:
             else:
                 # Execute the command in the current process
                 subprocess.run(final_command, shell=True, check=True)
-            
-            print(f"Command executed: {self.action}")
+            print( "\n\n================================================================================" )
+            print("Command executed: ")
+            print( "================================================================================" )
+            print(f"{self.action}")
+            print( "================================================================================\n\n" )
         except subprocess.CalledProcessError as e:
             print(f"Error executing command: {e}")
         finally:

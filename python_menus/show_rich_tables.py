@@ -31,7 +31,7 @@ def display_table(headers, rows):
     table = Table(show_header=True, header_style="bold magenta", box=box.SQUARE)
 
     # Define fixed widths for each column
-    WIDTH = 200
+    WIDTH = 240
     column_widths = [WIDTH, WIDTH, WIDTH, WIDTH, WIDTH, WIDTH, WIDTH, WIDTH, WIDTH, WIDTH]  # Example widths
 
     # Add columns with fixed widths
@@ -45,12 +45,13 @@ def display_table(headers, rows):
     console = Console()
     console.print(table)
 
-# MySQL commands
+# MySQL commands using .my.cnf (no inline password)
 commands = [
-    "mysql -D awmstag2_car -u awmstag2_car --password='.&#CL=}2W$EO' -h floridascarwash.com -e \"SELECT ID, pushid, first_name, last_name, rewards, device, email, uid, isAdmin FROM wp_mcba_users\"",
-    "mysql -D awmstag2_car -u awmstag2_car --password='.&#CL=}2W$EO' -h floridascarwash.com -e \"SELECT * FROM wp_mcba_chat_messages;\"",
-    "mysql -D awmstag2_car -u awmstag2_car --password='.&#CL=}2W$EO' -h floridascarwash.com -e \"SELECT * FROM wp_mcba_chat_conversations;\""
+    "mysql -D visionte_8 -e \"SELECT ID, pushid, first_name, last_name, rewards, device, email, uid, isAdmin FROM wp_mcba_users;\"",
+    "mysql -D visionte_8 -e \"SELECT * FROM wp_mcba_chat_messages;\"",
+    "mysql -D visionte_8 -e \"SELECT * FROM wp_mcba_chat_conversations;\""
 ]
+
 
 for command in commands:
     output = run_mysql_command(command)

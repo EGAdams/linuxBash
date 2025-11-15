@@ -1,0 +1,80 @@
+[
+    {
+        "title": "Speech Engine On Verificaition",
+        "action": "echo '\n\n\n******** verifying speech engine operations... ********\n\n\n'",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Start Recording Process",
+        "action": "echo '\n\n\n******** starting the recording process... ********\n\n\n'",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Stop Recording Process",
+        "action": "echo '\n\n\n******** stopping the recording process... ********\n\n\n'",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Speech to Text on generated file...",
+        "action": "echo '\n\n\n******** running the speech to text process on the generated file... ********\n\n\n'",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Open Notepad",
+        "action": "notepad.exe",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "List Directory",
+        "action": "ls",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Show JSON Config",
+        "action": "cat /home/adamsl/home_config.json",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Show Command History",
+        "action": "history",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Show the Plan",
+        "action": "cat /mnt/c/Users/NewUser/Desktop/aug_24__sunday__begin_archon_and_planning.txt",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Open Interpreter",
+        "action": "interpreter -y --model=gpt-3.5-turbo-1106 -ak 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 -b 2.00",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Switch to the Agent 99 environment",
+        "action": "source environment_for_agent_99/bin/activate",
+        "working_directory": "/home/adamsl/agent_99",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Open Linux Bash Workspace",
+        "action": "code /home/adamsl/linuxBash",
+        "working_directory": "/home/adamsl/linuxBash",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Set OPENAI_API_KEY",
+        "action": "export OPENAI_API_KEY=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",
+        "working_directory": ".",
+        "open_in_subprocess": false
+    }
+]
