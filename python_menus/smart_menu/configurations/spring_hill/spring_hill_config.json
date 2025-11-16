@@ -7,7 +7,7 @@
     },
     {
         "title": "crawler",
-        "action": "echo '\n\n\n******** opening the crawler menu... ********\n\n\n'",
+        "action": "python3 /home/adamsl/linuxBash/python_menus/smart_menu/smart_menu_system.py /home/adamsl/linuxBash/python_menus/smart_menu/configurations/spring_hill/crawler_menu_config.json",
         "working_directory": "",
         "open_in_subprocess": false
     },

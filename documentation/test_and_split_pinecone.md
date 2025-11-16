@@ -128,7 +128,7 @@ if __name__ == '__main__':
         embedded_user_input = gpt3_embedding( user_input )
         unique_id = str( uuid4())
         metadata = { 'speaker': 'USER', 'time': timestamp, 'message': user_input, 'timestring': timestring, 'uuid': unique_id }
-        save_json( '/home/adamsl/linuxBash/agents/nexus/%s.json' % unique_id, metadata ) # <<--- save user input to a .json file on our file system ---<<<
+        save_json( '/home/adamsl/linuxBash/agents/nexus/%s.json' % unique_id, metadata ) # save user input to .json file file system
         data_for_pinecone_upsert.append(( unique_id, embedded_user_input ))  # <<--- this data is going to pinecone ---<<<
         ###
         ###  Now we have the user input not only saved to our local file, but it is also placed in the built-in mutable

@@ -64,7 +64,7 @@ tools = [
     Tool(
         name = "Search",
         func=search.run,
-        description="useful for when you need to answer questions about current events"
+        description="useful for when you need to answer questions about current events, fresh bugs on Stack Overflow, SDK documentation searches, syntax searches, etc."
     ),
     Tool(
         name="Calculator",

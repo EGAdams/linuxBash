@@ -1,31 +1,13 @@
 [
     {
-        "title": "Speech Engine On Verificaition",
-        "action": "echo '\n\n\n******** verifying speech engine operations... ********\n\n\n'",
+        "title": "open crawler vscode",
+        "action": "cd /home/adamsl/selenium-headless; code .",
         "working_directory": "",
         "open_in_subprocess": false
     },
     {
-        "title": "Start Recording Process",
-        "action": "source /home/adamsl/voice_agent/.venv/bin/activate; python3 /home/adamsl/voice_agent/record_and_save.py;",
-        "working_directory": "",
-        "open_in_subprocess": false
-    },
-    {
-        "title": "Stop Recording Process",
-        "action": "echo '\n\n\n******** stopping the recording process... ********\n\n\n'",
-        "working_directory": "",
-        "open_in_subprocess": false
-    },
-    {
-        "title": "Speech to Text on generated file...",
-        "action": "source /home/adamsl/voice_agent/.venv/bin/activate; python3 /home/adamsl/voice_agent/audio_transcriber.py",
-        "working_directory": "",
-        "open_in_subprocess": false
-    },
-    {
-        "title": "Open Voice Agent Project",
-        "action": "code /home/adamsl/voice_agent",
+        "title": "Open Notepad",
+        "action": "notepad.exe",
         "working_directory": "",
         "open_in_subprocess": false
     },

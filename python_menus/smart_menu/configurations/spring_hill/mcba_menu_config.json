@@ -1,13 +1,25 @@
 [
     {
         "title": "show vision team tables",
-        "action": "python3 /home/adamsl/linuxBash/python_menus/smart_menu/smart_menu_system.py /home/adamsl/linuxBash/python_menus/smart_menu/configurations/mcba_menu_config.json",
+        "action": "python3 /home/adamsl/linuxBash/python_menus/show_rich_tables.py",
         "working_directory": "",
         "open_in_subprocess": false
     },
     {
-        "title": "Open Notepad",
-        "action": "notepad.exe",
+        "title": "Open Android Test Workspace",
+        "action": "code /home/adamsl/selenium-headless/mcba_tests/android_tests",
+        "working_directory": "",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Open Android Test Terminal",
+        "action": "cd /home/adamsl/selenium-headless/mcba_tests/android_tests",
+        "working_directory": "/home/adamsl/selenium-headless/mcba_tests/android_tests",
+        "open_in_subprocess": false
+    },
+    {
+        "title": "Fast Android Setup",
+        "action": "python3 /home/adamsl/selenium-headless/mcba_tests/android_tests/tools/fast_android_setup.py",
         "working_directory": "",
         "open_in_subprocess": false
     },

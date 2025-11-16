@@ -1,7 +1,7 @@
 [
     {
-        "title": "Open PB vscode",
-        "action": "echo '\n\n\n******** opening PB vscode... ********\n\n\n'",
+        "title": "Open rpi vscode",
+        "action": "code rpi-rgb-led-matrix/",
         "working_directory": "",
         "open_in_subprocess": false
     },
